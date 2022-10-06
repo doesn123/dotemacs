@@ -1,0 +1,1 @@
+("~/.emacs.d/" "~/delmenow/" "~/git-can-delme/" "~/gitTestMagit/" "~/magitTest/")

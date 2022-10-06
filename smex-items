@@ -1,0 +1,17 @@
+
+;; ----- smex-history -----
+(
+ ivy-mode
+ smex
+ cd
+ 5x5
+ arp
+ dbx
+ dig
+)
+
+;; ----- smex-data -----
+(
+ (ivy-mode . 2)
+ (smex . 2)
+)

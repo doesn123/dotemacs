@@ -1,0 +1,91 @@
+;; -*- mode: emacs-lisp; lexical-binding:t; coding: utf-8-emacs; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Sun Aug 21 21:00:35 2022
+;; Desktop file format version 208
+;; Emacs version 28.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (25346 32979 948392 0) (desktop . "208") "George@g-laptop" nil nil ((((minibuffer . t) (undecorated) (skip-taskbar) (font . "-outline-Consolas-normal-normal-normal-mono-17-*-*-*-c-*-iso8859-1") (border-width . 0) (internal-border-width . 0) (child-frame-border-width) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#ffffff") (background-color . "#000000") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 8) (right-fringe . 8) (no-focus-on-map) (no-accept-focus) (no-special-glyphs) (alpha) (menu-bar-lines . 0) (tab-bar-lines . 0) (height . 37) (tool-bar-lines . 0) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 17) (scroll-bar-height . 17) (fullscreen . maximized) (z-group) (visibility . t) (display-type . color) (background-mode . dark) (cursor-color . "#ffffff") (environment) (last-focus-update) (tabs (current-tab (name . "playOrg.org") (explicit-name))) (frameset--id . "A193-A430-D3AC-0811") (frameset--mini t . t) (modeline . t) (unsplittable) (icon-name) (display . "w32") (explicit-name) (tool-bar-position . top) (width . 150) (left + -8) (top + -8)) ((min-height . 4) (min-width . 80) (min-height-ignore . 3) (min-width-ignore . 80) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 80) (min-pixel-width . 720) (min-pixel-height-ignore . 60) (min-pixel-width-ignore . 720) (min-pixel-height-safe . 20) (min-pixel-width-safe . 18)) leaf (pixel-width . 1366) (pixel-height . 725) (total-width . 151) (total-height . 36) (normal-height . 1.0) (normal-width . 1.0) (buffer "george.org" (selected . t) (hscroll . 0) (fringes 8 8 nil nil) (margins 38 . 38) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 6908) (start . 6269)) (prev-buffers ("george.org" 6269 6908) ("init.el" 1 8) (".emacs.d" 1 249) ("*Warnings*" 1 386))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring '(#("go" 0 2 (isearch-regexp-function nil isearch-case-fold-search t)) #("jk" 0 2 (isearch-regexp-function nil isearch-case-fold-search t)) #("hj" 0 2 (isearch-regexp-function nil isearch-case-fold-search t))))
+(setq regexp-search-ring '(#("set" 0 3 (isearch-case-fold-search nil)) #("global" 0 6 (isearch-case-fold-search t)) #("glob" 0 4 (isearch-case-fold-search t)) #("globa" 0 5 (isearch-case-fold-search t)) #("after" 0 5 (isearch-case-fold-search t)) #("undo-tr" 0 7 (isearch-case-fold-search t)) #("use-" 0 4 (isearch-case-fold-search t)) #("evil" 0 4 (isearch-case-fold-search t)) #("windm" 0 5 (isearch-case-fold-search t)) #("org" 0 3 (isearch-case-fold-search t)) #("conso" 0 5 (isearch-case-fold-search t)) #("buffer" 0 6 (isearch-case-fold-search t)) #("tab" 0 3 (isearch-case-fold-search nil))))
+(setq register-alist '((119) (48 . #("(global-set-key (kbd \"C-M-<left>\") 'org-metaright)\n" 0 21 (yank-handler (evil-yank-line-handler nil t) fontified t font-lock-fontified t font-lock-multiline t face (org-block) help-echo nil src-block t) 21 33 (yank-handler (evil-yank-line-handler nil t) fontified t font-lock-fontified t font-lock-multiline t face (font-lock-string-face org-block) help-echo nil src-block t) 33 51 (yank-handler (evil-yank-line-handler nil t) fontified t font-lock-fontified t font-lock-multiline t face (org-block) src-block t)))))
+(setq file-name-history '(#("c:/Users/George/.emacs.d/george.org" 0 35 (ivy-index 1)) #("c:/Users/George/playOrg.org" 0 27 (ivy-index 0)) #("c:/Users/George/.emacs.d/" 0 25 (ivy-index 0))))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 208
+  "c:/Users/George/.emacs.d/george.org"
+  "george.org"
+  'org-mode
+  '(visual-line-mode undo-tree-mode evil-collection-unimpaired-mode general-override-mode override-global-mode gcmh-mode ivy-mode counsel-mode olivetti-mode)
+  6908
+  '(6908 nil)
+  nil
+  nil
+  '((buffer-display-time 25346 32946 926343 0) (buffer-file-coding-system . undecided-dos) (overwrite-mode) (truncate-lines))
+  '((mark-ring (6908 6908 6908 6954 6173 6152 4298 3820 3782 3451 3392 3342 3292 3285 3285 1282))))
+
+(desktop-create-buffer 208
+  "c:/Users/George/playOrg.org"
+  "playOrg.org"
+  'org-mode
+  '(undo-tree-mode evil-collection-unimpaired-mode general-override-mode override-global-mode gcmh-mode ivy-mode counsel-mode)
+  449
+  '(450 nil)
+  nil
+  nil
+  '((buffer-display-time 25346 32707 179561 0) (buffer-file-coding-system . iso-latin-1-dos) (overwrite-mode) (truncate-lines . t))
+  '((mark-ring (205 156 559 379 506 379 506 459 559 506 379 506 559 459 559 506))))
+
+(desktop-create-buffer 208
+  "c:/Users/George/.emacs.d/init.el"
+  "init.el"
+  'emacs-lisp-mode
+  '(eldoc-mode undo-tree-mode evil-collection-unimpaired-mode general-override-mode override-global-mode gcmh-mode ivy-mode counsel-mode)
+  8
+  '(8 nil)
+  nil
+  nil
+  '((buffer-display-time 25346 32735 314952 0) (buffer-file-coding-system . prefer-utf-8-unix) (overwrite-mode))
+  '((mark-ring (8 8 8 110 44 44 48 47 46 45 39 39 20 20 20 20))))
+
+(desktop-create-buffer 208
+  nil
+  ".emacs.d"
+  'dired-mode
+  '(evil-collection-unimpaired-mode general-override-mode override-global-mode gcmh-mode ivy-mode counsel-mode)
+  249
+  '(249 nil)
+  t
+  '("c:/Users/George/.emacs.d/")
+  '((buffer-display-time 25346 32734 841373 0) (overwrite-mode))
+  '((mark-ring (249 249 249 249 249 249 249 249 249 249 249 249 249 249 249 249))))
+
+(desktop-create-buffer 208
+  nil
+  "*info*<2>"
+  'Info-mode
+  '(undo-tree-mode evil-collection-unimpaired-mode general-override-mode override-global-mode gcmh-mode ivy-mode counsel-mode)
+  228
+  '(nil nil)
+  t
+  '("dir" "Top" ((history ("dir" "Top" 227) ("dir" "Top" 353) ("dir" "Top" 227) ("dir" "Top" 228) ("dir" "Top" 227) ("dir" "Top" 227) ("dir" "Top" 227) ("c:/Program Files/Emacs/emacs-28.1/share/info/efaq" "Top" 1450))))
+  '((tab-width . 8) (buffer-display-time 25346 32738 183524 0) (buffer-file-coding-system . utf-8-unix) (case-fold-search . t))
+  '((mark-ring (1 1 1 1 1 1))))
+
+(desktop-create-buffer 208
+  nil
+  "*info*"
+  'Info-mode
+  '(undo-tree-mode evil-collection-unimpaired-mode general-override-mode override-global-mode gcmh-mode ivy-mode counsel-mode)
+  903
+  '(903 nil)
+  t
+  '("c:/Users/George/.emacs.d/elpa/evil-20220705.1432/evil.info" "Top" ((history ("c:/Users/George/.emacs.d/elpa/evil-20220705.1432/evil.info" "Overview" 1508) ("c:/Users/George/.emacs.d/elpa/evil-20220705.1432/evil.info" "Settings" 5686) ("c:/Users/George/.emacs.d/elpa/evil-20220705.1432/evil.info" "Keymaps" 22770) ("c:/Users/George/.emacs.d/elpa/evil-20220705.1432/evil.info" "Hooks" 29421) ("c:/Users/George/.emacs.d/elpa/evil-20220705.1432/evil.info" "Extension" 30149) ("c:/Users/George/.emacs.d/elpa/evil-20220705.1432/evil.info" "Frequently Asked Questions" 41822) ("c:/Users/George/.emacs.d/elpa/evil-20220705.1432/evil.info" "Top" 493) ("dir" "Top" 548) ("dir" "Top" 227) ("dir" "Top" 374) ("dir" "Top" 227) ("dir" "Top" 353) ("dir" "Top" 227) ("dir" "Top" 228) ("dir" "Top" 227) ("dir" "Top" 227) ("dir" "Top" 227) ("c:/Program Files/Emacs/emacs-28.1/share/info/efaq" "Top" 1450))))
+  '((tab-width . 8) (buffer-display-time 25346 32937 143419 0) (buffer-file-coding-system . utf-8-unix) (case-fold-search . t))
+  '((mark-ring (903 630 949 630 949 630 949 630 949 630 949 421 41822 1 1 1))))
+

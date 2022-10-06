@@ -1,0 +1,1 @@
+#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ("c:/Users/George/Projects/Code/Proj2/" (".dir-locals.el" "srtst.txt") "c:/Users/George/gitTestMagit/" (".gitignore" "blah.txt" "blah.txt~" "blah.txt~~" "test.org" "test.org~")))

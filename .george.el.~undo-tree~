@@ -1,0 +1,25 @@
+(undo-tree-save-format-version . 1)
+"1c8aee3efceef03ed4434c71c1ab2cd78d5f8048"
+[nil nil nil nil (25361 57175 906863 0) 0 nil]
+([nil nil ((430 . 431) 472 (t 25359 45588 0 0)) nil (25361 57198 516086 0) 0 nil] [nil nil ((473 . 474) (t 25359 45588 0 0) 472) ((#("
+" 0 1 (fontified t)) . 473) (undo-tree-id0 . -1) (undo-tree-id1 . -1) (undo-tree-id2 . -1)) (25361 57175 904907 0) 0 nil])
+([nil nil ((430 . 432)) nil (25361 57198 516224 0) 0 nil])
+nil
+([nil nil ((nil rear-nonsticky nil 618 . 619) (nil fontified nil 477 . 619) (477 . 619)) nil (25361 57264 931529 0) 0 nil] [nil nil ((nil rear-nonsticky nil 578 . 579) (nil fontified nil 437 . 579) (437 . 579) 436) ((#("(add-to-list 'load-path \"~/.emacs.d/lisp/\")
+
+(require 'xah-fly-keys)
+
+;; specify a layout
+(xah-fly-keys-set-layout \"qwerty\")
+
+(xah-fly-keys 1)" 0 24 (fontified nil) 24 42 (fontified nil face font-lock-string-face) 42 46 (fontified nil) 46 53 (fontified nil face font-lock-keyword-face) 53 55 (fontified nil) 55 67 (fontified nil face font-lock-constant-face) 67 70 (fontified nil) 70 73 (fontified nil face font-lock-comment-delimiter-face) 73 90 (fontified nil face font-lock-comment-face) 90 115 (fontified nil) 115 123 (fontified nil face font-lock-string-face) 123 126 (fontified nil) 126 141 (fontified nil) 141 142 (fontified nil rear-nonsticky nil)) . 437) (undo-tree-id3 . -141) (undo-tree-id4 . -141) (undo-tree-id5 . 1) (undo-tree-id6 . -142) (undo-tree-id7 . 16) (undo-tree-id8 . -127) (undo-tree-id9 . -126) (undo-tree-id10 . -141) (nil fontified t 560 . 563) (nil fontified t 552 . 560) (nil fontified t 527 . 552) (nil fontified t 510 . 527) (nil fontified t 507 . 510) (nil fontified t 504 . 507) (nil fontified t 492 . 504) (nil fontified t 490 . 492) (nil fontified t 483 . 490) (nil fontified t 479 . 483) (nil fontified t 461 . 479) (nil fontified t 437 . 461) (nil rear-nonsticky t 578 . 579)) (25361 57198 516075 0) 0 nil])
+([nil nil ((619 . 620) 618) nil (25361 57264 931526 0) 0 nil])
+nil
+([nil nil ((620 . 621)) nil (25361 57264 931524 0) 0 nil])
+([nil nil ((#("(add-to-list 'load-path \"~/.emacs.d/lisp/\")
+" 0 24 (fontified t) 24 42 (fontified t face font-lock-string-face) 42 44 (fontified t)) . 477) (undo-tree-id13 . -15) (undo-tree-id14 . 28) (undo-tree-id15 . -16) 492) nil (25361 57264 931521 0) 0 nil])
+([nil nil ((#("qwerty" 0 6 (fontified t face font-lock-string-face)) . 549) 523) nil (25361 57264 931513 0) 0 nil])
+([nil nil ((549 . 550)) nil (25361 57264 931511 0) 0 nil])
+([nil nil ((#("\"" 0 1 (fontified t face font-lock-string-face)) . -549) (undo-tree-id11 . -1) (undo-tree-id12 . -1) 550) nil (25361 57264 931507 0) 0 nil])
+([nil current ((549 . 563)) nil (25361 57264 931485 0) 0 nil])
+nil

@@ -1,0 +1,2 @@
+;; Generated package description from modus-themes.el  -*- no-byte-compile: t -*-
+(define-package "modus-themes" "2.7.1" "Elegant, highly legible and customizable themes" '((emacs "27.1")) :commit "454e1a06a2c5194a81148df91da6ee441adb601b" :authors '(("Protesilaos Stavrou" . "info@protesilaos.com")) :maintainer '("Modus-Themes Development" . "~protesilaos/modus-themes@lists.sr.ht") :keywords '("faces" "theme" "accessibility") :url "https://git.sr.ht/~protesilaos/modus-themes")

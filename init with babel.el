@@ -1,0 +1,1 @@
+(org-babel-load-file (expand-file-name "myconfig.org" user-emacs-directory))
