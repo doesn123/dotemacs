@@ -1,0 +1,5 @@
+;;; -*- coding: utf-8; mode: lisp-data -*-
+(("c:/Users/George/playOrg.org" . 449)
+ ("c:/Users/George/.emacs.d/"
+  (dired-filename . "c:/Users/George/.emacs.d/history"))
+ ("c:/Users/George/.emacs.d/init.el" . 1150))

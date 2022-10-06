@@ -15,7 +15,7 @@
 (package-install 'use-package))
 
 (marginalia-mode t)
-(setq ivy-initial-inputs-alist nil)
+(ivy-initial-inputs-alist t)
 
 (dolist (mode '(org-mode-hook
 		eshell-mode-hook
@@ -33,14 +33,14 @@
 (use-package saveplace
   :init (save-place-mode))
 
-;; Profile emacs startup
-(add-hook 'emacs-startup-hook
-	  (lambda ()
-	    (message "*** Emacs loaded in %s with %d garbage collections."
-		     (format "%.2f seconds"
-			     (float-time
-			      (time-subtract after-init-time before-init-time)))
-		     gcs-done)))
+ ;; Profile emacs startup
+  (add-hook 'emacs-startup-hook
+	    (lambda ()
+	      (message "*** Emacs loaded in %s with %d garbage collections."
+		       (format "%.2f seconds"
+			       (float-time
+				(time-subtract after-init-time before-init-time)))
+		       gcs-done)))
 
 (smooth-scrolling-mode t)
 (setq inhibit-startup-screen t)
