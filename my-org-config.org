@@ -89,7 +89,7 @@
 (define-key xah-fly-command-map (kbd "C-e") 'eval-last-sexp)
 
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+;(add-to-list 'load-path "~/.emacs.d/lisp/")
 (autoload 'xah-elisp-mode "xah-elisp-mode" "xah emacs lisp major mode." t)
 
   (define-key dired-mode-map (kbd "DEL") 'dired-up-directory)
@@ -146,5 +146,22 @@
 
 (define-key org-mode-map (kbd "C-c C-l") 'org-insert-link)
 
-(set-face-attribute 'default nil :height 170)   
-#+end_src
+(set-face-attribute 'default nil :height 170)
+
+(add-hook 'find-file-hook
+          (lambda ()
+            (when (string= (file-name-extension buffer-file-name) "el")
+              (xah-elisp-mode +1))))
+
+(add-hook 'find-file-hook
+          (lambda ()
+            (when (string= (file-name-extension buffer-file-name) "el")
+              (xah-elisp-mode +1))))
+(global-set-key (kbd "C-<down>") 'scroll-other-window) 
+(global-set-key (kbd "C-<up>") 'scroll-other-window-down)
+
+(define-key minibuffer-local-map (kbd "M-o") 'ivy-dispatching-done)
+;; M-S-LEFT (org-table-delete-column)
+
+(global-prettify-symbols-mode 1)
++end_src ;-----------------------------------------

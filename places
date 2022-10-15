@@ -1,5 +1,17 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-(("c:/Users/George/playOrg.org" . 449)
+(("c:/Users/George/notes.org" . 4057)
+ ("c:/Users/George/"
+  (dired-filename . "c:/Users/George/#bulidsite.sh#"))
+ ("c:/Users/George/elispFun.el" . 2345)
+ ("c:/Users/George/randomtxt.txt" . 454)
+ ("c:/Users/George/.emacs.d/my-org-config.org" . 5001)
+ ("c:/Users/George/.emacs.d/.george.org.~undo-tree~" . 23)
+ ("c:/Users/George/.emacs.d/nn.org" . 42)
  ("c:/Users/George/.emacs.d/"
-  (dired-filename . "c:/Users/George/.emacs.d/history"))
- ("c:/Users/George/.emacs.d/init.el" . 1150))
+  (dired-filename . "c:/Users/George/.emacs.d/.george.org.~undo-tree~"))
+ ("c:/Users/"
+  (dired-filename . "c:/Users/George"))
+ ("c:/Users/George/.emacs.d/elpa/avy-0.5.0/avy-autoloads.el" . 8208)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/emacs-lisp/package.el" . 69946)
+ ("c:/Users/George/Emacs questions.org" . 1841)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/etc/PROBLEMS" . 5493))
