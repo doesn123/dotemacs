@@ -1,4 +1,5 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+(desktop-save-mode 1)
 
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -10,8 +11,9 @@
 
 (global-set-key (kbd "C-s") 'swiper)
 
+(find-file "~/.emacs.d/my-org-config.org")
+
 (package-initialize)
-(desktop-save-mode 1)
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package)
 (package-refresh-contents)
@@ -20,8 +22,9 @@
 (marginalia-mode t)
 (setq ivy-initial-inputs-alist nil)
 
-(dolist (mode '(org-mode-hook
-		eshell-mode-hook
+(load-theme 'modus-vivendi t)
+
+(dolist (mode '(eshell-mode-hook
                 fundamental-mode-hook))
   (add-hook mode (lambda () (olivetti-mode))))
 
@@ -52,10 +55,11 @@
 			      (time-subtract after-init-time before-init-time)))
 		     gcs-done)))
 
+(setq org-directory "~/OrgFiles")
+
 (smooth-scrolling-mode t)
 (setq inhibit-startup-screen t)
 (menu-bar-mode -1)
-(load-theme 'modus-vivendi t)
 (define-key global-map (kbd "<f5>") #'modus-themes-toggle)
 
   ;; (defun fontify-frame (frame)
@@ -88,7 +92,7 @@
 (define-key xah-fly-command-map (kbd "C-e") 'eval-last-sexp)
 
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+;(add-to-list 'load-path "~/.emacs.d/lisp/")
 (autoload 'xah-elisp-mode "xah-elisp-mode" "xah emacs lisp major mode." t)
 
   (define-key dired-mode-map (kbd "DEL") 'dired-up-directory)
@@ -146,3 +150,46 @@
 (define-key org-mode-map (kbd "C-c C-l") 'org-insert-link)
 
 (set-face-attribute 'default nil :height 170)
+
+(add-hook 'find-file-hook
+          (lambda ()
+            (when (string= (file-name-extension buffer-file-name) "el")
+              (xah-elisp-mode +1))))
+
+(add-hook 'find-file-hook
+          (lambda ()
+            (when (string= (file-name-extension buffer-file-name) "el")
+              (xah-elisp-mode +1))))
+(global-set-key (kbd "C-<down>") 'scroll-other-window) 
+(global-set-key (kbd "C-<up>") 'scroll-other-window-down)
+
+(define-key minibuffer-local-map (kbd "M-o") 'ivy-dispatching-done)
+
+(global-set-key (kbd "C-c c") 'org-capture)
+
+(setq org-capture-templates
+      '(("d" "Demo template" entry
+	 (file+headline "demo.org" "our f heading")
+	 "* DEMO text %?")
+("p" "Promt for imput" entry
+	 (file+headline "demo.org" "our f input")
+	 "* %^{Please write here} %?")
+("o" "options for prompt" entry
+	 (file+headline "demo.org" "our f heading")
+	 "* %^{Select option|ONE|TWO|THREE} %?")))
+
+;; M-S-LEFT (org-table-delete-column)
+
+(global-prettify-symbols-mode 1)
+(global-set-key (kbd "C-c a") 'org-agenda)
+
+
+      (setq org-agenda-files
+	    '("~/Projects/Code/OrgFiles/Tasks.org"
+	      "~/notes.org"
+	      "~/Projects/Code/OrgFiles/Birthdays.org"))
+(setq-default org-catch-invisible-edits 'error) 
+
+;; (setq org-todo-keywords
+;; '((sequence "TODO(t)" "|" "DONE(d)")
+;;   (sequence "REPORT(r)" "BUG(b)" "KNO

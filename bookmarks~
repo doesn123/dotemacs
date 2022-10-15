@@ -2,7 +2,17 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("Tasks.org"
+(("org-capture-last-stored"
+ (filename . "~/OrgFiles/demo.org")
+ (front-context-string)
+ (rear-context-string . "* our f heading\n")
+ (position . 17))
+("my-org-config.org"
+ (filename . "~/.emacs.d/my-org-config.org")
+ (front-context-string . ") 'xah-backward-")
+ (rear-context-string . "and-map (kbd \",\"")
+ (position . 2199))
+("Tasks.org"
  (filename . "~/Projects/Code/OrgFiles/Tasks.org")
  (front-context-string . "[2022-09-22 Thu ")
  (rear-context-string . "C dfjk\nCLOSED:  ")
