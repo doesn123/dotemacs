@@ -18,7 +18,7 @@
  (rear-context-string . "C dfjk\nCLOSED:  ")
  (position . 44))
 ("notes.org"
- (filename . "~/notes.org")
+ (filename . "~/OrgFiles/notes.org")
  (front-context-string . "\n\n** Merel Polat")
  (rear-context-string . "s program\n* Gigs")
  (position . 165))

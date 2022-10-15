@@ -5,8 +5,8 @@
 (("org-capture-last-stored"
  (filename . "~/OrgFiles/demo.org")
  (front-context-string)
- (rear-context-string . "* our f heading\n")
- (position . 17))
+ (rear-context-string . " \n* our f input\n")
+ (position . 45))
 ("my-org-config.org"
  (filename . "~/.emacs.d/my-org-config.org")
  (front-context-string . ") 'xah-backward-")

@@ -1,13 +1,17 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-(("c:/Users/George/.emacs.d/my-org-config.org" . 5211)
+(("c:/Users/George/Projects/Code/OrgFiles/Tasks.org" . 645)
+ ("c:/Users/George/.emacs.d/my-org-config.org" . 1584)
  ("c:/Users/George/.emacs.d/bookmarks" . 251)
+ ("c:/Users/George/OrgFiles/notes.org" . 2727)
+ ("c:/Users/George/OrgFiles/"
+  (dired-filename . "c:/Users/George/OrgFiles/."))
+ ("c:/Users/George/"
+  (dired-filename . "c:/Users/George/notes.org_archive~"))
+ ("c:/Users/George/.emacs.d/"
+  (dired-filename . "c:/Users/George/.emacs.d/my-org-config.el"))
+ ("c:/Users/George/Emacs questions.org" . 834)
  ("c:/Users/George/notes.org_archive" . 594)
  ("c:/Users/George/Projects/Code/OrgFiles/Birthdays.org" . 72)
- ("c:/Users/George/Projects/Code/OrgFiles/Tasks.org" . 645)
- ("c:/Users/George/.emacs.d/"
-  (dired-filename . "c:/Users/George/.emacs.d/my-org-config.org"))
- ("c:/Users/George/"
-  (dired-filename . "c:/Users/George/.emacs.d"))
  ("c:/Users/George/elispFun.el" . 2345)
  ("c:/Users/George/randomtxt.txt" . 454)
  ("c:/Users/George/.emacs.d/.george.org.~undo-tree~" . 23)
@@ -16,5 +20,4 @@
   (dired-filename . "c:/Users/George"))
  ("c:/Users/George/.emacs.d/elpa/avy-0.5.0/avy-autoloads.el" . 8208)
  ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/emacs-lisp/package.el" . 69946)
- ("c:/Users/George/Emacs questions.org" . 1841)
  ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/etc/PROBLEMS" . 5493))

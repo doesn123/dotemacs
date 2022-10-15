@@ -2,102 +2,42 @@
 ;; --------------------------------------------------------------------------
 ;; Desktop File for Emacs
 ;; --------------------------------------------------------------------------
-;; Created Sun Oct  9 20:53:07 2022
+;; Created Sat Oct 15 22:42:49 2022
 ;; Desktop file format version 208
-;; Emacs version 27.2
+;; Emacs version 28.2
 
 ;; Global section:
-(setq desktop-saved-frameset [frameset 1 (25411 6291 702587 0) (desktop . "208") "George@G-LAPTOP" nil nil ((((minibuffer . t) (undecorated) (skip-taskbar) (font . "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1") (border-width . 0) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#ffffff") (background-color . "#000000") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 8) (right-fringe . 8) (no-focus-on-map) (no-accept-focus) (no-special-glyphs) (alpha) (menu-bar-lines . 0) (tab-bar-lines . 0) (height . 46) (tool-bar-lines . 0) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 17) (scroll-bar-height . 17) (fullscreen . maximized) (z-group) (visibility . t) (display-type . color) (background-mode . dark) (cursor-color . "#ffffff") (environment) (child-frame-border-width) (last-focus-update) (tabs (current-tab (name . "init.el") (explicit-name))) (frameset--id . "A193-A430-D3AC-0811") (frameset--mini t . t) (modeline . t) (unsplittable) (icon-name) (display . "w32") (explicit-name) (tool-bar-position . top) (width . 168) (left + -8) (top + -8)) ((min-height . 4) (min-width . 10) (min-height-ignore . 3) (min-width-ignore . 4) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 64) (min-pixel-width . 80) (min-pixel-height-ignore . 48) (min-pixel-width-ignore . 32) (min-pixel-height-safe . 16) (min-pixel-width-safe . 16)) leaf (pixel-width . 1366) (pixel-height . 729) (total-width . 171) (total-height . 46) (normal-height . 1.0) (normal-width . 1.0) (buffer "*Help*" (selected . t) (hscroll . 0) (fringes 8 8 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 1) (start . 1))))])
+(setq desktop-saved-frameset [frameset 1 (25419 6985 361342 0) (desktop . "208") "George@G-LAPTOP" nil nil ((((minibuffer . t) (undecorated) (skip-taskbar) (font . "-outline-Courier New-normal-normal-normal-mono-23-*-*-*-c-*-iso8859-1") (border-width . 0) (internal-border-width . 0) (child-frame-border-width) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#ffffff") (background-color . "#000000") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 8) (right-fringe . 8) (no-focus-on-map) (no-accept-focus) (no-special-glyphs) (alpha) (menu-bar-lines . 0) (tab-bar-lines . 0) (height . 29) (tool-bar-lines . 0) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 17) (scroll-bar-height . 17) (fullscreen . maximized) (z-group) (visibility . t) (display-type . color) (background-mode . dark) (cursor-color . "#ffffff") (environment) (last-focus-update . t) (frameset--id . "01D7-F090-D19A-B62E") (frameset--mini t . t) (width . 96) (modeline . t) (unsplittable) (left + -8) (top + -8) (icon-name) (display . "w32") (explicit-name) (tool-bar-position . top)) ((min-height . 4) (min-width . 10) (min-height-ignore . 3) (min-width-ignore . 4) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 100) (min-pixel-width . 140) (min-pixel-height-ignore . 75) (min-pixel-width-ignore . 56) (min-pixel-height-safe . 25) (min-pixel-width-safe . 28)) leaf (pixel-width . 1366) (pixel-height . 720) (total-width . 97) (total-height . 28) (normal-height . 1.0) (normal-width . 1.0) (buffer "my-org-config.org" (selected . t) (hscroll . 0) (fringes 8 8 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 5596) (start . 5368)) (prev-buffers ("Emacs questions.org" 127 834) ("*Bookmark List*" 1 1) ("my-org-config.org" 1 492) ("*scratch*" 1 1))))])
 (setq desktop-missing-file-warning nil)
 (setq tags-file-name nil)
 (setq tags-table-list nil)
-(setq search-ring '(#("orderle		" 0 9 (isearch-case-fold-search t isearch-regexp-function nil)) #("order" 0 5 (isearch-case-fold-search t isearch-regexp-function nil)) #("backw" 0 5 (isearch-case-fold-search t isearch-regexp-function nil)) #("ivya" 0 4 (isearch-case-fold-search t isearch-regexp-function nil)) #("ivy" 0 3 (isearch-case-fold-search t isearch-regexp-function nil)) #("go" 0 2 (isearch-regexp-function nil isearch-case-fold-search t)) #("jk" 0 2 (isearch-regexp-function nil isearch-case-fold-search t)) #("hj" 0 2 (isearch-regexp-function nil isearch-case-fold-search t))))
-(setq regexp-search-ring '(#("set" 0 3 (isearch-case-fold-search nil)) #("global" 0 6 (isearch-case-fold-search t)) #("glob" 0 4 (isearch-case-fold-search t)) #("globa" 0 5 (isearch-case-fold-search t)) #("after" 0 5 (isearch-case-fold-search t)) #("undo-tr" 0 7 (isearch-case-fold-search t)) #("use-" 0 4 (isearch-case-fold-search t)) #("evil" 0 4 (isearch-case-fold-search t)) #("windm" 0 5 (isearch-case-fold-search t)) #("org" 0 3 (isearch-case-fold-search t)) #("conso" 0 5 (isearch-case-fold-search t)) #("buffer" 0 6 (isearch-case-fold-search t)) #("tab" 0 3 (isearch-case-fold-search nil))))
-(setq register-alist '((32 file-query "c:/Users/George/.emacs.d/init.el" 1070) (119) (48 . #("(global-set-key (kbd \"C-M-<left>\") 'org-metaright)\n" 0 21 (yank-handler (evil-yank-line-handler nil t) fontified t font-lock-fontified t font-lock-multiline t face (org-block) help-echo nil src-block t) 21 33 (yank-handler (evil-yank-line-handler nil t) fontified t font-lock-fontified t font-lock-multiline t face (font-lock-string-face org-block) help-echo nil src-block t) 33 51 (yank-handler (evil-yank-line-handler nil t) fontified t font-lock-fontified t font-lock-multiline t face (org-block) src-block t)))))
-(setq file-name-history '(#("c:/Users/George/.emacs.d/init.el" 0 32 (ivy-index 2)) #("c:/Users/George/.emacs.d/george.org" 0 35 (ivy-index 1)) #("c:/Users/George/playOrg.org" 0 27 (ivy-index 0)) #("c:/Users/George/.emacs.d/" 0 25 (ivy-index 0))))
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history nil)
 
 ;; Buffer section -- buffers listed in same order as in buffer list:
 (desktop-create-buffer 208
-  "c:/Users/George/.emacs.d/init.el"
-  "init.el"
-  'xah-elisp-mode
-  '(abbrev-mode gcmh-mode xah-fly-keys which-key-mode ivy-mode counsel-mode text-scale-mode)
-  4139
-  '(4058 nil)
-  nil
-  nil
-  '((buffer-display-time 25411 6254 260964 0) (buffer-file-coding-system . prefer-utf-8-dos))
-  '((mark-ring (4051 4030 4049 1))))
-
-(desktop-create-buffer 208
-  nil
-  "*info*"
-  'Info-mode
-  '(gcmh-mode xah-fly-keys which-key-mode ivy-mode counsel-mode follow-mode)
-  2211
-  '(1 nil)
-  t
-  '("c:/Users/George/.emacs.d/elpa/evil-20220705.1432/evil.info" "Installation via package el" ((history ("c:/Users/George/.emacs.d/elpa/evil-20220705.1432/evil.info" "Overview" 1508) ("c:/Users/George/.emacs.d/elpa/evil-20220705.1432/evil.info" "Top" 1152) ("dir" "Top" 670))))
-  '((tab-width . 8) (buffer-display-time 25410 31641 46152 0) (buffer-file-coding-system . utf-8-dos) (case-fold-search . t))
-  '((mark-ring (605))))
-
-(desktop-create-buffer 208
-  "c:/Users/George/elispFun.el"
-  "elispFun.el"
-  'xah-elisp-mode
-  '(abbrev-mode gcmh-mode xah-fly-keys which-key-mode ivy-mode counsel-mode)
-  1867
-  '(2346 nil)
-  nil
-  nil
-  '((buffer-display-time 25410 30966 958011 0) (buffer-file-coding-system . prefer-utf-8-dos) (truncate-lines))
-  '((mark-ring (2346 2346 2346 2346 2346 2346 2346 2346 2346 2346 2346 2346 1 1629 1 2235))))
-
-(desktop-create-buffer 208
-  "c:/Users/George/playOrg.org"
-  "playOrg.org"
+  "c:/Users/George/.emacs.d/my-org-config.org"
+  "my-org-config.org"
   'org-mode
-  '(visual-line-mode gcmh-mode xah-fly-keys which-key-mode ivy-mode counsel-mode olivetti-mode text-scale-mode)
-  1
-  '(652 nil)
+  '(gcmh-mode xah-fly-keys which-key-mode override-global-mode)
+  5596
+  '(5597 nil)
   nil
   nil
-  '((buffer-display-time 25410 33845 780724 0) (buffer-file-coding-system . iso-latin-1-dos) (overwrite-mode) (truncate-lines . t))
-  '((mark-ring (449 450 205 156 559 379 506 379 506 459 559 506 379 506 559 459))))
+  '((buffer-display-time 25419 6980 303792 0) (buffer-file-coding-system . undecided-dos) (truncate-lines . t))
+  '((mark-ring (5550 5779 5527 6282 5503 5804 5482 5804 4826 135 521 492 536 189 5804 935))))
 
 (desktop-create-buffer 208
+  "c:/Users/George/Emacs questions.org"
+  "Emacs questions.org"
+  'org-mode
+  '(gcmh-mode xah-fly-keys which-key-mode override-global-mode)
+  834
+  '(773 nil)
   nil
-  "*info*<2>"
-  'Info-mode
-  '(gcmh-mode xah-fly-keys which-key-mode ivy-mode counsel-mode)
-  228
-  '(nil nil)
-  t
-  '("dir" "Top" ((history ("dir" "Top" 227) ("dir" "Top" 353) ("dir" "Top" 227) ("dir" "Top" 228) ("dir" "Top" 227) ("dir" "Top" 227) ("dir" "Top" 227) ("c:/Program Files/Emacs/emacs-28.1/share/info/efaq" "Top" 1450))))
-  '((tab-width . 8) (buffer-display-time 25410 30905 864264 0) (buffer-file-coding-system . utf-8-unix) (case-fold-search . t))
-  '((mark-ring (1 1 1 1 1 1))))
-
-(desktop-create-buffer 208
   nil
-  "*info*<3>"
-  'Info-mode
-  '(gcmh-mode xah-fly-keys which-key-mode ivy-mode counsel-mode)
-  6496
-  '(nil nil)
-  t
-  '("dir" "Top" nil)
-  '((tab-width . 8) (buffer-display-time 25410 30906 253050 0) (case-fold-search . t))
+  '((buffer-display-time 25419 6216 38283 0) (buffer-file-coding-system . undecided-dos) (truncate-lines . t))
   '((mark-ring nil)))
-
-(desktop-create-buffer 208
-  nil
-  "*info*<4>"
-  'Info-mode
-  '(gcmh-mode xah-fly-keys which-key-mode ivy-mode counsel-mode)
-  2487
-  '(nil nil)
-  t
-  '("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Disabling Annalist" ((history ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Terminology" 3255) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Settings" 3872) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Defining New Types" 4255) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Defining Views" 8486) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Recording" 13194) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Describing" 15081) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Helper Functions" 16094) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Builtin Types" 18413) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Helper Functions" 16094) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Describing" 15081) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Recording" 13194) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Defining Views" 8486) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Defining New Types" 4255) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Settings" 3872) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Terminology" 3255) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Disabling Annalist" 2487) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Terminology" 3255) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Settings" 3872) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Terminology" 3255) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Disabling Annalist" 2487) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Usage" 2216) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Top" 278) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Usage" 2216) ("c:/Users/George/.emacs.d/elpa/annalist-20190929.207/annalist" "Top" 278) ("dir" "Top" 551) ("c:/Users/George/.emacs.d/elpa/modus-themes-2.7.1/modus-themes" "Installation" 10847) ("c:/Users/George/.emacs.d/elpa/modus-themes-2.7.1/modus-themes" "Overview" 7828) ("c:/Users/George/.emacs.d/elpa/modus-themes-2.7.1/modus-themes" "Top" 7745) ("c:/Users/George/.emacs.d/elpa/modus-themes-2.7.1/modus-themes" "*TOC*" 96) ("c:/Users/George/.emacs.d/elpa/modus-themes-2.7.1/modus-themes" "Top" 920) ("dir" "Top" 973) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Top" 872) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Emacs 28.1" 27208) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Emacs 27.1" 21281) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Emacs 26.1" 16642) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Emacs 25.1" 11515) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Emacs 24.5" 10299) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Emacs 24.4" 9807) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Support" 6587) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Intentions" 4976) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Additional libraries" 4518) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Usage" 3762) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Overview" 2540) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Introduction" 2390) ("c:/Users/George/.emacs.d/elpa/compat-28.1.2.0/compat" "Top" 1880) ("dir" "Top" 1526) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Top" 861) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Top" 861) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Using With-Editor commands" 9583) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Using With-Editor as a library" 12716) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Debugging" 12843) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Using With-Editor as a library" 11420) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Function and Command Index" 13699) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Debugging" 12843) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Using With-Editor as a library" 11420) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Function and Command Index" 13699) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Debugging" 12843) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Using With-Editor as a library" 11420) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Function and Command Index" 13699) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Debugging" 12843) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Using With-Editor as a library" 11420) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Function and Command Index" 13699) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Debugging" 12843) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Using With-Editor as a library" 11420) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Function and Command Index" 13699) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Debugging" 12843) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Using With-Editor as a library" 10865) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Using With-Editor commands" 9514) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Configuring With-Editor" 7132) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Using the With-Editor package" 2676) ("c:/Users/George/.emacs.d/elpa/with-editor-20220608.1017/with-editor" "Top" 2429) ("dir" "Top" 1460) ("c:/Program Files/Emacs/emacs-28.2/share/info/efaq" "Top" 1413) ("c:/Program Files/Emacs/emacs-28.2/share/info/efaq" "Concept index" 160994) ("c:/Program Files/Emacs/emacs-28.2/share/info/efaq" "Top" 3156) ("dir" "Top" 6543))))
-  '((tab-width . 8) (buffer-display-time 25410 30906 418461 0) (buffer-file-coding-system . utf-8-dos) (case-fold-search . t))
-  '((mark-ring (1 1 1 1 1 1 1 1 1 1 1 1 1 1))))
 
