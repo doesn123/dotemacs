@@ -1,9 +1,10 @@
- #+TITLE: George's Emacs Configurations
- #+AUTHOR: George Hadow
- #+STARTUP: overview
+#+TITLE: George's Emacs Configurations
+#+AUTHOR: George Hadow
+#+STARTUP: overview
 * Setup
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (setq initial-scratch-message "")
   (setq desktop-path '("~/")) 
   (desktop-save-mode 1)
   (global-set-key (kbd "C-s") (lambda () (interactive) (swiper)))
@@ -14,8 +15,10 @@
   (smooth-scrolling-mode t)
   (setq inhibit-startup-screen t)
   (menu-bar-mode -1)
-  
-(setq custom-file null-device)
+  (setq save-abbrevs 'silently)
+  (put 'narrow-to-region 'disabled nil)
+  (set-face-attribute 'default nil :height 170)
+  (setq custom-file null-device)
 #+end_src
 ** Garbage collection
 #+begin_src emacs-lisp
@@ -37,17 +40,24 @@
 #+end_src
 * Package loading
 #+begin_src emacs-lisp
+** Emacs from Scratch
+    ;; Initialize package sources
   (require 'package)
-  (setq package-enable-at-startup nil)
-  (add-to-list 'package-archives
-	       '(("melpa" . "https://melpa.org/packages/")
-		 ("org" . "https://orgmode.org/elpa/")
-		 ("elpa" . "https://elpa.gnu.org/packages/")))
+
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			   ("org" . "https://orgmode.org/elpa/")
+			   ("elpa" . "https://elpa.gnu.org/packages/")))
+
   (package-initialize)
-  ;; Bootstrap `use-package'
+  (unless package-archive-contents
+    (package-refresh-contents))
+
+    ;; Initialize use-package on non-Linux platforms
   (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
     (package-install 'use-package))
+
+  (require 'use-package)
+  (setq use-package-always-ensure t)
 #+end_src
 * Theme and fonts
 #+begin_src emacs-lisp
@@ -65,37 +75,63 @@
 ;; (defun fontify-frame (frame)
 ;; (set-frame-parameter frame 'font "Consolas-19"))
 #+end_src
-* Xah Lee
+* XFK
   #+begin_src emacs-lisp
-  (add-to-list 'load-path "~/.emacs.d/lisp/")
-  (require 'xah-fly-keys)
-  (xah-fly-keys-set-layout "colemak-dhm")
-  (xah-fly-keys 1)
-  (autoload 'xah-elisp-mode "xah-elisp-mode" "xah emacs lisp major mode." t)
+	    (add-to-list 'load-path "~/.emacs.d/lisp/")
+	    (require 'xah-fly-keys)
+	    (xah-fly-keys-set-layout "colemak-dhm")
+	    (xah-fly-keys 1)
+	    (autoload 'xah-elisp-mode "xah-elisp-mode" "xah emacs lisp major mode." t)
 
-  ;; (define-key xah-fly-command-map (kbd ",") 'xah-backward-left-bracket)
-  (define-key xah-fly-command-map (kbd "C-e") 'eval-last-sexp)
-  (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-  #+end_src
+	    ;; (define-key xah-fly-command-map (kbd ",") 'xah-backward-left-bracket)
+    (define-key xah-fly-command-map (kbd "C-e") 'eval-last-sexp)
+    (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+
+;    (define-key xah-fly-command-map (kbd "4") 'split-window-horizontally)
+;    (define-key xah-fly-leader-key-map (kbd "4") 'split-window-vertically)
+
+		  (add-hook 'find-file-hook
+			    (lambda ()
+			      (when (string= (file-name-extension buffer-file-name) "el")
+				(xah-elisp-mode +1))))
+
+		  (add-hook 'find-file-hook
+			    (lambda ()
+			      (when (string= (file-name-extension buffer-file-name) "el")
+				(xah-elisp-mode +1))))
+    (global-set-key (kbd "C-d") 'pop-global-mark)
+    (define-key xah-fly-leader-key-map (kbd "z") 'jump-to-register)
+    (global-set-key (kbd "C-d") 'pop-global-mark)
+    #+end_src
 * Packages
 #+begin_src emacs-lisp
+
+  (use-package simple-httpd
+    :ensure t)
+
+	     (dolist (mode '(eshell-mode-hook
+			     fundamental-mode-hook))
+	       (add-hook mode (lambda () (olivetti-mode))))
+
+  (vertico-mode 1)
+
   (use-package orderless
-    :ensure t
-    :custom
-    (completion-styles '(orderless basic))
-    (completion-category-overrides '((file (styles basic partial-completion)))))
+       :ensure t
+       :custom
+       (completion-styles '(orderless basic))
+       (completion-category-overrides '((file (styles basic partial-completion)))))
 
-  (use-package saveplace
-    :init (save-place-mode))
+     (use-package saveplace
+       :init (save-place-mode))
 
-    (use-package which-key
-    :ensure t
-    :config
-    (which-key-mode))
+       (use-package which-key
+       :ensure t
+       :config
+       (which-key-mode))
 
-    (use-package avy
-      :ensure t
-      :bind ("M-s" . avy-goto-word-0)) 
+       (use-package avy
+	 :ensure t
+	 :bind ("M-s" . avy-goto-word-0))
 #+end_src 
 * Dired
 #+begin_src emacs-lisp
@@ -117,33 +153,13 @@
   (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
   (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))
 #+end_src
-* Sort out
+* Misc keybindings
 #+begin_src emacs-lisp
-
-    (setq org-catch-invisible-edits 'smart)
-
-	  (dolist (mode '(eshell-mode-hook
-			  fundamental-mode-hook))
-	    (add-hook mode (lambda () (olivetti-mode))))
-
-	  (vertico-mode 1)
-	  (global-set-key (kbd "<f1>") 'check-parens)
-	  (setq save-abbrevs 'silently)
-	  (put 'narrow-to-region 'disabled nil)
-	  (set-face-attribute 'default nil :height 170)
-
-	  (add-hook 'find-file-hook
-		    (lambda ()
-		      (when (string= (file-name-extension buffer-file-name) "el")
-			(xah-elisp-mode +1))))
-
-	  (add-hook 'find-file-hook
-		    (lambda ()
-		      (when (string= (file-name-extension buffer-file-name) "el")
-			(xah-elisp-mode +1))))
-	  (global-set-key (kbd "C-<down>") 'scroll-other-window) 
-	  (global-set-key (kbd "C-<up>") 'scroll-other-window-down)
-	  (define-key minibuffer-local-map (kbd "M-o") 'ivy-dispatching-done)
+  (global-set-key (kbd "<f1>") 'check-parens)
+  (global-set-key (kbd "C-<down>") 'org-next-visible-heading)
+  (global-set-key (kbd "C-<up>") 'org-previous-visible-heading)
+  (define-key minibuffer-local-map (kbd "M-o") 'ivy-dispatching-done)
+  (global-set-key (kbd "C-x C-x") 'eval-last-sexp)
 #+end_src
 ** to Delete?
 :CustomCode:
@@ -167,7 +183,39 @@
 	   ;; If there is more than one, they won't work right.
 	   ;; )  
 :END:
+* Registers
+  (set-register ?z (cons 'file "c:/Users/George/.emacs.d/my-org-config.org"))
+  (set-register ?n (cons 'file "c:/Users/George/OrgFiles/notes.org"))
 * Org-mode
+** Org-capture
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c c") 'org-capture)
+
+  (setq org-capture-templates
+	'(("q" "Emacs question" entry
+	   (file+headline "notes.org" "Emacs questions")
+	   "* text %?") 
+
+	   ;; ("t" "Todooo" entry (file+headline "~/OrgFiles/notes.org" "tototo")
+	 ;; "* TODO %?\n  %i\n  %a")
+	("j" "Journal" entry (file+datetree "~/OrgFiles/notes.org" "Journal")
+	 "* %?\nEntered on %U\n  %i\n  %a")
+
+		  ("f" "Promt for imput" entry
+	   (file+headline "demo.org" "our f input")
+	   "* %^{aa|bb|cc} %?")
+		  
+	  ("p" "Promt for imput" entry
+	   (file+headline "demo.org" "our f input")
+	   "* %^{Please write here} %?")
+	  ("o" "options for prompt" entry
+	   (file+headline "demo.org" "our f heading")
+	   "* %^{Select option|ONE|TWO|THREE} %?")))
+
+  ;; M-S-LEFT (org-table-delete-column)
+#+end_src
+
+
 #+begin_src emacs-lisp
   (define-key org-mode-map (kbd "C-c C-l") 'org-insert-link)
   (setq org-directory "~/OrgFiles")
@@ -198,29 +246,24 @@
   (global-set-key (kbd "C-c a") 'org-agenda)
   (setq org-agenda-files
 	'("~/Projects/Code/OrgFiles/Tasks.org"
-	  "~/notes.org"
+	  "~/OrgFiles/notes.org"
 	  "~/Projects/Code/OrgFiles/Birthdays.org"))
   (setq-default org-catch-invisible-edits 'error) 
 #+end_src
 ** Org-other
 #+begin_src emacs-lisp
-(setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")("*" . "-")))
+      (setq org-catch-invisible-edits 'smart)
+
+    (setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")("*" . "-")))
+
+  (defun check-cell ()
+    (interactive)
+    (let ((cell (org-table-get-field)))
+      (if (string-match "[[:graph:]]" cell)
+	  (org-table-blank-field)
+	(insert "X")
+	(org-table-align))
+      (org-table-next-row)))
+
+  (define-key org-mode-map (kbd "M-n") 'check-cell)
 #+end_src
-** Org-capture
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-c c") 'org-capture)
-
-  (setq org-capture-templates
-	'(("q" "Emacs question" entry
-	   (file+headline "notes.org" "our f heading")
-	   "* DEMO text %?")
-	  ("p" "Promt for imput" entry
-	   (file+headline "demo.org" "our f input")
-	   "* %^{Please write here} %?")
-	  ("o" "options for prompt" entry
-	   (file+headline "demo.org" "our f heading")
-	   "* %^{Select option|ONE|TWO|THREE} %?")))
-
-  ;; M-S-LEFT (org-table-delete-column)
-#+end_src
-

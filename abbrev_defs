@@ -107,7 +107,7 @@
     ("current-word" "(current-word)" xah-elisp--ahf :count 0)
     ("custom-autoload" "(custom-autoload ▮ SYMBOL LOAD &optional NOSET)" xah-elisp--ahf :count 0)
     ("cw" "current-word" xah-elisp--ahf :count 0)
-    ("d" "defun" xah-elisp--ahf :count 1)
+    ("d" "defun" xah-elisp--ahf :count 0)
     ("daer" "delete-and-extract-region" xah-elisp--ahf :count 0)
     ("dc" "delete-char" xah-elisp--ahf :count 0)
     ("dd" "delete-directory" xah-elisp--ahf :count 0)

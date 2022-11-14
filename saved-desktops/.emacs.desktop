@@ -1,0 +1,79 @@
+;; -*- mode: emacs-lisp; lexical-binding:t; coding: utf-8-emacs; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Sun Oct 16 23:48:31 2022
+;; Desktop file format version 208
+;; Emacs version 28.2
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (25420 31791 974456 0) (desktop . "208") "George@G-LAPTOP" nil nil ((((minibuffer . t) (undecorated) (skip-taskbar) (font . "-outline-Courier New-normal-normal-normal-mono-23-*-*-*-c-*-iso8859-1") (border-width . 0) (internal-border-width . 0) (child-frame-border-width) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#ffffff") (background-color . "#000000") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 8) (right-fringe . 8) (no-focus-on-map) (no-accept-focus) (no-special-glyphs) (alpha) (menu-bar-lines . 0) (tab-bar-lines . 0) (height . 29) (tool-bar-lines . 0) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 17) (scroll-bar-height . 17) (fullscreen . maximized) (z-group) (visibility . t) (display-type . color) (background-mode . dark) (cursor-color . "#ffffff") (environment) (last-focus-update . t) (frameset--id . "EB06-A249-261E-F6DA") (frameset--mini t . t) (width . 96) (modeline . t) (unsplittable) (left + -8) (top + -8) (icon-name) (display . "w32") (explicit-name) (tool-bar-position . top)) ((min-height . 4) (min-width . 10) (min-height-ignore . 3) (min-width-ignore . 4) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 100) (min-pixel-width . 140) (min-pixel-height-ignore . 75) (min-pixel-width-ignore . 56) (min-pixel-height-safe . 25) (min-pixel-width-safe . 28)) leaf (pixel-width . 1366) (pixel-height . 720) (total-width . 98) (total-height . 28) (normal-height . 1.0) (normal-width . 1.0) (buffer "Emacs" (selected . t) (hscroll . 0) (fringes 8 8 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 287) (start . 1)) (prev-buffers ("*scratch*" 1 117) ("my-org-config.org" 5537 6098) ("notes.org" 1 2727) ("*Bookmark List*" 1 1))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("c:/Users/George/.emacs.d/saved-desktops/"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 208
+  nil
+  "Emacs"
+  'dired-mode
+  '(gcmh-mode xah-fly-keys which-key-mode override-global-mode)
+  287
+  '(nil nil)
+  t
+  '("c:/Program Files/Emacs/")
+  '((buffer-display-time 25420 31712 644510 0))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "c:/Users/George/.emacs.d/my-org-config.org"
+  "my-org-config.org"
+  'org-mode
+  '(gcmh-mode xah-fly-keys which-key-mode override-global-mode)
+  6098
+  '(5753 nil)
+  nil
+  nil
+  '((buffer-display-time 25420 11409 958457 0) (buffer-file-coding-system . undecided-dos) (truncate-lines . t))
+  '((mark-ring (5860 5538 6876 7268 7268 2876 2876 2876 2788 2876 2876 2876 41 5510 5536 5848))))
+
+(desktop-create-buffer 208
+  "c:/Users/George/OrgFiles/notes.org"
+  "notes.org"
+  'org-mode
+  '(gcmh-mode xah-fly-keys which-key-mode override-global-mode)
+  7756
+  '(7562 nil)
+  nil
+  nil
+  '((buffer-display-time 25419 64540 387992 0) (buffer-file-coding-system . utf-8-dos) (truncate-lines . t))
+  '((mark-ring (1 4463))))
+
+(desktop-create-buffer 208
+  "c:/Users/George/Emacs questions.org"
+  "Emacs questions.org"
+  'org-mode
+  '(gcmh-mode xah-fly-keys which-key-mode override-global-mode)
+  1939
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time) (buffer-file-coding-system . undecided-dos) (truncate-lines . t))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "c:/Users/George/OrgFiles/demo.org"
+  "demo.org"
+  'org-mode
+  '(gcmh-mode xah-fly-keys which-key-mode override-global-mode)
+  31
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time) (buffer-file-coding-system . undecided-dos) (truncate-lines . t))
+  '((mark-ring nil)))
+

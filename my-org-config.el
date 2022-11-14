@@ -1,15 +1,18 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-  (setq desktop-path '("~/")) 
-  (desktop-save-mode 1)
-  (global-set-key (kbd "C-s") (lambda () (interactive) (swiper)))
-  (find-file "~/.emacs.d/my-org-config.org")
-  (fset 'yes-or-no-p 'y-or-n-p)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (smooth-scrolling-mode t)
-  (setq inhibit-startup-screen t)
-  (menu-bar-mode -1)
-  
+(setq initial-scratch-message "")
+(setq desktop-path '("~/")) 
+(desktop-save-mode 1)
+(global-set-key (kbd "C-s") (lambda () (interactive) (swiper)))
+(find-file "~/.emacs.d/my-org-config.org")
+(fset 'yes-or-no-p 'y-or-n-p)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(smooth-scrolling-mode t)
+(setq inhibit-startup-screen t)
+(menu-bar-mode -1)
+(setq save-abbrevs 'silently)
+(put 'narrow-to-region 'disabled nil)
+(set-face-attribute 'default nil :height 170)
 (setq custom-file null-device)
 
 (use-package gcmh
@@ -55,14 +58,54 @@
 ;; (set-frame-parameter frame 'font "Consolas-19"))
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-(require 'xah-fly-keys)
-(xah-fly-keys-set-layout "colemak-dhm")
-(xah-fly-keys 1)
-(autoload 'xah-elisp-mode "xah-elisp-mode" "xah emacs lisp major mode." t)
+	    (require 'xah-fly-keys)
+	    (xah-fly-keys-set-layout "colemak-dhm")
+	    (xah-fly-keys 1)
+	    (autoload 'xah-elisp-mode "xah-elisp-mode" "xah emacs lisp major mode." t)
 
-;; (define-key xah-fly-command-map (kbd ",") 'xah-backward-left-bracket)
-(define-key xah-fly-command-map (kbd "C-e") 'eval-last-sexp)
-(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+	    ;; (define-key xah-fly-command-map (kbd ",") 'xah-backward-left-bracket)
+    (define-key xah-fly-command-map (kbd "C-e") 'eval-last-sexp)
+    (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+
+;    (define-key xah-fly-command-map (kbd "4") 'split-window-horizontally)
+;    (define-key xah-fly-leader-key-map (kbd "4") 'split-window-vertically)
+
+		  (add-hook 'find-file-hook
+			    (lambda ()
+			      (when (string= (file-name-extension buffer-file-name) "el")
+				(xah-elisp-mode +1))))
+
+		  (add-hook 'find-file-hook
+			    (lambda ()
+			      (when (string= (file-name-extension buffer-file-name) "el")
+				(xah-elisp-mode +1))))
+    (global-set-key (kbd "C-d") 'pop-global-mark)
+    (define-key xah-fly-leader-key-map (kbd "z") 'jump-to-register)
+    (global-set-key (kbd "C-d") 'pop-global-mark)
+
+(dolist (mode '(eshell-mode-hook
+			   fundamental-mode-hook))
+	     (add-hook mode (lambda () (olivetti-mode))))
+
+(vertico-mode 1)
+
+(use-package orderless
+     :ensure t
+     :custom
+     (completion-styles '(orderless basic))
+     (completion-category-overrides '((file (styles basic partial-completion)))))
+
+   (use-package saveplace
+     :init (save-place-mode))
+
+     (use-package which-key
+     :ensure t
+     :config
+     (which-key-mode))
+
+     (use-package avy
+       :ensure t
+       :bind ("M-s" . avy-goto-word-0))
 
 (define-key dired-mode-map (kbd "DEL") 'dired-up-directory)
 (setq dired-dwim-target t)
@@ -82,55 +125,36 @@
 (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
 (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))
 
-(dolist (mode '(eshell-mode-hook
-		    fundamental-mode-hook))
-      (add-hook mode (lambda () (olivetti-mode))))
+(global-set-key (kbd "<f1>") 'check-parens)
+(global-set-key (kbd "C-<down>") 'scroll-other-window) 
+(global-set-key (kbd "C-<up>") 'scroll-other-window-down)
+(define-key minibuffer-local-map (kbd "M-o") 'ivy-dispatching-done)
+(global-set-key (kbd "C-x C-x") 'eval-last-sexp)
 
-    (vertico-mode 1)
+(global-set-key (kbd "C-c c") 'org-capture)
 
-    (global-set-key (kbd "<f1>") 'check-parens)
+(setq org-capture-templates
+      '(("q" "Emacs question" entry
+	 (file+headline "notes.org" "Emacs questions")
+	 "* text %?") 
 
+	 ;; ("t" "Todooo" entry (file+headline "~/OrgFiles/notes.org" "tototo")
+       ;; "* TODO %?\n  %i\n  %a")
+      ("j" "Journal" entry (file+datetree "~/OrgFiles/notes.org" "Journal")
+       "* %?\nEntered on %U\n  %i\n  %a")
 
-    (setq save-abbrevs 'silently)
+		("f" "Promt for imput" entry
+	 (file+headline "demo.org" "our f input")
+	 "* %^{aa|bb|cc} %?")
 
-    ;; (custom-set-variables
-     ;; custom-set-variables was added by Custom.
-     ;; If you edit it by hand, you could mess it up, so be careful.
-     ;; Your init file should contain only one such instance.
-     ;; If there is more than one, they won't work right.
-     ;; '(custom-safe-themes
-       ;; '("183dfa34e360f5bc2ee4a6b3f4236e6664f4cfce40de1d43c984e0e8fc5b51ae"
-;; default))
+	("p" "Promt for imput" entry
+	 (file+headline "demo.org" "our f input")
+	 "* %^{Please write here} %?")
+	("o" "options for prompt" entry
+	 (file+headline "demo.org" "our f heading")
+	 "* %^{Select option|ONE|TWO|THREE} %?")))
 
-;; '(package-selected-packages
-       ;; '(avy modus-themes xclip which-key vertico-posframe use-package
-;; try smooth-scrolling rainbow-delimiters orderless olivetti marginalia
-;; magit key-chord helpful gcmh consult)))
-    ;; (custom-set-faces
-     ;; custom-set-faces was added by Custom.
-     ;; If you edit it by hand, you could mess it up, so be careful.
-     ;; Your init file should contain only one such instance.
-     ;; If there is more than one, they won't work right.
-     ;; )
-
-
-    (put 'narrow-to-region 'disabled nil)
-
-    (set-face-attribute 'default nil :height 170)
-
-    (add-hook 'find-file-hook
-	      (lambda ()
-		(when (string= (file-name-extension buffer-file-name) "el")
-		  (xah-elisp-mode +1))))
-
-    (add-hook 'find-file-hook
-	      (lambda ()
-		(when (string= (file-name-extension buffer-file-name) "el")
-		  (xah-elisp-mode +1))))
-    (global-set-key (kbd "C-<down>") 'scroll-other-window) 
-    (global-set-key (kbd "C-<up>") 'scroll-other-window-down)
-
-    (define-key minibuffer-local-map (kbd "M-o") 'ivy-dispatching-done)
+;; M-S-LEFT (org-table-delete-column)
 
 (define-key org-mode-map (kbd "C-c C-l") 'org-insert-link)
 (setq org-directory "~/OrgFiles")
@@ -159,23 +183,21 @@
 (global-set-key (kbd "C-c a") 'org-agenda)
 (setq org-agenda-files
       '("~/Projects/Code/OrgFiles/Tasks.org"
-	"~/notes.org"
+	"~/OrgFiles/notes.org"
 	"~/Projects/Code/OrgFiles/Birthdays.org"))
 (setq-default org-catch-invisible-edits 'error)
 
+(setq org-catch-invisible-edits 'smart)
 
+  (setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")("*" . "-")))
 
-(global-set-key (kbd "C-c c") 'org-capture)
+(defun check-cell ()
+  (interactive)
+  (let ((cell (org-table-get-field)))
+    (if (string-match "[[:graph:]]" cell)
+	(org-table-blank-field)
+      (insert "X")
+      (org-table-align))
+    (org-table-next-row)))
 
-(setq org-capture-templates
-      '(("q" "Emacs question" entry
-	 (file+headline "notes.org" "our f heading")
-	 "* DEMO text %?")
-	("p" "Promt for imput" entry
-	 (file+headline "demo.org" "our f input")
-	 "* %^{Please write here} %?")
-	("o" "options for prompt" entry
-	 (file+headline "demo.org" "our f heading")
-	 "* %^{Select option|ONE|TWO|THREE} %?")))
-
-;; M-S-LEFT (org-table-delete-column)
+(define-key org-mode-map (kbd "M-n") 'check-cell)

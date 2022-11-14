@@ -1,12 +1,22 @@
-;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored"
- (filename . "~/OrgFiles/demo.org")
- (front-context-string)
- (rear-context-string . " \n* our f input\n")
- (position . 45))
+(("A Course In Miracles"
+ (filename . "g:/A Course In Miracles/")
+ (front-context-string . "A Course in Mira")
+ (rear-context-string . "608 2022-03-01  ")
+ (position . 234))
+("org-capture-last-stored-marker"
+ (filename . "~/OrgFiles/notes.org")
+ (front-context-string . "** DEMO text \n* ")
+ (rear-context-string . "dalia tazartes\n\n")
+ (position . 2728))
+("org-capture-last-stored"
+ (filename . "~/OrgFiles/notes.org")
+ (front-context-string . "** DEMO text reg")
+ (rear-context-string . "MO text tstnest\n")
+ (position . 6417))
 ("my-org-config.org"
  (filename . "~/.emacs.d/my-org-config.org")
  (front-context-string . ") 'xah-backward-")
@@ -38,8 +48,8 @@
  (rear-context-string . "n I do with this")
  (position . 5501))
 ("org-refile-last-stored"
- (filename . "~/playOrg.org")
- (front-context-string)
- (rear-context-string . "dkdsa\ndsfljkdfj\n")
- (position . 99))
+ (filename . "~/OrgFiles/notes.org")
+ (front-context-string . "** DEMO text \n* ")
+ (rear-context-string . "dalia tazartes\n\n")
+ (position . 2728))
 )

@@ -1,6 +1,12 @@
-3685
-50
 Emacs tutorial.  See end for copying conditions.
+
+ NOTICE: The main purpose of the Emacs tutorial is to teach you
+ the most important standard Emacs commands (key bindings).
+ However, your Emacs has been customized by changing some of
+ these basic editing commands, so it doesn't correspond to the
+ tutorial.  We have inserted colored notices where the altered
+ commands have been introduced. [More]
+
 
 Emacs commands generally involve the CONTROL key (often labeled CTRL)
 or the META key (usually labeled ALT).  Rather than writing that
@@ -8,6 +14,7 @@ in full each time, we'll use the following abbreviations:
 
  C-<chr>  means hold the CONTROL key while typing the character <chr>
 	  Thus, C-f would be: hold the CONTROL key and type f.
+** C-f has been rebound, but you can use M-x forward-char instead [More] **
  M-<chr>  means hold the META or ALT key down while typing <chr>.
 	  If there is no META or ALT key, instead press and release the
 	  ESC key and then type <chr>.  We write <ESC> for the ESC key.
@@ -23,6 +30,7 @@ try using a command.  For instance:
 
 
 >> Now type C-v (View next screen) to scroll down in the tutorial.
+** C-v has been rebound, but you can use <next> instead [More] **
 	(go ahead, do it by holding down the CONTROL key while typing v).
 	From now on, please do this whenever you reach the end of the screen.
 
@@ -38,6 +46,7 @@ that is called "editing" and that's what Emacs is for.
 The first thing that you need to know is how to move around from place
 to place in the text.  You already know how to move forward one screen,
 with C-v.  To move backwards one screen, type M-v (hold down the META key
+** M-v has been rebound, but you can use <prior> instead [More] **
 and type v, or type <ESC>v if you do not have a META or ALT key).
 
 >> Try typing M-v and then C-v, a few times.
@@ -52,6 +61,7 @@ The following commands are useful for viewing screenfuls:
 	C-v	Move forward one screenful
 	M-v	Move backward one screenful
 	C-l	Clear screen and redisplay all the text,
+** C-l has been rebound, but you can use <f7> ; instead [More] **
 		 moving the text around the cursor
 		 to the center of the screen.
 		 (That's CONTROL-L, not CONTROL-1.)
@@ -75,6 +85,9 @@ move to a specific place within the text on the screen?
 There are several ways you can do this.  You can use the arrow keys,
 but it's more efficient to keep your hands in the standard position
 and use the commands C-p, C-b, C-f, and C-n.  These characters
+** C-p has been rebound, but you can use <up> instead [More] **
+** C-b has been rebound, but you can use M-x backward-char instead [More] **
+** C-n has been rebound, but you can use <down> instead [More] **
 are equivalent to the four arrow keys, like this:
 
 			  Previous line, C-p
@@ -122,6 +135,8 @@ without moving it off the screen.
 
 If moving by characters is too slow, you can move by words.  M-f
 (META-f) moves forward a word and M-b moves back a word.
+** M-f has been rebound, but you can use ESC <right> instead [More] **
+** M-b has been rebound, but you can use ESC <left> instead [More] **
 
 >> Type a few M-f's and M-b's.
 
@@ -140,7 +155,11 @@ paragraphs), while Control characters operate on basic units that are
 independent of what you are editing (characters, lines, etc).
 
 This parallel applies between lines and sentences: C-a and C-e move to
+** C-a has been rebound, but you can use M-x move-beginning-of-line instead [More] **
+** C-e has been rebound, but you can use <end> instead [More] **
 the beginning or end of a line, and M-a and M-e move to the beginning
+** M-a has been rebound, but you can use M-x backward-sentence instead [More] **
+** M-e has been rebound, but you can use M-x forward-sentence instead [More] **
 or end of a sentence.
 
 >> Try a couple of C-a's, and then a couple of C-e's.
@@ -176,7 +195,9 @@ word and sentence moving commands:
    These are the most often used commands.
 
 Two other important cursor motion commands are M-< (META Less-than),
+** M-< has been rebound, but you can use <begin> instead [More] **
 which moves to the beginning of the whole text, and M-> (META
+** M-> has been rebound, but you can use C-<end> instead [More] **
 Greater-than), which moves to the end of the whole text.
 
 On most terminals, the "<" is above the comma, so you must use the
@@ -366,12 +387,16 @@ as well.  Here is a summary of the delete operations:
 
 	<DEL>        Delete the character just before the cursor
 	C-d   	     Delete the next character after the cursor
+** C-d has been rebound, but you can use M-x delete-char instead [More] **
 
 	M-<DEL>      Kill the word immediately before the cursor
 	M-d	     Kill the next word after the cursor
+** M-d has been rebound, but you can use C-<delete> instead [More] **
 
 	C-k	     Kill from the cursor position to end of line
+** C-k has been rebound, but you can use <deleteline> instead [More] **
 	M-k	     Kill to the end of the current sentence
+** M-k has been rebound, but you can use M-x kill-sentence instead [More] **
 
 Notice that <DEL> and C-d vs M-<DEL> and M-d extend the parallel
 started by C-f and M-f (well, <DEL> is not really a control character,
@@ -383,6 +408,7 @@ one end of that part, and type C-<SPC>.  (<SPC> is the Space bar.)
 Next, move the cursor to the other end of the text you intend to kill.
 As you do this, Emacs highlights the text between the cursor and the
 position where you typed C-<SPC>.  Finally, type C-w.  This kills all
+** C-w has been rebound, but you can use S-<delete> instead [More] **
 the text between the two positions.
 
 >> Move the cursor to the Y at the start of the previous paragraph.
@@ -654,6 +680,7 @@ using a text terminal which can only show one application at a time,
 you need to "suspend" Emacs to move to any other application.
 
 C-z is the command to exit Emacs *temporarily*--so that you can go
+** C-z has been rebound, but you can use C-x C-z instead [More] **
 back to the same Emacs session afterward.  When Emacs is running on a
 text terminal, C-z "suspends" Emacs; that is, it returns to the shell
 but does not destroy the Emacs job.  In the most common shells, you
@@ -804,6 +831,7 @@ When the mode is on, you can turn it off again by doing
 M-x auto-fill-mode <Return>.  If the mode is off, this command turns
 it on, and if the mode is on, this command turns it off.  We say that
 the command "toggles the mode".
+asdf'(34 4(2 4)(ensure-list "foo")
 
 >> Type M-x auto-fill-mode <Return> now.  Then insert a line of "asdf "
    over again until you see it divide into two lines.  You must put in
@@ -821,6 +849,7 @@ as a numeric argument.
 If you make changes in the middle of a paragraph, Auto Fill mode
 does not re-fill it for you.
 To re-fill the paragraph, type M-q (META-q) with the cursor inside
+** M-q has been rebound, but you can use M-x fill-paragraph instead [More] **
 that paragraph.
 
 >> Move the cursor into the previous paragraph and type M-q.
@@ -838,6 +867,7 @@ The Emacs search command is "incremental".  This means that the
 search happens while you type in the string to search for.
 
 The command to initiate a search is C-s for forward search, and C-r
+** C-s has been rebound, but you can use the ‘Edit’ menu instead [More] **
 for reverse search.  BUT WAIT!  Don't try them now.
 
 When you type C-s you'll notice that the string "I-search" appears as

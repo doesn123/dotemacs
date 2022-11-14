@@ -1,23 +1,72 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-(("c:/Users/George/Projects/Code/OrgFiles/Tasks.org" . 645)
- ("c:/Users/George/.emacs.d/my-org-config.org" . 1584)
- ("c:/Users/George/.emacs.d/bookmarks" . 251)
- ("c:/Users/George/OrgFiles/notes.org" . 2727)
- ("c:/Users/George/OrgFiles/"
-  (dired-filename . "c:/Users/George/OrgFiles/."))
- ("c:/Users/George/"
-  (dired-filename . "c:/Users/George/notes.org_archive~"))
+(("c:/Users/George/my-org-site/public/"
+  (dired-filename . "c:/Users/George/my-org-site/public/index.html"))
  ("c:/Users/George/.emacs.d/"
   (dired-filename . "c:/Users/George/.emacs.d/my-org-config.el"))
- ("c:/Users/George/Emacs questions.org" . 834)
- ("c:/Users/George/notes.org_archive" . 594)
- ("c:/Users/George/Projects/Code/OrgFiles/Birthdays.org" . 72)
- ("c:/Users/George/elispFun.el" . 2345)
- ("c:/Users/George/randomtxt.txt" . 454)
- ("c:/Users/George/.emacs.d/.george.org.~undo-tree~" . 23)
- ("c:/Users/George/.emacs.d/nn.org" . 42)
+ ("c:/Users/George/.emacs.d/myconfig.org" . 227)
+ ("c:/Users/George/my-org-site/content/index.org" . 56)
+ ("c:/Users/George/my-org-site/content/"
+  (dired-filename . "c:/Users/George/my-org-site/content/index.org"))
+ ("c:/Users/George/my-org-site/"
+  (dired-filename . "c:/Users/George/my-org-site/content"))
+ ("c:/Users/George/"
+  (dired-filename . "c:/Users/George/.emacs.d"))
+ ("c:/Users/George/my-org-site/public/index.html" . 6945)
+ ("c:/Users/George/.emacs.d/my-org-config.org" . 1541)
+ ("c:/Users/George/.emacs.d/elpa/simple-httpd-20191103.1446/simple-httpd-autoloads.el" . 1007)
+ ("c:/Users/George/P/PP/"
+  (dired-filename . "c:/Users/George/P/PP/Amateur Anal Babe Big Dick Blowjob Brunette Green Eyes Latina Petite Small Tits [infantilephysicalelectriceel].mp4"))
+ ("c:/Users/George/P/"
+  (dired-filename . "c:/Users/George/P/PP"))
  ("c:/Users/"
   (dired-filename . "c:/Users/George"))
+ ("c:/Users/George/.emacs.d/.git/hooks/" . 4723)
+ ("c:/Users/George/.emacs.d/elpa/olivetti-20220330.635/olivetti.el" . 6577)
+ ("c:/Users/George/Projects/Code/OrgFiles/Birthdays.org" . 42)
+ ("c:/Users/George/OrgFiles/notes.org" . 290)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/org/org-agenda.el" . 341647)
+ ("c:/Users/George/elispFun.el" . 3282)
+ ("c:/Users/George/OrgFiles/"
+  (dired-filename . "c:/Users/George/OrgFiles/packing.org"))
+ ("c:/"
+  (dired-filename . "c:/Users"))
+ ("g:/A Course In Miracles/"
+  (dired-filename . "g:/A Course In Miracles/A Course in Miracles - Audiobook"))
+ ("g:/A Course In Miracles/My Spiritual Journey.org" . 2649)
+ ("g:/"
+  (dired-filename . "g:/A Course In Miracles"))
+ ("c:/Users/George/OrgFiles/packing.org" . 595)
+ ("c:/Users/George/delmenow/kf/"
+  (dired-filename . "c:/Users/George/delmenow/kf/."))
+ ("c:/Users/George/delmenow/"
+  (dired-filename . "c:/Users/George/delmenow/kf dfdf dfdf.org"))
+ ("c:/Users/George/Desktop/"
+  (dired-filename . "c:/Users/George/Desktop/41zn6JMNdZL.jpg"))
+ ("c:/Users/George/delmenow/bc" . 2)
+ ("e:/AutoHotKey Scripts/" . 624)
+ ("e:/"
+  (dired-filename . "e:/.gitignore"))
+ ("e:/AutoHotKey Scripts/AHK-Studio Backup/"
+  (dired-filename . "e:/AutoHotKey Scripts/AHK-Studio Backup/Ueli SM scriptsadd image.ahk"))
+ ("e:/Directory Opus backups/"
+  (dired-filename . "e:/Directory Opus backups/George - Opus Config - 2022-02-26.ocb"))
+ ("e:/.git/objects/"
+  (dired-filename . "e:/.git/objects/00"))
+ ("e:/.git/"
+  (dired-filename . "e:/.git/objects"))
+ ("e:/Directory Opus backups/George - Opus Config - 2022-02-25.ocb" . 193)
+ ("e:/AutoHotKey Scripts/AHK-Studio Backup/Ueli SM scriptsadd image.ahk" . 457)
+ ("e:/AutoHotKey Scripts/AHK-Studio Backup/Ueli SM scriptsadd html.ahk" . 327)
+ ("c:/Users/George/.emacs.d/tutorial-pos" . 35262)
+ ("c:/Users/George/randomtxt.txt" . 6381)
+ ("c:/Users/George/Emacs questions.org" . 831)
+ ("c:/ProgramData/chocolatey/lib/Emacs/tools/emacs/share/info/"
+  (dired-filename . "c:/ProgramData/chocolatey/lib/Emacs/tools/emacs/share/info/auth.info"))
+ ("c:/Users/George/OrgFiles/demo.org" . 31)
+ ("c:/Program Files/Emacs/"
+  (dired-filename . "c:/Program Files/Emacs/emacs-28.2"))
+ ("c:/Users/George/notes.org_archive" . 594)
+ ("c:/Users/George/.emacs.d/.george.org.~undo-tree~" . 23)
  ("c:/Users/George/.emacs.d/elpa/avy-0.5.0/avy-autoloads.el" . 8208)
  ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/emacs-lisp/package.el" . 69946)
  ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/etc/PROBLEMS" . 5493))

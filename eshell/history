@@ -25,3 +25,11 @@ cd
 build.cmd
 mv build.cmd build.bat
 build.bat
+chmod
+chmod +x buildsite.el .\#build.sh 
+chmod +x buildsite.el .\#build.sh 
+chmod +x buildsite.el .\#build.sh 
+chmod +x build-site.el 
+chmod +x build.sh 
+./build.sh
+ls
