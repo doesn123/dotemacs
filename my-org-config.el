@@ -2,10 +2,10 @@
 (setq initial-scratch-message "")
 (setq desktop-path '("~/")) 
 (desktop-save-mode 1)
-(global-set-key (kbd "C-s") (lambda () (interactive) (swiper)))
+(global-set-key (kbd "C-s") 'swiper)
 (find-file "~/.emacs.d/my-org-config.org")
 (fset 'yes-or-no-p 'y-or-n-p)
-(tool-bar-mode -1)
+(tool-bar-mode -1) ; read to here
 (scroll-bar-mode -1)
 (smooth-scrolling-mode t)
 (setq inhibit-startup-screen t)
@@ -31,18 +31,6 @@
 			    (time-subtract after-init-time before-init-time)))
 		   gcs-done)))
 
-(require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives
-	     '(("melpa" . "https://melpa.org/packages/")
-	       ("org" . "https://orgmode.org/elpa/")
-	       ("elpa" . "https://elpa.gnu.org/packages/")))
-(package-initialize)
-;; Bootstrap `use-package'
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
 (load-theme 'modus-vivendi t)
   (marginalia-mode t)
   (setq ivy-initial-inputs-alist nil)
@@ -63,27 +51,31 @@
 	    (xah-fly-keys 1)
 	    (autoload 'xah-elisp-mode "xah-elisp-mode" "xah emacs lisp major mode." t)
 
-	    ;; (define-key xah-fly-command-map (kbd ",") 'xah-backward-left-bracket)
+	    ;; (define-key xah-fly-command-map (kbd ",") 'xah-backward-left-bracket) 
     (define-key xah-fly-command-map (kbd "C-e") 'eval-last-sexp)
-    (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+    (define-key key-translation-map (kbd "ESC") (kbd "C-g")) 
 
 ;    (define-key xah-fly-command-map (kbd "4") 'split-window-horizontally)
 ;    (define-key xah-fly-leader-key-map (kbd "4") 'split-window-vertically)
 
-		  (add-hook 'find-file-hook
-			    (lambda ()
-			      (when (string= (file-name-extension buffer-file-name) "el")
-				(xah-elisp-mode +1))))
+    ;; 		  (add-hook 'find-file-hook
+    ;; 			    (lambda ()
+    ;; 			      (when (string= (file-name-extension buffer-file-name) "el")
+    ;; 				(xah-elisp-mode +1))))
 
-		  (add-hook 'find-file-hook
-			    (lambda ()
-			      (when (string= (file-name-extension buffer-file-name) "el")
-				(xah-elisp-mode +1))))
-    (global-set-key (kbd "C-d") 'pop-global-mark)
-    (define-key xah-fly-leader-key-map (kbd "z") 'jump-to-register)
-    (global-set-key (kbd "C-d") 'pop-global-mark)
+    ;; 		  (add-hook 'find-file-hook
+    ;; 			    (lambda ()
+    ;; 			      (when (string= (file-name-extension buffer-file-name) "el")
+    ;; 				(xah-elisp-mode +1)))) ;the cause of the messages popupu?
+     (global-set-key (kbd "C-d") 'pop-global-mark)
+(define-key xah-fly-leader-key-map (kbd "z") 'jump-to-register)
+    (define-key xah-fly-leader-key-map (kbd "d") 'xah-shrink-whitespaces)
+(global-set-key (kbd "C-d") 'pop-global-mark)
 
-(dolist (mode '(eshell-mode-hook
+(use-package simple-httpd
+  :ensure t)
+
+	   (dolist (mode '(eshell-mode-hook
 			   fundamental-mode-hook))
 	     (add-hook mode (lambda () (olivetti-mode))))
 
@@ -126,17 +118,25 @@
 (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))
 
 (global-set-key (kbd "<f1>") 'check-parens)
-(global-set-key (kbd "C-<down>") 'scroll-other-window) 
-(global-set-key (kbd "C-<up>") 'scroll-other-window-down)
-(define-key minibuffer-local-map (kbd "M-o") 'ivy-dispatching-done)
-(global-set-key (kbd "C-x C-x") 'eval-last-sexp)
+    (global-set-key (kbd "C-<down>") 'org-next-visible-heading)
+    (global-set-key (kbd "C-<up>") 'org-previous-visible-heading)
+    (define-key minibuffer-local-map (kbd "M-o") 'ivy-dispatching-done)
+    (add-to-list 'display-buffer-alist
+	       '("*Help*" display-buffer-same-window))
+    (global-set-key (kbd "M-q") 'org-fill-paragraph) ;probs use xfk instead - can use for doc strings
+    (global-set-key (kbd "C-c C-x") 'org-timer-set-timer)
+      (global-set-key (kbd "C-x C-x") 'eval-last-sexp)
+    (global-set-key (kbd "<kp-subtract>") 'org-timer-set-timer)
+    (setq org-timer-default-timer 5)
+(require 'org)
+  (setq org-clock-sound "~/finish.wav")
 
 (global-set-key (kbd "C-c c") 'org-capture)
 
 (setq org-capture-templates
       '(("q" "Emacs question" entry
 	 (file+headline "notes.org" "Emacs questions")
-	 "* text %?") 
+	 "* %?") 
 
 	 ;; ("t" "Todooo" entry (file+headline "~/OrgFiles/notes.org" "tototo")
        ;; "* TODO %?\n  %i\n  %a")

@@ -1,33 +1,63 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-(("c:/Users/George/my-org-site/public/"
-  (dired-filename . "c:/Users/George/my-org-site/public/index.html"))
+(("c:/Users/George/elispFun.el" . 409)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/emacs-lisp/timer.el" . 1364)
+ ("c:/Users/George/.#tt.txt" . 13)
+ ("c:/Users/George/.emacs.d/lisp/xah-fly-keys.el" . 34661)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/play/snake.el" . 10551)
+ ("c:/Users/George/AppData/Local/Temp/snake-scores" . 43)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/play/hanoi.el" . 1571)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/org/org-timer.el" . 170)
+ ("c:/Users/George/Emacs questions.org" . 196)
+ ("c:/Users/George/Projects/Code/OrgFiles/Tasks.org" . 155)
+ ("c:/Users/George/OrgFiles/notes.org" . 100888)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/startup.el" . 12461)
+ ("c:/Users/George/delme.el" . 3)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/files.el" . 21746)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/org/org.el" . 250367)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/calc/calc-yank.el" . 4257)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/calc/calc.el" . 57432)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/loaddefs.el" . 457737)
  ("c:/Users/George/.emacs.d/"
-  (dired-filename . "c:/Users/George/.emacs.d/my-org-config.el"))
+  (dired-filename . "c:/Users/George/.emacs.d/tutorial-pos"))
+ ("c:/Users/George/Projects/Code/OrgFiles/Birthdays.org" . 42)
+ ("c:/Users/George/.emacs.d/tutorial-pos" . 35262)
+ ("c:/Users/George/"
+  (dired-filename . "c:/Users/George/.emacs.d"))
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/dired.el" . 175034)
+ ("c:/Users/George/.emacs.d/lisp/"
+  (dired-filename . "c:/Users/George/.emacs.d/lisp/dired+.el"))
+ ("c:/Users/George/.emacs.d/modus-themes/doc/" . 385)
+ ("c:/Users/George/.emacs.d/modus-themes/"
+  (dired-filename . "c:/Users/George/.emacs.d/modus-themes/doc"))
+ ("c:/Users/George/.emacs.d/recentf" . 5)
+ ("c:/Users/George/.emacs.d/SM to import/" . 3295)
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/info.el" . 172304)
+ ("c:/Users/George/.emacs.d/init.el" . 156)
+ ("c:/Users/George/.emacs.d/modus-themes/CHANGELOG.org" . 116)
+ ("c:/Program Files/Emacs/emacs-28.2/share/info/"
+  (dired-filename . "c:/Program Files/Emacs/emacs-28.2/share/info/mh-e.info"))
+ ("c:/Users/George/randomtxt.txt" . 890)
+ ("c:/Users/George/OrgFiles/"
+  (dired-filename . "c:/Users/George/OrgFiles/packing.org"))
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/"
+  (dired-filename . "c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/abbrev.el"))
+ ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/"
+  (dired-filename . "c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp"))
+ ("c:/Users/George/my-org-site/public/"
+  (dired-filename . "c:/Users/George/my-org-site/public/index.html"))
  ("c:/Users/George/.emacs.d/myconfig.org" . 227)
  ("c:/Users/George/my-org-site/content/index.org" . 56)
  ("c:/Users/George/my-org-site/content/"
   (dired-filename . "c:/Users/George/my-org-site/content/index.org"))
  ("c:/Users/George/my-org-site/"
   (dired-filename . "c:/Users/George/my-org-site/content"))
- ("c:/Users/George/"
-  (dired-filename . "c:/Users/George/.emacs.d"))
  ("c:/Users/George/my-org-site/public/index.html" . 6945)
- ("c:/Users/George/.emacs.d/my-org-config.org" . 1541)
  ("c:/Users/George/.emacs.d/elpa/simple-httpd-20191103.1446/simple-httpd-autoloads.el" . 1007)
- ("c:/Users/George/P/PP/"
-  (dired-filename . "c:/Users/George/P/PP/Amateur Anal Babe Big Dick Blowjob Brunette Green Eyes Latina Petite Small Tits [infantilephysicalelectriceel].mp4"))
- ("c:/Users/George/P/"
-  (dired-filename . "c:/Users/George/P/PP"))
  ("c:/Users/"
   (dired-filename . "c:/Users/George"))
  ("c:/Users/George/.emacs.d/.git/hooks/" . 4723)
  ("c:/Users/George/.emacs.d/elpa/olivetti-20220330.635/olivetti.el" . 6577)
- ("c:/Users/George/Projects/Code/OrgFiles/Birthdays.org" . 42)
- ("c:/Users/George/OrgFiles/notes.org" . 290)
  ("c:/Program Files/Emacs/emacs-28.2/share/emacs/28.2/lisp/org/org-agenda.el" . 341647)
- ("c:/Users/George/elispFun.el" . 3282)
- ("c:/Users/George/OrgFiles/"
-  (dired-filename . "c:/Users/George/OrgFiles/packing.org"))
  ("c:/"
   (dired-filename . "c:/Users"))
  ("g:/A Course In Miracles/"
@@ -35,7 +65,6 @@
  ("g:/A Course In Miracles/My Spiritual Journey.org" . 2649)
  ("g:/"
   (dired-filename . "g:/A Course In Miracles"))
- ("c:/Users/George/OrgFiles/packing.org" . 595)
  ("c:/Users/George/delmenow/kf/"
   (dired-filename . "c:/Users/George/delmenow/kf/."))
  ("c:/Users/George/delmenow/"
@@ -57,9 +86,6 @@
  ("e:/Directory Opus backups/George - Opus Config - 2022-02-25.ocb" . 193)
  ("e:/AutoHotKey Scripts/AHK-Studio Backup/Ueli SM scriptsadd image.ahk" . 457)
  ("e:/AutoHotKey Scripts/AHK-Studio Backup/Ueli SM scriptsadd html.ahk" . 327)
- ("c:/Users/George/.emacs.d/tutorial-pos" . 35262)
- ("c:/Users/George/randomtxt.txt" . 6381)
- ("c:/Users/George/Emacs questions.org" . 831)
  ("c:/ProgramData/chocolatey/lib/Emacs/tools/emacs/share/info/"
   (dired-filename . "c:/ProgramData/chocolatey/lib/Emacs/tools/emacs/share/info/auth.info"))
  ("c:/Users/George/OrgFiles/demo.org" . 31)
