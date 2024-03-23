@@ -31,8 +31,6 @@
 	("America/New_York" "Chris (NY)")
         ("Europe/Amsterdam" "Amsterdam")))
 
-
-
 ;package management
 (setq package-archives
       '(("gnu-elpa" . "https://elpa.gnu.org/packages/")
@@ -42,14 +40,14 @@
 
 ;my package management
 (defun gh/package-management (package)
-  (unless package-archive-contents
-    (package-refresh-contents))
   (unless (package-installed-p package)
+    (unless package-archive-contents
+  (package-refresh-contents))
     (package-install package)))
 
 (gh/package-management 'xah-fly-keys)
 (gh/package-management 'orderless)
-;keybinding
+;keybinding - -= (and shift+keys)
 (require 'xah-fly-keys)
 (xah-fly-keys-set-layout "colemak-dhm")
 (xah-fly-keys 1)
@@ -69,23 +67,34 @@
         ("melpa" . 2)
         ("nongnu" . 1)))
 
-(define-key key-translation-map (kbd "<escape>") (kbd "C-g"))
+(keymap-set key-translation-map "<escape>" "C-g")
+(keymap-set xah-fly-command-map "," 'crux-other-window-or-switch-buffer)
+(keymap-set xah-fly-command-map "8" 'er/expand-region)
 
-(define-key xah-fly-command-map (kbd ",") 'crux-other-window-or-switch-buffer)
-(define-key xah-fly-command-map (kbd "8") 'er/expand-region)
-(define-key xah-fly-command-map (kbd "'") 'consult-line)
-;; (keymap-global-set "<f12>" 'dabbrev-expand)
-(global-set-key (kbd "C-x C-x") #'eval-last-sexp)
+(keymap-set xah-fly-leader-key-map "t" 'consult-buffer)
+(keymap-set xah-fly-leader-key-map "SPC" 'embark-dwim)
+(keymap-set xah-fly-command-map "'" 'consult-line)
+
+(keymap-global-set "s-v" 'helpful-variable)
+(keymap-global-set "s-f" 'helpful-function)
+(keymap-global-set "<f12>" 'dabbrev-expand)
+(keymap-global-set "C-x C-x" #'eval-defun)
+(keymap-global-set "s-b" #'eval-buffer)
+(keymap-global-set "C-x C-a" #'eval-expression)
+(keymap-global-set "M-<up>" (lambda () (interactive)(funcall #'scroll-other-window-down 1)))
+(keymap-global-set "M-<down>" (lambda () (interactive)(funcall #'scroll-other-window 1)))
 ;orderless
 (require 'orderless)
 (setq completion-styles '(orderless basic)
       completion-category-overrides '((file (styles basic partial-completion))))
 
+(keymap-set dired-mode-map "DEL" 'dired-up-directory)
 ;dired
-(define-key dired-mode-map (kbd "DEL") 'dired-up-directory)
-
 ;packages
 (gh/package-management 'crux)
+(gh/package-management 'helpful)
+(gh/package-management 'openwith)
+(gh/package-management 'all-the-icons-dired)
 (gh/package-management 'expand-region)
 (gh/package-management 'centered-cursor-mode)
 (gh/package-management 'ef-themes)
@@ -105,6 +114,9 @@
 (gh/package-management 'rainbow-delimiters)
 (gh/package-management 'fancy-battery)
 
+(when (display-graphic-p)
+  (require 'all-the-icons))
+;; or
 ;substitute
 (require 'substitute)
 
@@ -115,15 +127,17 @@
 (add-hook 'substitute-post-replace-functions #'substitute-report-operation)
 
 (let ((map global-map))
-   (define-key map (kbd "M-s") #'substitute-target-below-point)
-   (define-key map (kbd "M-r") #'substitute-target-above-point)
-   (define-key map (kbd "M-d") #'substitute-target-in-defun)
-   (define-key map (kbd "M-b") #'substitute-target-in-buffer))
+   (keymap-set map "M-s" #'substitute-target-below-point)
+   (keymap-set map "M-r" #'substitute-target-above-point)
+   (keymap-set map "M-d" #'substitute-target-in-defun)
+   (keymap-set map "M-b" #'substitute-target-in-buffer))
 
 (dolist (hook '(text-mode-hook prog-mode-hook conf-mode-hook))
   (add-hook hook #'jinx-mode))
+
 ;(keymap-global-set "C-/" #'jinx-correct)
 (vertico-mode)
+(centered-cursor-mode)
 (marginalia-mode)
 (battery-notifier-mode)
 
@@ -131,14 +145,14 @@
 (add-hook 'after-init-hook #'ef-themes-load-random)
 (setq fancy-battery-show-percentage t)
 
-(global-set-key (kbd "<f7>") 'eshell)
-(global-set-key (kbd "C-.") 'embark-act)
+(keymap-global-set "<f7>" 'eshell)
+(keymap-global-set "C-." 'embark-act)
 
  (when (require 'openwith nil 'noerror)
       (setq openwith-associations
             (list
              (list (openwith-make-extension-regexp
-                    '("mpg" "mpeg" "mp3" "mp4"
+                    '("mpg" "mpeg" "mp3" "mp4" "mkv"
                       "avi" "wmv" "wav" "mov" "flv"
                       "ogm" "ogg" "mkv"))
                    "mpv"
@@ -172,3 +186,12 @@
 (defun backquote-symbol-insert ()
   (interactive)
   (insert "`"))
+
+;consult
+;helpful
+(global-set-key (kbd "C-h f") #'helpful-callable)
+
+(keymap-global-set "C-h v" #'helpful-variable)
+(keymap-global-set "C-h k" #'helpful-key)
+(keymap-global-set "C-h k" #'helpful-key)
+(keymap-global-set "C-h x" #'helpful-command)
