@@ -148,6 +148,7 @@
 (keymap-global-set "<f7>" 'eshell)
 (keymap-global-set "C-." 'embark-act)
 
+
  (when (require 'openwith nil 'noerror)
       (setq openwith-associations
             (list
