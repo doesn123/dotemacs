@@ -75,12 +75,15 @@
 (keymap-set xah-fly-leader-key-map "SPC" 'embark-dwim)
 (keymap-set xah-fly-command-map "'" 'consult-line)
 
+(keymap-global-set "<f2>" 'rename-file)
 (keymap-global-set "s-v" 'helpful-variable)
-(keymap-global-set "s-f" 'helpful-function)
+(keymap-global-set "s-f" 'helpful-callable)
 (keymap-global-set "<f12>" 'dabbrev-expand)
 (keymap-global-set "C-x C-x" #'eval-defun)
 (keymap-global-set "s-b" #'eval-buffer)
 (keymap-global-set "C-x C-a" #'eval-expression)
+(keymap-global-set "C-v" #'xah-paste-or-paste-previous)
+
 (keymap-global-set "M-<up>" (lambda () (interactive)(funcall #'scroll-other-window-down 1)))
 (keymap-global-set "M-<down>" (lambda () (interactive)(funcall #'scroll-other-window 1)))
 ;orderless
@@ -137,7 +140,7 @@
 
 ;(keymap-global-set "C-/" #'jinx-correct)
 (vertico-mode)
-(centered-cursor-mode)
+(global-centered-cursor-mode 1)
 (marginalia-mode)
 (battery-notifier-mode)
 
@@ -147,34 +150,6 @@
 
 (keymap-global-set "<f7>" 'eshell)
 (keymap-global-set "C-." 'embark-act)
-
-
- (when (require 'openwith nil 'noerror)
-      (setq openwith-associations
-            (list
-             (list (openwith-make-extension-regexp
-                    '("mpg" "mpeg" "mp3" "mp4" "mkv"
-                      "avi" "wmv" "wav" "mov" "flv"
-                      "ogm" "ogg" "mkv"))
-                   "mpv"
-                   '(file))
-             (list (openwith-make-extension-regexp
-                    '("xbm" "pbm" "pgm" "ppm" "pnm"
-                      "png" "gif" "bmp" "tif" "jpeg" "jpg"))
-                   "geeqie"
-                   '(file))
-             (list (openwith-make-extension-regexp
-                    '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
-                   "libreoffice"
-                   '(file))
-             '("\\.lyx" "lyx" (file))
-             '("\\.chm" "kchmviewer" (file))
-             (list (openwith-make-extension-regexp
-                    '("pdf" "ps" "ps.gz" "dvi"))
-                   "okular"
-                   '(file))
-             ))
-      (openwith-mode 1))
 
 					;abbrev mode
 (setq-default abbrev-mode t)
@@ -196,3 +171,9 @@
 (keymap-global-set "C-h k" #'helpful-key)
 (keymap-global-set "C-h k" #'helpful-key)
 (keymap-global-set "C-h x" #'helpful-command)
+
+;isearch
+(setq isearch-repeat-on-direction-change t)
+(setq isearch-lazy-count t)
+(setq lazy-count-prefix-format "(%s/%s) ")
+(setq isearch-wrap-pause nil)
