@@ -1,6 +1,7 @@
 ;appearance 
 (setq inhibit-startup-screen t)
-(hl-line-mode)
+(set-face-attribute 'default nil :height 140)
+(global-hl-line-mode)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -67,6 +68,7 @@
         ("melpa" . 2)
         ("nongnu" . 1)))
 
+
 (keymap-set key-translation-map "<escape>" "C-g")
 (keymap-set xah-fly-command-map "," 'crux-other-window-or-switch-buffer)
 (keymap-set xah-fly-command-map "8" 'er/expand-region)
@@ -75,24 +77,49 @@
 (keymap-set xah-fly-leader-key-map "SPC" 'embark-dwim)
 (keymap-set xah-fly-command-map "'" 'consult-line)
 
+;; (keymap-global-set "C-|" (lambda () (interactive) (insert "~")))
 (keymap-global-set "<f2>" 'rename-file)
 (keymap-global-set "s-v" 'helpful-variable)
 (keymap-global-set "s-f" 'helpful-callable)
 (keymap-global-set "<f12>" 'dabbrev-expand)
+(keymap-global-set "C-x C-s" #'eval-expression)
 (keymap-global-set "C-x C-x" #'eval-defun)
 (keymap-global-set "s-b" #'eval-buffer)
 (keymap-global-set "C-x C-a" #'eval-expression)
 (keymap-global-set "C-v" #'xah-paste-or-paste-previous)
+(keymap-global-set "C-n" #'scratch-buffer)
 
 (keymap-global-set "M-<up>" (lambda () (interactive)(funcall #'scroll-other-window-down 1)))
 (keymap-global-set "M-<down>" (lambda () (interactive)(funcall #'scroll-other-window 1)))
+
 ;orderless
 (require 'orderless)
 (setq completion-styles '(orderless basic)
       completion-category-overrides '((file (styles basic partial-completion))))
-
-(keymap-set dired-mode-map "DEL" 'dired-up-directory)
 ;dired
+(keymap-set dired-mode-map "DEL" 'dired-up-directory)
+
+(defun gh/dired-setup ()
+  (all-the-icons-dired-mode 1))
+
+(add-hook 'dired-mode-hook #'dired-hide-details-mode)
+(add-hook 'dired-mode-hook #'all-the-icons-dired-mode)
+(setq dired-dwim-target t)
+(setq delete-by-moving-to-trash t)
+(setq dired-listing-switches "-AGgFhlv --group-directories-first --time-style=long-iso")
+
+(defun dired-mark-or-xah-beginning-of-line-or-block ()
+  (interactive)
+  (if (eq major-mode 'dired-mode)
+      (dired-mark 1)
+    (xah-beginning-of-line-or-block)))
+
+(defun gh/double-command (mode mode-command other-command)
+  (interactive)
+  (if (eq major-mode mode)
+      mode-command
+    other-command))
+
 ;packages
 (gh/package-management 'crux)
 (gh/package-management 'helpful)
@@ -155,9 +182,9 @@
 (setq-default abbrev-mode t)
 
 
-(defun pipe-symbol-insert ()
+(defun tilde-symbol-insert ()
   (interactive)
-  (insert "|"))
+  (insert "~"))
 
 (defun backquote-symbol-insert ()
   (interactive)
@@ -177,3 +204,10 @@
 (setq isearch-lazy-count t)
 (setq lazy-count-prefix-format "(%s/%s) ")
 (setq isearch-wrap-pause nil)
+
+;vertico
+(define-key vertico-map (kbd "C-<up>") 'previous-history-element)
+(define-key vertico-map (kbd "C-<down>") 'next-history-element)
+(define-key vertico-map (kbd "C-`") (lambda () (interactive) (insert "~/")))
+
+(add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy) ;clears previous file path after typing '~/'
