@@ -87,6 +87,7 @@
 (keymap-global-set "s-b" #'eval-buffer)
 (keymap-global-set "C-x C-a" #'eval-expression)
 (keymap-global-set "C-v" #'xah-paste-or-paste-previous)
+(keymap-global-set "s-d" #'duplicate-line)
 (keymap-global-set "C-n" #'scratch-buffer)
 
 (keymap-global-set "M-<up>" (lambda () (interactive)(funcall #'scroll-other-window-down 1)))
@@ -105,6 +106,7 @@
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 (add-hook 'dired-mode-hook #'all-the-icons-dired-mode)
 (setq dired-dwim-target t)
+(setq dired-kill-when-opening-new-dired-buffer t)
 (setq delete-by-moving-to-trash t)
 (setq dired-listing-switches "-AGgFhlv --group-directories-first --time-style=long-iso")
 
@@ -122,6 +124,7 @@
 
 ;packages
 (gh/package-management 'crux)
+(gh/package-management 'smooth-scrolling)
 (gh/package-management 'helpful)
 (gh/package-management 'openwith)
 (gh/package-management 'all-the-icons-dired)
@@ -143,6 +146,8 @@
 (gh/package-management 'battery-notifier)
 (gh/package-management 'rainbow-delimiters)
 (gh/package-management 'fancy-battery)
+
+(smooth-scrolling-mode 1)
 
 (when (display-graphic-p)
   (require 'all-the-icons))
