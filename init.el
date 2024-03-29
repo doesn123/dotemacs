@@ -100,6 +100,8 @@
 ;dired
 (keymap-set dired-mode-map "DEL" 'dired-up-directory)
 
+  (define-key dired-mode-map (kbd "1") #'dired-do-shell-command)
+
 (defun gh/dired-setup ()
   (all-the-icons-dired-mode 1))
 
@@ -109,6 +111,8 @@
 (setq dired-kill-when-opening-new-dired-buffer t)
 (setq delete-by-moving-to-trash t)
 (setq dired-listing-switches "-AGgFhlv --group-directories-first --time-style=long-iso")
+
+(keymap-set dired-mode-map "<f10>" (lambda () (interactive) (dired default-directory "-lR")))
 
 (defun dired-mark-or-xah-beginning-of-line-or-block ()
   (interactive)
@@ -126,10 +130,8 @@
 (gh/package-management 'crux)
 (gh/package-management 'smooth-scrolling)
 (gh/package-management 'helpful)
-(gh/package-management 'openwith)
 (gh/package-management 'all-the-icons-dired)
 (gh/package-management 'expand-region)
-(gh/package-management 'centered-cursor-mode)
 (gh/package-management 'ef-themes)
 (gh/package-management 'embark)
 (gh/package-management 'embark-consult)
@@ -146,6 +148,7 @@
 (gh/package-management 'battery-notifier)
 (gh/package-management 'rainbow-delimiters)
 (gh/package-management 'fancy-battery)
+
 
 (smooth-scrolling-mode 1)
 
@@ -172,7 +175,6 @@
 
 ;(keymap-global-set "C-/" #'jinx-correct)
 (vertico-mode)
-(global-centered-cursor-mode 1)
 (marginalia-mode)
 (battery-notifier-mode)
 
@@ -213,6 +215,35 @@
 ;vertico
 (define-key vertico-map (kbd "C-<up>") 'previous-history-element)
 (define-key vertico-map (kbd "C-<down>") 'next-history-element)
+(define-key vertico-map (kbd "C-v") 'xah-paste-or-paste-previous)
 (define-key vertico-map (kbd "C-`") (lambda () (interactive) (insert "~/")))
 
 (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy) ;clears previous file path after typing '~/'
+
+;openwith
+    (when (require 'openwith nil 'noerror)
+      (setq openwith-associations
+            (list
+             (list (openwith-make-extension-regexp
+                    '("mpg" "mpeg" "mp3" "mp4"
+                      "avi" "wmv" "wav" "mov" "flv"
+                      "ogm" "ogg" "mkv"))
+                   "mpv"
+                   '(file))
+             (list (openwith-make-extension-regexp
+                    '("xbm" "pbm" "pgm" "ppm" "pnm"
+                      "png" "gif" "bmp" "tif" "jpeg" "jpg"))
+                   "geeqie"
+                   '(file))
+             (list (openwith-make-extension-regexp
+                    '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
+                   "libreoffice"
+                   '(file))
+             '("\\.lyx" "lyx" (file))
+             '("\\.chm" "kchmviewer" (file))
+             (list (openwith-make-extension-regexp
+                    '("pdf" "ps" "ps.gz" "dvi"))
+                   "okular"
+                   '(file))
+             ))
+      (openwith-mode 1))
