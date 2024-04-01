@@ -1,36 +1,49 @@
-;appearance 
-(setq inhibit-startup-screen t)
+;appearance
+(setq inhibit-startup-message t)
+(setq inhibit-startup-echo-area-message "george")
 (set-face-attribute 'default nil :height 140)
-(global-hl-line-mode)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)
 (show-paren-mode)
 (blink-cursor-mode -1)
 (add-hook 'window-setup-hook 'toggle-frame-maximized)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-;; this prevents completely the logging of the warnings
- ;; (setq native-comp-async-report-warnings-errors nil)
 (load custom-file)
-;; (ef-themes-load-random 'dark)
-;; (if (time-less-p nil (format-time-string "%Y"))) ;SORT
-;; (1+ (string-to-number (format-time-string "%Y")))
 (global-visual-line-mode)
-;; (setq desktop-path '("~/")) 
-;; (desktop-save-mode 1)
+
 (setq display-time-day-and-date t)
 (setq display-time-24hr-format t)
 (setq display-time-format " %a %e %b %H:%M ")
 (setq display-time-default-load-average nil)
 
+(setq kill-buffer-query-functions
+  (remq 'process-kill-buffer-query-function
+         kill-buffer-query-functions))
+
 (display-time-mode 1)
 
-;world clock
-(setq display-time-world-time-format "%R // %z %Z	%A %d %B")
-(setq zoneinfo-style-world-list
-      '(("America/Los_Angeles" "Lance (LA)")
-	("America/New_York" "Chris (NY)")
-        ("Europe/Amsterdam" "Amsterdam")))
+(defun gh/load-random-ef-theme-variant-dep-on-time-of-day ()
+  (let ((now (string-to-number (format-time-string "%H" (current-time)))))
+  (if (and (<= now 18) ;time of dark variant at night
+	   (>= now 7)) ;time of light variant in the morning
+(ef-themes-load-random 'light)
+(ef-themes-load-random 'dark))))
+
+(add-hook 'after-init-hook #'gh/load-random-ef-theme-variant-dep-on-time-of-day)
+
+(defvar gh/modus-themes-light
+       '(modus-operandi
+	 modus-operandi-tritanopia     
+    	 modus-operandi-deuteranopia
+    	 modus-operandi-tinted))
+
+(defvar gh/modus-themes-dark
+       '(modus-vivendi                 
+    	 modus-vivendi-tinted          
+    	 modus-vivendi-deuteranopia    
+    	 modus-vivendi-tritanopia))
 
 ;package management
 (setq package-archives
@@ -38,6 +51,12 @@
         ("gnu-elpa-devel" . "https://elpa.gnu.org/devel/")
         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
         ("melpa" . "https://melpa.org/packages/")))
+
+;; Highest number gets priority (what is not mentioned has priority 0)
+(setq package-archive-priorities
+      '(("gnu-elpa" . 3)
+        ("melpa" . 2)
+        ("nongnu" . 1)))
 
 ;my package management
 (defun gh/package-management (package)
@@ -53,24 +72,28 @@
 (xah-fly-keys-set-layout "colemak-dhm")
 (xah-fly-keys 1)
 
-
 ;basic setup
 (add-to-list 'load-path '"~/.emacs.d/lisp/")
 (savehist-mode 1)
+(rainbow-delimiters-mode 1)
 (find-file "~/.emacs.d/init.el")
 (setq large-file-warning-threshold nil)
 
 (put 'narrow-to-region 'disabled t)
 
-;; Highest number gets priority (what is not mentioned has priority 0)
-(setq package-archive-priorities
-      '(("gnu-elpa" . 3)
-        ("melpa" . 2)
-        ("nongnu" . 1)))
+  (setq kill-read-only-ok t)
+  
+;world clock
+(setq display-time-world-time-format "%R // %z %Z	%A %d %B")
+(setq zoneinfo-style-world-list
+      '(("America/Los_Angeles" "Lance (LA)")
+	("America/New_York" "Chris (NY)")
+        ("Europe/Amsterdam" "Amsterdam")))
 
 
 (keymap-set key-translation-map "<escape>" "C-g")
-(keymap-set xah-fly-command-map "," 'crux-other-window-or-switch-buffer)
+(keymap-set xah-fly-command-map "." 'crux-other-window-or-switch-buffer)
+(keymap-set xah-fly-command-map "<" (lambda () (interactive) (switch-to-buffer (other-buffer (current-buffer)))))
 (keymap-set xah-fly-command-map "8" 'er/expand-region)
 
 (keymap-set xah-fly-leader-key-map "t" 'consult-buffer)
@@ -80,6 +103,7 @@
 ;; (keymap-global-set "C-|" (lambda () (interactive) (insert "~")))
 (keymap-global-set "<f2>" 'rename-file)
 (keymap-global-set "s-v" 'helpful-variable)
+(keymap-global-set "s-a" 'consult-yank-from-kill-ring)
 (keymap-global-set "s-f" 'helpful-callable)
 (keymap-global-set "<f12>" 'dabbrev-expand)
 (keymap-global-set "C-x C-s" #'eval-expression)
@@ -87,12 +111,11 @@
 (keymap-global-set "s-b" #'eval-buffer)
 (keymap-global-set "C-x C-a" #'eval-expression)
 (keymap-global-set "C-v" #'xah-paste-or-paste-previous)
-(keymap-global-set "s-d" #'duplicate-line)
+(keymap-global-set "s-d" (lambda () (interactive) (duplicate-line) (next-line)))
 (keymap-global-set "C-n" #'scratch-buffer)
 
-(keymap-global-set "M-<up>" (lambda () (interactive)(funcall #'scroll-other-window-down 1)))
-(keymap-global-set "M-<down>" (lambda () (interactive)(funcall #'scroll-other-window 1)))
-
+(keymap-global-set "M-<up>" (lambda () (interactive) (scroll-other-window-down 1)))
+(keymap-global-set "M-<down>" (lambda () (interactive) (scroll-other-window 1)))
 ;orderless
 (require 'orderless)
 (setq completion-styles '(orderless basic)
@@ -107,10 +130,13 @@
 
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 (add-hook 'dired-mode-hook #'all-the-icons-dired-mode)
+(add-hook 'dired-mode-hook #'hl-line-mode)
 (setq dired-dwim-target t)
 (setq dired-kill-when-opening-new-dired-buffer t)
 (setq delete-by-moving-to-trash t)
 (setq dired-listing-switches "-AGgFhlv --group-directories-first --time-style=long-iso")
+  (setq dired-recursive-copies 'always)
+  (setq dired-recursive-deletes 'always)
 
 (keymap-set dired-mode-map "<f10>" (lambda () (interactive) (dired default-directory "-lR")))
 
@@ -148,9 +174,10 @@
 (gh/package-management 'battery-notifier)
 (gh/package-management 'rainbow-delimiters)
 (gh/package-management 'fancy-battery)
-
+(gh/package-management 'savekill)
 
 (smooth-scrolling-mode 1)
+(require 'savekill)
 
 (when (display-graphic-p)
   (require 'all-the-icons))
@@ -170,7 +197,7 @@
    (keymap-set map "M-d" #'substitute-target-in-defun)
    (keymap-set map "M-b" #'substitute-target-in-buffer))
 
-(dolist (hook '(text-mode-hook prog-mode-hook conf-mode-hook))
+(dolist (hook '(text-mode-hook))
   (add-hook hook #'jinx-mode))
 
 ;(keymap-global-set "C-/" #'jinx-correct)
@@ -179,7 +206,8 @@
 (battery-notifier-mode)
 
 (add-hook 'after-init-hook #'fancy-battery-mode)
-(add-hook 'after-init-hook #'ef-themes-load-random)
+
+
 (setq fancy-battery-show-percentage t)
 
 (keymap-global-set "<f7>" 'eshell)
@@ -211,6 +239,7 @@
 (setq isearch-lazy-count t)
 (setq lazy-count-prefix-format "(%s/%s) ")
 (setq isearch-wrap-pause nil)
+(setq isearch-lax-whitespace nil)
 
 ;vertico
 (define-key vertico-map (kbd "C-<up>") 'previous-history-element)
@@ -247,3 +276,23 @@
                    '(file))
              ))
       (openwith-mode 1))
+
+;encryption
+(defun umount-other-docs ()
+  (interactive)
+  (shell-command "sudo umount ~/other-docs&")
+  (dired "~/other-docs"))
+
+(defun mount-other-docs ()
+    (interactive)
+    (shell-command "sudo mount -t ecryptfs ~/other-docs ~/other-docs -o key=passphrase,ecryptfs_cipher=aes,ecryptfs_key_bytes=32,ecryptfs_passthrough=no,ecryptfs_enable_filename_crypto=yes,ecryptfs_sig=$(sudo cat /root/.ecryptfs/sig-cache.txt)&")
+    (switch-to-buffer "*Async Shell Command*")
+    (delete-other-windows)
+    (xah-fly-insert-mode-init)
+    (dired "~/other-docs")
+    (revert-buffer)
+    )
+
+;minibuffer
+(define-key consult-narrow-map (kbd "?") #'consult-narrow-help)
+
