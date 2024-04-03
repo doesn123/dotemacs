@@ -23,7 +23,6 @@
 (show-paren-mode)
 (add-hook 'window-setup-hook 'toggle-frame-maximized)
 
-
 (setq custom-file (make-temp-file "emacs-custom-"))
 ;; (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 ;; (load custom-file)Welcome to the Emacs shell
@@ -121,12 +120,10 @@
 
 (keymap-set xah-fly-leader-key-map "t" 'consult-buffer)
 (keymap-set xah-fly-leader-key-map "SPC" 'embark-dwim)
-(keymap-set xah-fly-command-map "'" 'consult-line)
 
 ;; (keymap-global-set "C-|" (lambda () (interactive) (insert "~")))
 (keymap-global-set "<f2>" 'rename-file)
 (keymap-global-set "s-v" 'helpful-variable)
-(keymap-global-set "s-a" 'consult-yank-from-kill-ring)
 (keymap-global-set "s-f" 'helpful-callable)
 (keymap-global-set "<f12>" 'dabbrev-expand)
 (keymap-global-set "C-x C-s" #'eval-expression)
@@ -169,6 +166,18 @@
       (dired-mark 1)
     (xah-beginning-of-line-or-block)))
 
+;; (defun gh/dired-goto-file-or-undo (&opt file)
+  ;; (interactive)
+  ;; (or (eq major-mode 'dired-mode)
+;; 
+  ;; (if (eq major-mode 'dired-mode)
+      ;; (gh/dired-goto-file (file))
+    ;; (undo)))
+
+;; (defun gh/dired-goto-file (file)
+  ;; (interactive "f")
+  ;; (dired-goto-file (expand-file-name file)))
+
 (defun gh/double-command (mode mode-command other-command)
   (interactive)
   (if (eq major-mode mode)
@@ -176,9 +185,11 @@
     other-command))
 
 (keymap-set xah-fly-command-map "m" 'dired-mark-or-xah-beginning-of-line-or-block)
+;; (keymap-set xah-fly-command-map "j" 'gh/dired-goto-file-or-undo)
 
 ;packages
 (gh/package-management 'crux)
+(gh/package-management 'denote)
 (gh/package-management 'smooth-scrolling)
 (gh/package-management 'helpful)
 (gh/package-management 'all-the-icons-dired)
@@ -251,6 +262,26 @@
   (insert "`"))
 
 ;consult
+(keymap-set xah-fly-command-map "F" #'consult-find)
+(keymap-set xah-fly-command-map "%" #'consult-buffer-other-frame)
+(keymap-set xah-fly-command-map "I" #'consult-imenu)
+(keymap-set xah-fly-command-map "R" #'consult-ripgrep)
+(keymap-set xah-fly-command-map "M" #'consult-mark)
+(keymap-set xah-fly-command-map "B" #'consult-bookmark)
+(keymap-set xah-fly-command-map "G" #'consult-register-load)
+(keymap-set xah-fly-command-map "?" #'consult-info)
+(keymap-set xah-fly-command-map "E" #'consult-register)
+(keymap-set xah-fly-command-map "'" 'consult-line)
+;; (keymap-set xah-fly-command-map """ 'consult-line-multi)
+
+;; consult-narrow
+;; consult-org-agenda
+;; consult-focus-lines
+;; consult-global-mark
+;; consult-org-heading
+;; consult-complex-command
+(keymap-global-set "s-a" 'consult-yank-from-kill-ring)
+
 ;helpful
 (global-set-key (kbd "C-h f") #'helpful-callable)
 
@@ -316,5 +347,6 @@
     (dired "~/other-docs")
     (revert-buffer)
     )
+
 
 
