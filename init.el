@@ -1,16 +1,33 @@
 ;appearance
-(setq inhibit-startup-message t)
-(setq inhibit-startup-echo-area-message "george")
-(set-face-attribute 'default nil :height 140)
+(setq inhibit-startup-message t
+      inhibit-startup-echo-area-message "george")
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(blink-cursor-mode -1)
+
+(mapc
+ (lambda (command)
+   (put command 'disabled nil))
+ '(narrow-to-region upcase-region downcase-region))
+
+;; Make native compilation silent and prune its cache.
+(when (native-comp-available-p)
+  (setq native-compile-prune-cache t))
+
+(add-hook 'after-init-hook (lambda () (set-frame-name "home")))
+
+(set-face-attribute 'default nil :height 140)
 (fset 'yes-or-no-p 'y-or-n-p)
 (show-paren-mode)
-(blink-cursor-mode -1)
 (add-hook 'window-setup-hook 'toggle-frame-maximized)
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file)
+
+
+(setq custom-file (make-temp-file "emacs-custom-"))
+;; (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+;; (load custom-file)Welcome to the Emacs shell
+
 (global-visual-line-mode)
 
 (setq display-time-day-and-date t)
@@ -24,14 +41,11 @@
 
 (display-time-mode 1)
 
-(defun gh/load-random-ef-theme-variant-dep-on-time-of-day ()
-  (let ((now (string-to-number (format-time-string "%H" (current-time)))))
-  (if (and (<= now 18) ;time of dark variant at night
-	   (>= now 7)) ;time of light variant in the morning
-(ef-themes-load-random 'light)
-(ef-themes-load-random 'dark))))
+(defun gh/toggle-menu-bar-mode ()
+  (interactive)
+  (menu-bar-mode 'toggle))
 
-(add-hook 'after-init-hook #'gh/load-random-ef-theme-variant-dep-on-time-of-day)
+(keymap-global-set "<f10>" 'gh/toggle-menu-bar-mode)
 
 (defvar gh/modus-themes-light
        '(modus-operandi
@@ -44,6 +58,15 @@
     	 modus-vivendi-tinted          
     	 modus-vivendi-deuteranopia    
     	 modus-vivendi-tritanopia))
+
+(defun gh/load-random-ef-theme-variant-dep-on-time-of-day ()
+  (let ((now (string-to-number (format-time-string "%H" (current-time)))))
+  (if (and (<= now 18) ;time of dark variant at night
+	   (>= now 7)) ;time of light variant in the morning
+(ef-themes-load-random 'light)
+(ef-themes-load-random 'dark))))
+
+(add-hook 'after-init-hook #'gh/load-random-ef-theme-variant-dep-on-time-of-day)
 
 ;package management
 (setq package-archives
@@ -135,8 +158,8 @@
 (setq dired-kill-when-opening-new-dired-buffer t)
 (setq delete-by-moving-to-trash t)
 (setq dired-listing-switches "-AGgFhlv --group-directories-first --time-style=long-iso")
-  (setq dired-recursive-copies 'always)
-  (setq dired-recursive-deletes 'always)
+(setq dired-recursive-copies 'always)
+(setq dired-recursive-deletes 'always)
 
 (keymap-set dired-mode-map "<f10>" (lambda () (interactive) (dired default-directory "-lR")))
 
@@ -151,6 +174,8 @@
   (if (eq major-mode mode)
       mode-command
     other-command))
+
+(keymap-set xah-fly-command-map "m" 'dired-mark-or-xah-beginning-of-line-or-block)
 
 ;packages
 (gh/package-management 'crux)
@@ -245,7 +270,6 @@
 (define-key vertico-map (kbd "C-<up>") 'previous-history-element)
 (define-key vertico-map (kbd "C-<down>") 'next-history-element)
 (define-key vertico-map (kbd "C-v") 'xah-paste-or-paste-previous)
-(define-key vertico-map (kbd "C-`") (lambda () (interactive) (insert "~/")))
 
 (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy) ;clears previous file path after typing '~/'
 
@@ -293,6 +317,4 @@
     (revert-buffer)
     )
 
-;minibuffer
-(define-key consult-narrow-map (kbd "?") #'consult-narrow-help)
 
