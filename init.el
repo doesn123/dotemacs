@@ -472,9 +472,10 @@ is already narrowed."
   (start-process "my-emacs-process" nil "emacs" "-Q"))
 
 
-;mode line
+					;mode line
 (setq-default mode-line-format
-	      '(" %e"
+	      '("%e"
+		" "
 		gh-my-mode-line-buffer-name
 		gh-mode-line-padding
 		gh-mode-line-narrowing
@@ -482,16 +483,14 @@ is already narrowed."
 		gh-mode-line-major-mode
 		gh-mode-line-padding
 		;; gh-mode-line-git
-		" "
 		gh-mode-line-time-and-date
 		))
 
 (defvar-local gh-my-mode-line-buffer-name
     '(:eval
-      (when (mode-line-window-selected-p)
 	(format "%s "
 		(propertize (buffer-name) 'face 'warning))
-	)))
+	))
 
 ;; (defvar-local gh-mode-line-git
 ;;     '(:eval
@@ -501,31 +500,31 @@ is already narrowed."
 
 (defvar-local gh-mode-line-major-mode
     '(:eval
-	 (format " %s "
-		       (propertize (symbol-name major-mode) 'face 'bold))))
+      (format " %s "
+	      (propertize (symbol-name major-mode) 'face 'bold))))
 
 (defvar-local gh-mode-line-time-and-date
     '(:eval
-     (when (mode-line-window-selected-p)
-       (format-time-string " %a%e %b %H:%M"))))
+      (when (mode-line-window-selected-p)
+	(propertize (format-time-string " %a%e %b %H:%M") 'face 'abbrev-table-name))))
 
 (defvar-local gh-mode-line-padding
     '(:eval
-    (when (mode-line-window-selected-p)
-    "---")))
+      (when (mode-line-window-selected-p)
+	"---")))
 
 (defvar-local gh-mode-line-narrowing
     '(:eval
       ;; (setq gh-mode-line-padding nil)
       (when (and (buffer-narrowed-p)
-	     (mode-line-window-selected-p))
-	     "\(Narrowed\) ")))
+		 (mode-line-window-selected-p))
+	" \(Narrowed\) ")))
 
 (defvar gh-mode-line-kmacro
   '(:eval
     (when (and (mode-line-window-selected-p)
 	       defining-kbd-macro)
-      "KMacro ")))
+      " KMacro ")))
 
 (dolist (construct
 	 '(gh-mode-line-major-mode
@@ -536,6 +535,24 @@ is already narrowed."
 	   gh-my-mode-line-buffer-name))
   (put construct 'risky-local-variable t))
 
-;to add: **-  line nums  % through document, Git, battery
+;to add: **-,  line nums, % through document, Git, battery, get rid of padding when narrowed
 
+
+					;buffer management
+
+(defun gh-make-window-current (window)
+  (select-window window))
+
+(setq display-buffer-alist
+      '(
+	("\\*Occur\\*"
+	 (display-buffer-reuse-window
+	  display-buffer-below-selected)
+	 (window-height . fit-window-to-buffer)
+	 (dedicated . t)
+	(body-function . gh-make-window-current))
+	("\\*helpful.*"
+	 (display-buffer-reuse-window
+	  display-buffer-below-selected)
+	 )))
 
