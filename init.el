@@ -41,32 +41,32 @@
 
 (display-time-mode 1)
 
-(defun gh/toggle-menu-bar-mode ()
+(defun gh-toggle-menu-bar-mode ()
   (interactive)
   (menu-bar-mode 'toggle))
 
-(keymap-global-set "<f10>" 'gh/toggle-menu-bar-mode)
+(keymap-global-set "<f10>" 'gh-toggle-menu-bar-mode)
 
-(defvar gh/modus-themes-light
+(defvar gh-modus-themes-light
        '(modus-operandi
 	 modus-operandi-tritanopia     
     	 modus-operandi-deuteranopia
     	 modus-operandi-tinted))
 
-(defvar gh/modus-themes-dark
+(defvar gh-modus-themes-dark
        '(modus-vivendi                 
     	 modus-vivendi-tinted          
     	 modus-vivendi-deuteranopia    
     	 modus-vivendi-tritanopia))
 
-(defun gh/load-random-ef-theme-variant-dep-on-time-of-day ()
+(defun gh-load-random-ef-theme-variant-dep-on-time-of-day ()
   (let ((now (string-to-number (format-time-string "%H" (current-time)))))
   (if (and (<= now 18) ;time of dark variant at night
 	   (>= now 7)) ;time of light variant in the morning
 (ef-themes-load-random 'light)
 (ef-themes-load-random 'dark))))
 
-(add-hook 'after-init-hook #'gh/load-random-ef-theme-variant-dep-on-time-of-day)
+(add-hook 'after-init-hook #'gh-load-random-ef-theme-variant-dep-on-time-of-day)
 
 ;package management
 (setq package-archives
@@ -82,14 +82,14 @@
         ("nongnu" . 1)))
 
 ;my package management
-(defun gh/package-management (package)
+(defun gh-package-management (package)
   (unless (package-installed-p package)
     (unless package-archive-contents
   (package-refresh-contents))
     (package-install package)))
 
-(gh/package-management 'xah-fly-keys)
-(gh/package-management 'orderless)
+(gh-package-management 'xah-fly-keys)
+(gh-package-management 'orderless)
 ;keybinding - -= (and shift+keys)
 (require 'xah-fly-keys)
 (xah-fly-keys-set-layout "colemak-dhm")
@@ -147,7 +147,7 @@
 
   (define-key dired-mode-map (kbd "1") #'dired-do-shell-command)
 
-(defun gh/dired-setup ()
+(defun gh-dired-setup ()
   (all-the-icons-dired-mode 1))
 
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
@@ -168,52 +168,52 @@
       (dired-mark 1)
     (xah-beginning-of-line-or-block)))
 
-;; (defun gh/dired-goto-file-or-undo (&opt file)
+;; (defun gh-dired-goto-file-or-undo (&opt file)
   ;; (interactive)
   ;; (or (eq major-mode 'dired-mode)
 ;; 
   ;; (if (eq major-mode 'dired-mode)
-      ;; (gh/dired-goto-file (file))
+      ;; (gh-dired-goto-file (file))
     ;; (undo)))
 
-;; (defun gh/dired-goto-file (file)
+;; (defun gh-dired-goto-file (file)
   ;; (interactive "f")
   ;; (dired-goto-file (expand-file-name file)))
 
-(defun gh/double-command (mode mode-command other-command)
+(defun gh-double-command (mode mode-command other-command)
   (interactive)
   (if (eq major-mode mode)
       mode-command
     other-command))
 
 (keymap-set xah-fly-command-map "m" 'dired-mark-or-xah-beginning-of-line-or-block)
-;; (keymap-set xah-fly-command-map "j" 'gh/dired-goto-file-or-undo)
+;; (keymap-set xah-fly-command-map "j" 'gh-dired-goto-file-or-undo)
 
 ;packages
-(gh/package-management 'crux)
-(gh/package-management 'hydra)
-(gh/package-management 'denote)
-(gh/package-management 'smooth-scrolling)
-(gh/package-management 'helpful)
-(gh/package-management 'all-the-icons-dired)
-(gh/package-management 'expand-region)
-(gh/package-management 'ef-themes)
-(gh/package-management 'embark)
-(gh/package-management 'embark-consult)
-(gh/package-management 'jinx)
-(gh/package-management 'magit)
-(gh/package-management 'marginalia)
-(gh/package-management 'modus-themes)
-(gh/package-management 'orderless)
-(gh/package-management 'try)
-(gh/package-management 'vertico)
-(gh/package-management 'vertico)
-(gh/package-management 'xah-fly-keys)
-(gh/package-management 'substitute)
-(gh/package-management 'battery-notifier)
-(gh/package-management 'rainbow-delimiters)
-(gh/package-management 'fancy-battery)
-;; (gh/package-management 'savekill)
+(gh-package-management 'crux)
+(gh-package-management 'hydra)
+(gh-package-management 'denote)
+(gh-package-management 'smooth-scrolling)
+(gh-package-management 'helpful)
+(gh-package-management 'all-the-icons-dired)
+(gh-package-management 'expand-region)
+(gh-package-management 'ef-themes)
+(gh-package-management 'embark)
+(gh-package-management 'embark-consult)
+(gh-package-management 'jinx)
+(gh-package-management 'magit)
+(gh-package-management 'marginalia)
+(gh-package-management 'modus-themes)
+(gh-package-management 'orderless)
+(gh-package-management 'try)
+(gh-package-management 'vertico)
+(gh-package-management 'vertico)
+(gh-package-management 'xah-fly-keys)
+(gh-package-management 'substitute)
+(gh-package-management 'battery-notifier)
+(gh-package-management 'rainbow-delimiters)
+(gh-package-management 'fancy-battery)
+;; (gh-package-management 'savekill)
 
 (smooth-scrolling-mode 1)
 ;; (require 'savekill)
@@ -391,18 +391,18 @@
       )
   (global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
 
-  (defun gh/paste-clipboard-into-buffer ()
+  (defun gh-paste-clipboard-into-buffer ()
     "Paste contents of clipboard into current buffer"
     (interactive)
     (xah-new-empty-buffer)
     (yank))
 
-  (defun gh/no-kill-ring-if-blank (str)
+  (defun gh-no-kill-ring-if-blank (str)
     "DOCSTRING"
     (interactive)
     (unless (string-blank-p str) str))
 
-  (setq kill-transform-function #'gh/no-kill-ring-if-blank)
+  (setq kill-transform-function #'gh-no-kill-ring-if-blank)
 
 
   (defun my-q-insert-or-quit-window (&optional n)
@@ -471,3 +471,58 @@ is already narrowed."
   "DOCSTRING"
   (interactive)
   (start-process "my-emacs-process" nil "emacs" "-Q"))
+
+
+;mode line
+(setq-default mode-line-format
+	      '(" %e"
+		gh-my-mode-line-buffer-name
+		gh-mode-line-padding
+		gh-mode-line-narrowing
+		gh-mode-line-kmacro
+		gh-mode-line
+		gh-mode-line-time-and-date
+		  ))
+
+(defvar-local gh-my-mode-line-buffer-name
+    '(:eval
+      (when (mode-line-window-selected-p)
+	(format "%s "
+		(propertize (buffer-name) 'face 'warning))
+	)))
+
+(defvar-local gh-mode-line
+    '(:eval
+      (when (mode-line-window-selected-p)
+	 (format "%s"
+		       (propertize (symbol-name major-mode) 'face 'shadow)))))
+
+(defvar-local gh-mode-line-time-and-date
+    '(:eval
+     (when (mode-line-window-selected-p)
+       (format-time-string " %H:%M"))))
+
+(defvar-local gh-mode-line-padding
+    "--- ")
+
+(defvar-local gh-mode-line-narrowing
+    '(:eval
+      ;; (setq gh-mode-line-padding nil)
+      (when (and (buffer-narrowed-p)
+	     (mode-line-window-selected-p))
+	     "\(Narrowed\) ")))
+
+(defvar gh-mode-line-kmacro
+  '(:eval
+    (when (and (mode-line-window-selected-p)
+	       defining-kbd-macro)
+      "Macro ")))
+
+(dolist (construct
+	 '(gh-mode-line
+	   gh-mode-line-padding
+	   gh-mode-line-kmacro
+	   gh-mode-line-narrowing
+	   gh-mode-line-time-and-date
+	   gh-my-mode-line-buffer-name))
+  (put construct 'risky-local-variable t))
