@@ -30,9 +30,9 @@
 
 (global-visual-line-mode)
 
-(setq display-time-day-and-date t)
-(setq display-time-24hr-format t)
-(setq display-time-format " %a %e %b %H:%M ")
+;; (setq display-time-day-and-date t)
+;; (setq display-time-24hr-format t)
+;; (setq display-time-format " %a %e %b %H:%M ")
 (setq display-time-default-load-average nil)
 
 (setq kill-buffer-query-functions
@@ -247,7 +247,6 @@
 (battery-notifier-mode)
 
 (add-hook 'after-init-hook #'fancy-battery-mode)
-
 
 (setq fancy-battery-show-percentage t)
 
@@ -480,9 +479,12 @@ is already narrowed."
 		gh-mode-line-padding
 		gh-mode-line-narrowing
 		gh-mode-line-kmacro
-		gh-mode-line
+		gh-mode-line-major-mode
+		gh-mode-line-padding
+		;; gh-mode-line-git
+		" "
 		gh-mode-line-time-and-date
-		  ))
+		))
 
 (defvar-local gh-my-mode-line-buffer-name
     '(:eval
@@ -491,19 +493,26 @@ is already narrowed."
 		(propertize (buffer-name) 'face 'warning))
 	)))
 
-(defvar-local gh-mode-line
+;; (defvar-local gh-mode-line-git
+;;     '(:eval
+;;       (when (mode-line-window-selected-p)
+;; 	(format "%s"
+;; 		(propertize vc-mode 'face 'warning)))))
+
+(defvar-local gh-mode-line-major-mode
     '(:eval
-      (when (mode-line-window-selected-p)
-	 (format "%s"
-		       (propertize (symbol-name major-mode) 'face 'shadow)))))
+	 (format " %s "
+		       (propertize (symbol-name major-mode) 'face 'bold))))
 
 (defvar-local gh-mode-line-time-and-date
     '(:eval
      (when (mode-line-window-selected-p)
-       (format-time-string " %H:%M"))))
+       (format-time-string " %a%e %b %H:%M"))))
 
 (defvar-local gh-mode-line-padding
-    "--- ")
+    '(:eval
+    (when (mode-line-window-selected-p)
+    "---")))
 
 (defvar-local gh-mode-line-narrowing
     '(:eval
@@ -516,13 +525,17 @@ is already narrowed."
   '(:eval
     (when (and (mode-line-window-selected-p)
 	       defining-kbd-macro)
-      "Macro ")))
+      "KMacro ")))
 
 (dolist (construct
-	 '(gh-mode-line
+	 '(gh-mode-line-major-mode
 	   gh-mode-line-padding
 	   gh-mode-line-kmacro
 	   gh-mode-line-narrowing
 	   gh-mode-line-time-and-date
 	   gh-my-mode-line-buffer-name))
   (put construct 'risky-local-variable t))
+
+;to add: **-  line nums  % through document, Git, battery
+
+
