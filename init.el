@@ -6,6 +6,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (blink-cursor-mode -1)
+(setq enable-recursive-minibuffers t)
 
 (mapc
  (lambda (command)
@@ -115,7 +116,8 @@
 
 (keymap-set key-translation-map "<escape>" "C-g")
 (keymap-set xah-fly-command-map "." 'crux-other-window-or-switch-buffer)
-(keymap-set xah-fly-command-map "<" (lambda () (interactive) (switch-to-buffer (other-buffer (current-buffer)))))
+;; (keymap-set xah-fly-command-map ">" (lambda () (interactive) (switch-to-buffer (other-buffer (current-buffer)))))
+
 (keymap-set xah-fly-command-map "8" 'er/expand-region)
 
 (keymap-set xah-fly-leader-key-map "t" 'consult-buffer)
@@ -189,6 +191,7 @@
 
 ;packages
 (gh/package-management 'crux)
+(gh/package-management 'hydra)
 (gh/package-management 'denote)
 (gh/package-management 'smooth-scrolling)
 (gh/package-management 'helpful)
@@ -210,13 +213,15 @@
 (gh/package-management 'battery-notifier)
 (gh/package-management 'rainbow-delimiters)
 (gh/package-management 'fancy-battery)
-(gh/package-management 'savekill)
+;; (gh/package-management 'savekill)
 
 (smooth-scrolling-mode 1)
-(require 'savekill)
+;; (require 'savekill)
+(setq savehist-additional-variables '(register-alist kill-ring))
 
 (when (display-graphic-p)
   (require 'all-the-icons))
+
 ;; or
 ;substitute
 (require 'substitute)
@@ -262,7 +267,7 @@
   (insert "`"))
 
 ;consult
-(keymap-set xah-fly-command-map "F" #'consult-find)
+(keymap-set xah-fly-command-map "F" #'consult-locate)
 (keymap-set xah-fly-command-map "%" #'consult-buffer-other-frame)
 (keymap-set xah-fly-command-map "I" #'consult-imenu)
 (keymap-set xah-fly-command-map "R" #'consult-ripgrep)
@@ -348,5 +353,121 @@
     (revert-buffer)
     )
 
+;hydra
+(defun hydra-ex-point-mark ()
+"Exchange point and mark."
+(interactive)
+(if rectangle-mark-mode
+    (rectangle-exchange-point-and-mark)
+  (let ((mk (mark)))
+    (rectangle-mark-mode 1)
+    (goto-char mk))))
 
 
+(defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
+				     :color pink
+				     :post (deactivate-mark))
+      "
+  _s_tring _d_:yank _b_:reset _c_opy _j_:undo _e_xchange _x_kill _n_umbers _o_pen c_l_ear _w_hitespace re_g_ister
+	    "
+      ("e" hydra-ex-point-mark nil)
+	("o" open-rectangle nil)
+      ("c" copy-rectangle-as-kill nil)
+      ("b" (if (region-active-p)
+	       (deactivate-mark)
+	     (rectangle-mark-mode 1)) nil)
+      ("d" yank-rectangle nil)
+      ("g" copy-rectangle-to-register nil)
+      ("w" delete-whitespace-rectangle nil)
+      ("n" rectangle-number-lines nil)
+      ("l" clear-rectangle nil)
+      ("j" undo nil)
+      ("s" string-rectangle nil)
+      ("x" kill-rectangle nil)
+      ("<left>" rectangle-left-char nil :color pink)
+      ("<right>" rectangle-right-char nil :color pink)
+      ("C-g" nil)
+      ("RET" nil)
+      )
+  (global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
+
+  (defun gh/paste-clipboard-into-buffer ()
+    "Paste contents of clipboard into current buffer"
+    (interactive)
+    (xah-new-empty-buffer)
+    (yank))
+
+  (defun gh/no-kill-ring-if-blank (str)
+    "DOCSTRING"
+    (interactive)
+    (unless (string-blank-p str) str))
+
+  (setq kill-transform-function #'gh/no-kill-ring-if-blank)
+
+
+  (defun my-q-insert-or-quit-window (&optional n)
+    (interactive "p")
+    (unless (and (equal (buffer-name) "init.el")
+		 buffer-read-only
+		 (not (eq major-mode 'dired-mode))
+		 (quit-window))))
+
+;; (defun my-q-insert-or-quit-window (&optional n) (interactive "p") (if buffer-read-only (quit-window) (xah-reformat-lines)))
+
+(defun newline-without-break-of-line ()
+	      (interactive)
+	      (save-excursion
+		(let ((oldpos (point)))
+		(end-of-line)
+		(newline-and-indent))))
+
+(define-key xah-fly-command-map (kbd "r") #'newline-without-break-of-line)
+
+
+(defun narrow-or-widen-dwim (p)
+  "Widen if buffer is narrowed, narrow-dwim otherwise.
+Dwim means: region, org-src-block, org-subtree, or
+defun, whichever applies first. Narrowing to
+org-src-block actually calls `org-edit-src-code'.
+
+With prefix P, don't widen, just narrow even if buffer
+is already narrowed."
+  (interactive "P")
+  (declare (interactive-only))
+  (cond ((and (buffer-narrowed-p) (not p)) (widen))
+        ((region-active-p)
+         (narrow-to-region (region-beginning)
+                           (region-end)))
+        ((derived-mode-p 'org-mode)
+         ;; `org-edit-src-code' is not a real narrowing
+         ;; command. Remove this first conditional if
+         ;; you don't want it.
+         (cond ((ignore-errors (org-edit-src-code) t)
+                (delete-other-windows))
+               ((ignore-errors (org-narrow-to-block) t))
+               (t (org-narrow-to-subtree))))
+        ((derived-mode-p 'latex-mode)
+         (LaTeX-narrow-to-environment))
+        (t (narrow-to-defun))))
+
+;; (define-key endless/toggle-map "n"
+;; #'narrow-or-widen-dwim)
+
+;; This line actually replaces Emacs' entire narrowing
+;; keymap, that's how much I like this command. Only
+;; copy it if that's what you want.
+(define-key ctl-x-map "n" #'narrow-or-widen-dwim)
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (define-key LaTeX-mode-map "\C-xn"
+			nil)))
+
+(keymap-global-set "C-x n" #'narrow-or-widen-dwim)
+
+;mouse
+(keymap-global-set "<left-fringe> <mouse-1>" #'display-line-numbers-mode)
+
+(defun emacs-Q ()
+  "DOCSTRING"
+  (interactive)
+  (start-process "my-emacs-process" nil "emacs" "-Q"))
