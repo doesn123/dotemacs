@@ -2,7 +2,7 @@
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message "george")
 
-(menu-bar-mode -1)
+(menu-bar-mode 1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (blink-cursor-mode -1)
@@ -68,6 +68,8 @@
 
 (add-hook 'after-init-hook #'gh-load-random-ef-theme-variant-dep-on-time-of-day)
 
+(setq consult-themes
+      '("ef-\\|modus.*"))
 ;package management
 (setq package-archives
       '(("gnu-elpa" . "https://elpa.gnu.org/packages/")
@@ -99,7 +101,7 @@
 (add-to-list 'load-path '"~/.emacs.d/lisp/")
 (savehist-mode 1)
 (rainbow-delimiters-mode 1)
-(find-file "~/.emacs.d/init.el")
+(find-file "~/.emacs.d/init.org")
 (setq large-file-warning-threshold nil)
 
 (put 'narrow-to-region 'disabled t)
@@ -222,7 +224,6 @@
 (when (display-graphic-p)
   (require 'all-the-icons))
 
-;; or
 ;substitute
 (require 'substitute)
 
@@ -253,7 +254,7 @@
 (keymap-global-set "<f7>" 'eshell)
 (keymap-global-set "C-." 'embark-act)
 
-					;abbrev mode
+;abbrev mode
 (setq-default abbrev-mode t)
 
 
@@ -538,7 +539,7 @@ is already narrowed."
 ;to add: **-,  line nums, % through document, Git, battery, get rid of padding when narrowed
 
 
-					;buffer management
+;buffer management
 
 (defun gh-make-window-current (window)
   (select-window window))
@@ -556,3 +557,13 @@ is already narrowed."
 	  display-buffer-below-selected)
 	 )))
 
+					;org
+(setq org-structure-template-alist
+      '(
+	("a" . "export ascii")
+ ("e" . "src emacs-lisp")
+ ("t" . "src emacs-lisp :tangle \" \"")
+ ("l" . "src lua")
+ ("v" . "verse")))
+
+(keymap-global-set "C-c C-," 'org-insert-structure-template)
