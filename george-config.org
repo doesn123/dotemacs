@@ -70,20 +70,22 @@
 
 		    (setq consult-themes
 			  '("ef-\\|modus.*"))
-		    ;package management
-		    (setq package-archives
+#+end_src
+* package managment
+#+begin_src emacs-lisp :tangle "init.el"
+	    (setq package-archives
 			  '(("gnu-elpa" . "https://elpa.gnu.org/packages/")
 			    ("gnu-elpa-devel" . "https://elpa.gnu.org/devel/")
 			    ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 			    ("melpa" . "https://melpa.org/packages/")))
-
+(setq test "t1")
 		    ;; Highest number gets priority (what is not mentioned has priority 0)
 		    (setq package-archive-priorities
 			  '(("gnu-elpa" . 3)
 			    ("melpa" . 2)
 			    ("nongnu" . 1)))
 
-		    ;my package management
+		    ; package management
 		    (defun gh-package-management (package)
 		      (unless (package-installed-p package)
 			(unless package-archive-contents
@@ -92,12 +94,13 @@
 
 		    (gh-package-management 'xah-fly-keys)
 		    (gh-package-management 'orderless)
-		    ;keybinding - -= (and shift+keys)
+; keybinding - -= (and shift+keys)
 		    (require 'xah-fly-keys)
 		    (xah-fly-keys-set-layout "colemak-dhm")
 		    (xah-fly-keys 1)
-
-		    ;basic setup
+#+end_src
+* basic setup
+#+begin_src emacs-lisp :tangle "init.el"
 		    (add-to-list 'load-path '"~/.emacs.d/lisp/")
 		    ;; (savehist-mode 1)
 		    (rainbow-delimiters-mode 1)
@@ -108,7 +111,9 @@
 
 		      (setq kill-read-only-ok t)
 
-		    ;world clock
+#+end_src
+* world clock
+#+begin_src emacs-lisp :tangle "init.el"
 		    (setq display-time-world-time-format "%R // %z %Z	%A %d %B")
 		    (setq zoneinfo-style-world-list
 			  '(("America/Los_Angeles" "Lance (LA)")
@@ -116,6 +121,10 @@
 			    ("Europe/Amsterdam" "Amsterdam")))
 
 
+#+end_src
+
+* keybindings
+#+begin_src emacs-lisp :tangle "init.el"
 		    (keymap-set key-translation-map "<escape>" "C-g")
 		    (keymap-set xah-fly-command-map "." 'crux-other-window-or-switch-buffer)
 		    ;; (keymap-set xah-fly-command-map ">" (lambda () (interactive) (switch-to-buffer (other-buffer (current-buffer)))))
@@ -140,11 +149,15 @@
 
 		    (keymap-global-set "M-<up>" (lambda () (interactive) (scroll-other-window-down 1)))
 		    (keymap-global-set "M-<down>" (lambda () (interactive) (scroll-other-window 1)))
-		    ;orderless
+#+end_src
+* orderless
+#+begin_src emacs-lisp :tangle "init.el"
 		    (require 'orderless)
 		    (setq completion-styles '(orderless basic)
 			  completion-category-overrides '((file (styles basic partial-completion))))
-		    ;dired
+#+end_src
+* dired
+#+begin_src emacs-lisp :tangle "init.el"
 
 		    (keymap-set dired-mode-map "DEL" 'dired-up-directory)
 
@@ -199,7 +212,9 @@
 		    (keymap-set xah-fly-command-map "g" 'dired-revert-buffer-or-xah-delete-current-text-block)
 		    ;; (keymap-set xah-fly-command-map "j" 'gh-dired-goto-file-or-undo)
 
-		    ;packages
+#+end_src
+* packages
+#+begin_src emacs-lisp :tangle "init.el"
 		    (gh-package-management 'crux)
 		    (gh-package-management 'hydra)
 		    (gh-package-management 'visual-regexp)
@@ -233,7 +248,9 @@
 		    (when (display-graphic-p)
 		      (require 'all-the-icons))
 
-		    ;substitute
+#+end_src
+* substitute
+#+begin_src emacs-lisp :tangle "init.el"
 		    (require 'substitute)
 
 		    (setq substitute-fixed-letter-case t)
@@ -263,7 +280,9 @@
 		    (keymap-global-set "<f7>" 'eshell)
 		    (keymap-global-set "C-." 'embark-act)
 
-		    ;abbrev mode
+#+end_src
+* abbrev mode
+#+begin_src emacs-lisp :tangle "init.el"
 		    (setq-default abbrev-mode t)
 
 
@@ -275,10 +294,12 @@
 		      (interactive)
 		      (insert "`"))
 
-		    ;consult
+#+end_src
+* consult
+#+begin_src emacs-lisp :tangle "init.el"
 		    (keymap-set xah-fly-command-map "F" #'consult-locate)
 		    (keymap-set xah-fly-command-map "%" #'consult-buffer-other-frame)
-		    (keymap-set xah-fly-command-map "I" #'consult-imenu)
+		    (keymap-set xah-fly-command-map "I" #'consult-org-heading)
 		    (keymap-set xah-fly-command-map "R" #'consult-ripgrep)
 		    (keymap-set xah-fly-command-map "M" #'consult-mark)
 		    (keymap-set xah-fly-command-map "B" #'consult-bookmark)
@@ -297,7 +318,9 @@
 		    ;; consult-complex-command
 		    (keymap-global-set "s-a" 'consult-yank-from-kill-ring)
 
-		    ;helpful
+#+end_src
+* helpful
+#+begin_src emacs-lisp :tangle "init.el"
 		    (global-set-key (kbd "C-h f") #'helpful-callable)
 
 		    (keymap-global-set "C-h v" #'helpful-variable)
@@ -305,14 +328,18 @@
 		    (keymap-global-set "C-h k" #'helpful-key)
 		    (keymap-global-set "C-h x" #'helpful-command)
 
-		    ;isearch
+#+end_src
+* isearch
+#+begin_src emacs-lisp :tangle "init.el"
 		    (setq isearch-repeat-on-direction-change t)
 		    (setq isearch-lazy-count t)
 		    (setq lazy-count-prefix-format "(%s/%s) ")
 		    (setq isearch-wrap-pause nil)
 		    (setq isearch-lax-whitespace nil)
 
-		    ;vertico
+#+end_src
+* vertico
+#+begin_src emacs-lisp :tangle "init.el"
 		    (define-key vertico-map (kbd "C-<up>") 'previous-history-element)
 		    (define-key vertico-map (kbd "C-<down>") 'next-history-element)
 		    (define-key vertico-map (kbd "C-v") 'xah-paste-or-paste-previous)
@@ -320,7 +347,9 @@
 		    (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy) ;clears previous file path after typing '~/'
 
 		    (keymap-set dired-mode-map "M-RET" 'browse-url-of-dired-file)
-					    ;encryption
+#+end_src
+* encryption
+#+begin_src emacs-lisp :tangle "init.el"
 		    (defun umount-other-docs 
 			()
 		      (interactive)
@@ -338,7 +367,9 @@
 			(revert-buffer)
 			)
 
-		    ;hydra
+#+end_src
+* TODO hydra (narrow function)
+#+begin_src emacs-lisp :tangle "init.el"
 		    (defun hydra-ex-point-mark ()
 		    "Exchange point and mark."
 		    (interactive)
@@ -347,7 +378,6 @@
 		      (let ((mk (mark)))
 			(rectangle-mark-mode 1)
 			(goto-char mk))))
-
 
 		    (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
 							 :color pink
@@ -454,7 +484,9 @@
 
 		    (keymap-global-set "C-c n" #'narrow-or-widen-dwim)
 
-		    ;mouse
+#+end_src
+* mouse
+#+begin_src emacs-lisp :tangle "init.el"
 		    (keymap-global-set "<left-fringe> <mouse-1>" #'display-line-numbers-mode)
 		    (keymap-global-set "<mouse-3>" #'eval-last-sexp)
 
@@ -465,7 +497,9 @@
 		      (start-process "my-emacs-process" nil "emacs" "-Q"))
 
 
-	    ;mode line
+#+end_src
+* mode line
+#+begin_src emacs-lisp :tangle "init.el"
 		    (setq-default mode-line-format
 				  '("%e"
 				    " "
@@ -499,7 +533,7 @@
 		    (defvar-local gh-mode-line-time-and-date
 			'(:eval
 			  (when (mode-line-window-selected-p)
-			    (propertize (format-time-string " %a%e %b %H:%M") 'face 'abbrev-table-name))))
+			    (propertize (format-time-string " %a%e %b, %H:%M") 'face 'abbrev-table-name))))
 
 		    (defvar-local gh-mode-line-padding
 			'(:eval
@@ -528,7 +562,7 @@
 			       gh-my-mode-line-buffer-name))
 		      (put construct 'risky-local-variable t))
 
-		    ;to add: **-,  line nums, % through document, Git, battery, get rid of padding when narrowed
+;to add: **-,  line nums, % through document, Git, battery, get rid of padding when narrowed    534:		    ;buffer ;management
 
 
 		    ;buffer management
@@ -561,7 +595,9 @@
 
 		    (keymap-global-set "C-c C-," 'org-insert-structure-template)
 
-	    ;occur
+#+end_src
+* occur
+#+begin_src emacs-lisp :tangle "init.el"
 	    (keymap-set occur-mode-map "M-<up>" ' previous-error-no-select)
 	    (keymap-set occur-mode-map "M-<down>" ' next-error-no-select)
 
