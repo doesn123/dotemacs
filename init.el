@@ -113,6 +113,7 @@
 
 (keymap-set key-translation-map "<escape>" "C-g")
 (keymap-set xah-fly-command-map "." 'crux-other-window-or-switch-buffer)
+(keymap-set xah-fly-command-map "," 'ignore)
 ;; (keymap-set xah-fly-command-map ">" (lambda () (interactive) (switch-to-buffer (other-buffer (current-buffer)))))
 
 (keymap-set xah-fly-command-map "8" 'er/expand-region)
@@ -439,6 +440,86 @@
 
 	  (keymap-global-set "C-c n" #'narrow-or-widen-dwim)
 
+  	(defhydra hydra-artist (:pre (artist-mode) :color pink :post (artist-mode-off))
+	  ("C-p" artist-select-op-pen-line "pen")
+	  ("C-r" artist-select-op-rectangle "rect")
+	  ("C-l" artist-select-op-line "line")
+	  ("C-c" artist-select-op-circle "circle")
+	  ("C-s" artist-select-op-square "square")
+	  ("C-s" artist-select-op-square "square")
+	  ("C-e" artist-select-op-ellipse "ellipse")
+	  ("C-y" artist-select-op-poly-line "poly line")
+	  ("C-z" artist-select-op-spray-con "spray can")
+	  ("C-q" nil "quit")
+	  ("C-h" backward-char "back"))
+
+	(global-set-key (kbd "M-a") #'hydra-artist/body)
+
+	(defhydra hydra-register (:color blue)
+	  ("j" jump-to-register "jump")
+	  ("i" jump-to-register "insert")
+	  ("k" copy-to-register "copy")
+	  ("p" point-to-register "point")
+	  ("v" view-register "view")
+	  ("a" append-register "append")
+	  ("c" increment-register "increment")
+	  ("m" kmacro-register "macro")
+	  ("n" number-to-register "number")
+	  ("e" prepend-to-register "prepent")
+	  ("r" rectangle-to-register "rect")
+	  ("w" window-to-register "win"))
+
+	(defhydra hydra-kmacro (:color blue)
+	  ("v" kmacro-view-macro "view")
+	  ;; ("o" kmacro-pop-ring "pop")
+	  ;; ("p" kmacro-push-ring "push")
+	  ;; ("h" kmacro-ring-head "ring head")
+	  ("w" kmacro-swap-ring "swap")
+	  ("e" kmacro-edit-macro "edit")
+	  ("b" kmacro-bind-to-key "bind")
+	  ("s" kmacro-set-counter "set counter")
+	  ("a" kmacro-add-counter "add counter")
+	  ("i" kmacro-insert-counter "insert counter")
+	  ("r" kmacro-to-register "reg")
+	  ("d" kmacro-display-counter "display counter")
+	  ("n" kmacro-name-last-macro "name last"))
+
+
+	;; (defhydra hydra-kmacro (:color blue)
+	;; ("v" kmacro-view-macro "view")
+	;; ;; ("o" kmacro-pop-ring "pop")
+	;; ;; ("p" kmacro-push-ring "push")
+	;; ;; ("h" kmacro-ring-head "ring head")
+	;; ("w" kmacro-swap-ring "swap")
+	;; ("e" kmacro-edit-macro "edit")
+	;; ("b" kmacro-bind-to-key "bind")
+	;; ("s" kmacro-set-counter "set counter")
+	;; ("a" kmacro-add-counter "add counter")
+	;; ("i" kmacro-insert-counter "insert counter")
+	;; ("r" kmacro-to-register "reg")
+	;; ("d" kmacro-display-counter "display counter")
+	;; ("n" kmacro-name-last-macro "name last"))
+
+(global-set-key (kbd "M-w") #'hydra-window/body)
+(global-set-key (kbd "M-r") #'hydra-register/body)
+
+
+(defun ora-ex-point-mark ()
+  (interactive)
+  (if rectangle-mark-mode
+      (exchange-point-and-mark)
+    (let ((mk (mark)))
+      (rectangle-mark-mode 1)
+      (goto-char mk))))
+
+(defun ora-ex-point-mark ()
+  (interactive)
+  (if rectangle-mark-mode
+      (exchange-point-and-mark)
+    (let ((mk (mark)))
+      (rectangle-mark-mode 1)
+      (goto-char mk))))
+
 (keymap-global-set "<left-fringe> <mouse-1>" #'display-line-numbers-mode)
 (keymap-global-set "<mouse-3>" #'eval-last-sexp)
 
@@ -455,6 +536,7 @@
 				    gh-mode-line-padding
 				    gh-mode-line-narrowing
 				    gh-mode-line-kmacro
+				    gh-mode-line-buffer-read-only
 				    gh-mode-line-major-mode
 				    gh-mode-line-padding
 				    ;; gh-mode-line-git
@@ -463,9 +545,10 @@
 
 		    (defvar-local gh-my-mode-line-buffer-name
 			'(:eval
+			  (when (mode-line-window-selected-p)
 			    (format "%s "
 				    (propertize (buffer-name) 'face 'warning))
-			    ))
+			    )))
 
 		    ;; (defvar-local gh-mode-line-git
 		    ;;     '(:eval
@@ -475,13 +558,19 @@
 
 		    (defvar-local gh-mode-line-major-mode
 			'(:eval
+			  (when (mode-line-window-selected-p)
 			  (format " %s "
-				  (propertize (symbol-name major-mode) 'face 'bold))))
+				  (propertize (symbol-name major-mode) 'face 'bold)))))
 
 		    (defvar-local gh-mode-line-time-and-date
 			'(:eval
 			  (when (mode-line-window-selected-p)
 			    (propertize (format-time-string " %a%e %b, %H:%M") 'face 'abbrev-table-name))))
+
+(defvar-local gh-mode-line-buffer-read-only
+		      '(:eval
+			(when buffer-read-only
+				    (propertize " \(ro\)" 'face 'all-the-icons-blue))))
 
 		    (defvar-local gh-mode-line-padding
 			'(:eval
@@ -493,7 +582,7 @@
 			  ;; (setq gh-mode-line-padding nil)
 			  (when (and (buffer-narrowed-p)
 				     (mode-line-window-selected-p))
-			    " \(Narrowed\) ")))
+			    (propertize " \(Narrowed\)" 'face 'error))))
 
 		    (defvar gh-mode-line-kmacro
 		      '(:eval
@@ -506,6 +595,7 @@
 			       gh-mode-line-padding
 			       gh-mode-line-kmacro
 			       gh-mode-line-narrowing
+			       gh-mode-line-buffer-read-only
 			       gh-mode-line-time-and-date
 			       gh-my-mode-line-buffer-name))
 		      (put construct 'risky-local-variable t))
@@ -568,3 +658,5 @@
 ;; (keymap-set xah-fly-command-map "g"
 ;; 	    (lambda () (interactive)
 ;; 	      (mode-command-or-xfk-command 'magit-status-mode 'magit-refresh            'dired-revert-buffer-or-xah-delete-current-text-block)))
+
+;; (keymap-set minibuffer-mode-map "C-r" (lambda () (interactive) (insert "~")(sleep-for 1)(insert "/")))

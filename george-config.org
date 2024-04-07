@@ -127,6 +127,7 @@
 #+begin_src emacs-lisp :tangle "init.el"
 		    (keymap-set key-translation-map "<escape>" "C-g")
 		    (keymap-set xah-fly-command-map "." 'crux-other-window-or-switch-buffer)
+		    (keymap-set xah-fly-command-map "," 'ignore)
 		    ;; (keymap-set xah-fly-command-map ">" (lambda () (interactive) (switch-to-buffer (other-buffer (current-buffer)))))
 
 		    (keymap-set xah-fly-command-map "8" 'er/expand-region)
@@ -370,121 +371,205 @@
 #+end_src
 * TODO hydra (narrow function)
 #+begin_src emacs-lisp :tangle "init.el"
-		    (defun hydra-ex-point-mark ()
-		    "Exchange point and mark."
-		    (interactive)
-		    (if rectangle-mark-mode
-			(rectangle-exchange-point-and-mark)
-		      (let ((mk (mark)))
-			(rectangle-mark-mode 1)
-			(goto-char mk))))
+	    (defun hydra-ex-point-mark ()
+	    "Exchange point and mark."
+	    (interactive)
+	    (if rectangle-mark-mode
+		(rectangle-exchange-point-and-mark)
+	      (let ((mk (mark)))
+		(rectangle-mark-mode 1)
+		(goto-char mk))))
 
-		    (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
-							 :color pink
-							 :post (deactivate-mark))
-			  "
-		      _s_tring _d_:yank _b_:reset _c_opy _j_:undo _e_xchange _x_kill _n_umbers _o_pen c_l_ear _w_hitespace re_g_ister
-				"
-			  ("e" hydra-ex-point-mark nil)
-			    ("o" open-rectangle nil)
-			  ("c" copy-rectangle-as-kill nil)
-			  ("b" (if (region-active-p)
-				   (deactivate-mark)
-				 (rectangle-mark-mode 1)) nil)
-			  ("d" yank-rectangle nil)
-			  ("g" copy-rectangle-to-register nil)
-			  ("w" delete-whitespace-rectangle nil)
-			  ("n" rectangle-number-lines nil)
-			  ("l" clear-rectangle nil)
-			  ("j" undo nil)
-			  ("s" string-rectangle nil)
-			  ("x" kill-rectangle nil)
-			  ("<left>" rectangle-left-char nil :color pink)
-			  ("<right>" rectangle-right-char nil :color pink)
-			  ("C-g" nil)
-			  ("RET" nil)
-			  )
-	  (global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
+	    (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
+						 :color pink
+						 :post (deactivate-mark))
+		  "
+	      _s_tring _d_:yank _b_:reset _c_opy _j_:undo _e_xchange _x_kill _n_umbers _o_pen c_l_ear _w_hitespace re_g_ister
+			"
+		  ("e" hydra-ex-point-mark nil)
+		    ("o" open-rectangle nil)
+		  ("c" copy-rectangle-as-kill nil)
+		  ("b" (if (region-active-p)
+			   (deactivate-mark)
+			 (rectangle-mark-mode 1)) nil)
+		  ("d" yank-rectangle nil)
+		  ("g" copy-rectangle-to-register nil)
+		  ("w" delete-whitespace-rectangle nil)
+		  ("n" rectangle-number-lines nil)
+		  ("l" clear-rectangle nil)
+		  ("j" undo nil)
+		  ("s" string-rectangle nil)
+		  ("x" kill-rectangle nil)
+		  ("<left>" rectangle-left-char nil :color pink)
+		  ("<right>" rectangle-right-char nil :color pink)
+		  ("C-g" nil)
+		  ("RET" nil)
+		  )
+  (global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
 
-		      (defun gh-paste-clipboard-into-buffer ()
-			"Paste contents of clipboard into current buffer"
-			(interactive)
-			(xah-new-empty-buffer)
-			(yank))
+	      (defun gh-paste-clipboard-into-buffer ()
+		"Paste contents of clipboard into current buffer"
+		(interactive)
+		(xah-new-empty-buffer)
+		(yank))
 
-	  (keymap-global-set "C-S-n" #'gh-paste-clipboard-into-buffer)
+  (keymap-global-set "C-S-n" #'gh-paste-clipboard-into-buffer)
 
-		      (defun gh-no-kill-ring-if-blank (str)
-			"DOCSTRING"
-			(interactive)
-			(unless (string-blank-p str) str))
+	      (defun gh-no-kill-ring-if-blank (str)
+		"DOCSTRING"
+		(interactive)
+		(unless (string-blank-p str) str))
 
-		      (setq kill-transform-function #'gh-no-kill-ring-if-blank)
-
-
-	      ;; 	(defun my-q-insert-or-quit-window (&optional n)
-	      ;; 	  (interactive "p")
-	      ;; 	  (unless (and (equal (buffer-name) "george-config.org")
-	      ;; 		       buffer-read-only
-	      ;; 		       (not (eq major-mode 'dired-mode))
-	      ;; 		       (quit-window))))
-
-	      ;; (define-key xah-fly-command-map (kbd "q") #'my-q-insert-or-quit-window)
-
-		    ;; (defun my-q-insert-or-quit-window (&optional n) (interactive "p") (if buffer-read-only (quit-window) (xah-reformat-lines)))
+	      (setq kill-transform-function #'gh-no-kill-ring-if-blank)
 
 
-		    (defun newline-without-break-of-line ()
-				  (interactive)
-				  (save-excursion
-				    (let ((oldpos (point)))
-				    (end-of-line)
-				    (newline-and-indent))))
+      ;; 	(defun my-q-insert-or-quit-window (&optional n)
+      ;; 	  (interactive "p")
+      ;; 	  (unless (and (equal (buffer-name) "george-config.org")
+      ;; 		       buffer-read-only
+      ;; 		       (not (eq major-mode 'dired-mode))
+      ;; 		       (quit-window))))
 
-		    (define-key xah-fly-command-map (kbd "r") #'newline-without-break-of-line)
+      ;; (define-key xah-fly-command-map (kbd "q") #'my-q-insert-or-quit-window)
+
+	    ;; (defun my-q-insert-or-quit-window (&optional n) (interactive "p") (if buffer-read-only (quit-window) (xah-reformat-lines)))
 
 
-		    (defun narrow-or-widen-dwim (p)
-		      "Widen if buffer is narrowed, narrow-dwim otherwise.
-		    Dwim means: region, org-src-block, org-subtree, or
-		    defun, whichever applies first. Narrowing to
-		    org-src-block actually calls `org-edit-src-code'.
+	    (defun newline-without-break-of-line ()
+			  (interactive)
+			  (save-excursion
+			    (let ((oldpos (point)))
+			    (end-of-line)
+			    (newline-and-indent))))
 
-		    With prefix P, don't widen, just narrow even if buffer
-		    is already narrowed."
-		      (interactive "P")
-		      (declare (interactive-only))
-		      (cond ((and (buffer-narrowed-p) (not p)) (widen))
-			    ((region-active-p)
-			     (narrow-to-region (region-beginning)
-					       (region-end)))
-			    ;; ((derived-mode-p 'org-mode)
-			     ;; `org-edit-src-code' is not a real narrowing
-			     ;; command. Remove this first conditional if
-			     ;; you don't want it.
-			     ;; (cond ((ignore-errors (org-edit-src-code) t)
-				    ;; (delete-other-windows))
-				   ;; ((ignore-errors (org-narrow-to-block) t))
-				   ;; (t (org-narrow-to-subtree))))
-			    ((derived-mode-p 'latex-mode)
-			     (LaTeX-narrow-to-environment))
-			    (t (narrow-to-defun))))
+	    (define-key xah-fly-command-map (kbd "r") #'newline-without-break-of-line)
 
-		    ;; (define-key endless/toggle-map "n"
-		    ;; #'narrow-or-widen-dwim)
 
-		    ;; This line actually replaces Emacs' entire narrowing
-		    ;; keymap, that's how much I like this command. Only
-		    ;; copy it if that's what you want.
-		    (define-key ctl-x-map "n" #'narrow-or-widen-dwim)
-		    (add-hook 'LaTeX-mode-hook
-			      (lambda ()
-				(define-key LaTeX-mode-map "\C-xn"
-					    nil)))
+	    (defun narrow-or-widen-dwim (p)
+	      "Widen if buffer is narrowed, narrow-dwim otherwise.
+	    Dwim means: region, org-src-block, org-subtree, or
+	    defun, whichever applies first. Narrowing to
+	    org-src-block actually calls `org-edit-src-code'.
 
-		    (keymap-global-set "C-c n" #'narrow-or-widen-dwim)
+	    With prefix P, don't widen, just narrow even if buffer
+	    is already narrowed."
+	      (interactive "P")
+	      (declare (interactive-only))
+	      (cond ((and (buffer-narrowed-p) (not p)) (widen))
+		    ((region-active-p)
+		     (narrow-to-region (region-beginning)
+				       (region-end)))
+		    ;; ((derived-mode-p 'org-mode)
+		     ;; `org-edit-src-code' is not a real narrowing
+		     ;; command. Remove this first conditional if
+		     ;; you don't want it.
+		     ;; (cond ((ignore-errors (org-edit-src-code) t)
+			    ;; (delete-other-windows))
+			   ;; ((ignore-errors (org-narrow-to-block) t))
+			   ;; (t (org-narrow-to-subtree))))
+		    ((derived-mode-p 'latex-mode)
+		     (LaTeX-narrow-to-environment))
+		    (t (narrow-to-defun))))
+
+	    ;; (define-key endless/toggle-map "n"
+	    ;; #'narrow-or-widen-dwim)
+
+	    ;; This line actually replaces Emacs' entire narrowing
+	    ;; keymap, that's how much I like this command. Only
+	    ;; copy it if that's what you want.
+	    (define-key ctl-x-map "n" #'narrow-or-widen-dwim)
+	    (add-hook 'LaTeX-mode-hook
+		      (lambda ()
+			(define-key LaTeX-mode-map "\C-xn"
+				    nil)))
+
+	    (keymap-global-set "C-c n" #'narrow-or-widen-dwim)
+
+  	  (defhydra hydra-artist (:pre (artist-mode) :color pink :post (artist-mode-off))
+	    ("C-p" artist-select-op-pen-line "pen")
+	    ("C-r" artist-select-op-rectangle "rect")
+	    ("C-l" artist-select-op-line "line")
+	    ("C-c" artist-select-op-circle "circle")
+	    ("C-s" artist-select-op-square "square")
+	    ("C-s" artist-select-op-square "square")
+	    ("C-e" artist-select-op-ellipse "ellipse")
+	    ("C-y" artist-select-op-poly-line "poly line")
+	    ("C-z" artist-select-op-spray-con "spray can")
+	    ("C-q" nil "quit")
+	    ("C-h" backward-char "back"))
+
+	  (global-set-key (kbd "M-a") #'hydra-artist/body)
+
+	  (defhydra hydra-register (:color blue)
+	    ("j" jump-to-register "jump")
+	    ("i" jump-to-register "insert")
+	    ("k" copy-to-register "copy")
+	    ("p" point-to-register "point")
+	    ("v" view-register "view")
+	    ("a" append-register "append")
+	    ("c" increment-register "increment")
+	    ("m" kmacro-register "macro")
+	    ("n" number-to-register "number")
+	    ("e" prepend-to-register "prepent")
+	    ("r" rectangle-to-register "rect")
+	    ("w" window-to-register "win"))
+
+	  (defhydra hydra-kmacro (:color blue)
+	    ("v" kmacro-view-macro "view")
+	    ;; ("o" kmacro-pop-ring "pop")
+	    ;; ("p" kmacro-push-ring "push")
+	    ;; ("h" kmacro-ring-head "ring head")
+	    ("w" kmacro-swap-ring "swap")
+	    ("e" kmacro-edit-macro "edit")
+	    ("b" kmacro-bind-to-key "bind")
+	    ("s" kmacro-set-counter "set counter")
+	    ("a" kmacro-add-counter "add counter")
+	    ("i" kmacro-insert-counter "insert counter")
+	    ("r" kmacro-to-register "reg")
+	    ("d" kmacro-display-counter "display counter")
+	    ("n" kmacro-name-last-macro "name last"))
+
+
+	  ;; (defhydra hydra-kmacro (:color blue)
+	  ;; ("v" kmacro-view-macro "view")
+	  ;; ;; ("o" kmacro-pop-ring "pop")
+	  ;; ;; ("p" kmacro-push-ring "push")
+	  ;; ;; ("h" kmacro-ring-head "ring head")
+	  ;; ("w" kmacro-swap-ring "swap")
+	  ;; ("e" kmacro-edit-macro "edit")
+	  ;; ("b" kmacro-bind-to-key "bind")
+	  ;; ("s" kmacro-set-counter "set counter")
+	  ;; ("a" kmacro-add-counter "add counter")
+	  ;; ("i" kmacro-insert-counter "insert counter")
+	  ;; ("r" kmacro-to-register "reg")
+	  ;; ("d" kmacro-display-counter "display counter")
+	  ;; ("n" kmacro-name-last-macro "name last"))
+
+  (global-set-key (kbd "M-w") #'hydra-window/body)
+  (global-set-key (kbd "M-r") #'hydra-register/body)
+
+
+  (defun ora-ex-point-mark ()
+    (interactive)
+    (if rectangle-mark-mode
+	(exchange-point-and-mark)
+      (let ((mk (mark)))
+	(rectangle-mark-mode 1)
+	(goto-char mk))))
+
+  (defun ora-ex-point-mark ()
+    (interactive)
+    (if rectangle-mark-mode
+	(exchange-point-and-mark)
+      (let ((mk (mark)))
+	(rectangle-mark-mode 1)
+	(goto-char mk))))
 
 #+end_src
+
+#+RESULTS:
+: ora-ex-point-mark
+
 * mouse
 #+begin_src emacs-lisp :tangle "init.el"
 		    (keymap-global-set "<left-fringe> <mouse-1>" #'display-line-numbers-mode)
@@ -500,100 +585,112 @@
 #+end_src
 * mode line
 #+begin_src emacs-lisp :tangle "init.el"
-		    (setq-default mode-line-format
-				  '("%e"
-				    " "
-				    gh-my-mode-line-buffer-name
-				    gh-mode-line-padding
-				    gh-mode-line-narrowing
-				    gh-mode-line-kmacro
-				    gh-mode-line-major-mode
-				    gh-mode-line-padding
-				    ;; gh-mode-line-git
-				    gh-mode-line-time-and-date
-				    ))
+		      (setq-default mode-line-format
+				    '("%e"
+				      " "
+				      gh-my-mode-line-buffer-name
+				      gh-mode-line-padding
+				      gh-mode-line-narrowing
+				      gh-mode-line-kmacro
+				      gh-mode-line-buffer-read-only
+				      gh-mode-line-major-mode
+				      gh-mode-line-padding
+				      ;; gh-mode-line-git
+				      gh-mode-line-time-and-date
+				      ))
 
-		    (defvar-local gh-my-mode-line-buffer-name
+		      (defvar-local gh-my-mode-line-buffer-name
+			  '(:eval
+			      (format "%s "
+				      (propertize (buffer-name) 'face 'alert-normal-face))
+			      ))
+
+		      ;; (defvar-local gh-mode-line-git
+		      ;;     '(:eval
+		      ;;       (when (mode-line-window-selected-p)
+		      ;; 	(format "%s"
+		      ;; 		(propertize vc-mode 'face 'warning)))))
+
+		      (defvar-local gh-mode-line-major-mode
+			  '(:eval
+			    (when (mode-line-window-selected-p)
+			    (format " %s "
+				    (propertize (symbol-name major-mode) 'face 'bold)))))
+
+		      (defvar-local gh-mode-line-time-and-date
+			  '(:eval
+			    (when (mode-line-window-selected-p)
+			      (propertize (format-time-string " %a%e %b, %H:%M") 'face 'abbrev-table-name))))
+
+  (defvar-local gh-mode-line-buffer-read-only
 			'(:eval
-			    (format "%s "
-				    (propertize (buffer-name) 'face 'warning))
-			    ))
+			  (when buffer-read-only
+			    (if (mode-line-window-selected-p)
+			    (propertize " \(ro\)" 'face 'all-the-icons-blue)
+			    (propertize " \(ro\)" 'face 'shadow)))))
 
-		    ;; (defvar-local gh-mode-line-git
-		    ;;     '(:eval
-		    ;;       (when (mode-line-window-selected-p)
-		    ;; 	(format "%s"
-		    ;; 		(propertize vc-mode 'face 'warning)))))
+		      (defvar-local gh-mode-line-padding
+			  '(:eval
+			    (when (mode-line-window-selected-p)
+			      "---")))
 
-		    (defvar-local gh-mode-line-major-mode
+		      (defvar-local gh-mode-line-narrowing
+			  '(:eval
+			    ;; (setq gh-mode-line-padding nil)
+			    (when (buffer-narrowed-p)
+			      (if (mode-line-window-selected-p)
+			      (propertize " \(narrowed\)" 'face 'error)
+			      (propertize " \(narrowed\)" 'face 'shadow)))))
+
+
+		      (defvar gh-mode-line-kmacro
 			'(:eval
-			  (format " %s "
-				  (propertize (symbol-name major-mode) 'face 'bold))))
+			  (when (and (mode-line-window-selected-p)
+				     defining-kbd-macro)
+			    " KMacro ")))
 
-		    (defvar-local gh-mode-line-time-and-date
-			'(:eval
-			  (when (mode-line-window-selected-p)
-			    (propertize (format-time-string " %a%e %b, %H:%M") 'face 'abbrev-table-name))))
+		      (dolist (construct
+			       '(gh-mode-line-major-mode
+				 gh-mode-line-padding
+				 gh-mode-line-kmacro
+				 gh-mode-line-narrowing
+				 gh-mode-line-buffer-read-only
+				 gh-mode-line-time-and-date
+				 gh-my-mode-line-buffer-name))
+			(put construct 'risky-local-variable t))
 
-		    (defvar-local gh-mode-line-padding
-			'(:eval
-			  (when (mode-line-window-selected-p)
-			    "---")))
-
-		    (defvar-local gh-mode-line-narrowing
-			'(:eval
-			  ;; (setq gh-mode-line-padding nil)
-			  (when (and (buffer-narrowed-p)
-				     (mode-line-window-selected-p))
-			    " \(Narrowed\) ")))
-
-		    (defvar gh-mode-line-kmacro
-		      '(:eval
-			(when (and (mode-line-window-selected-p)
-				   defining-kbd-macro)
-			  " KMacro ")))
-
-		    (dolist (construct
-			     '(gh-mode-line-major-mode
-			       gh-mode-line-padding
-			       gh-mode-line-kmacro
-			       gh-mode-line-narrowing
-			       gh-mode-line-time-and-date
-			       gh-my-mode-line-buffer-name))
-		      (put construct 'risky-local-variable t))
-
-;to add: **-,  line nums, % through document, Git, battery, get rid of padding when narrowed    534:		    ;buffer ;management
+  ;to add: **-,  line nums, % through document, Git, battery, get rid of padding when narrowed    534:		    ;buffer ;management
 
 
-		    ;buffer management
+		      ;buffer management
 
-		    (defun gh-make-window-current (window)
-		      (select-window window))
+		      (defun gh-make-window-current (window)
+			(select-window window))
 
-		    (setq display-buffer-alist
-			  '(
-			    ("\\*Occur\\*"
-			     (display-buffer-reuse-window
-			      display-buffer-below-selected)
-			     (window-height . fit-window-to-buffer)
-			     (dedicated . t)
-			    (body-function . gh-make-window-current))
-			    ("\\*helpful.*"
-			     (display-buffer-reuse-window
-			      display-buffer-below-selected)
-			     )))
+		      (setq display-buffer-alist
+			    '(
+			      ("\\*Occur\\*"
+			       (display-buffer-reuse-window
+				display-buffer-below-selected)
+			       (window-height . fit-window-to-buffer)
+			       (dedicated . t)
+			      (body-function . gh-make-window-current))
+			      ("\\*helpful.*"
+			       (display-buffer-reuse-window
+				display-buffer-below-selected)
+			       )))
 
-      ;org
-	    (setq org-use-speed-commands t)
-		    (setq org-structure-template-alist
-			  '(
-			    ("a" . "export ascii")
-		     ("e" . "src emacs-lisp")
-		     ("t" . "src emacs-lisp :tangle \" \"")
-		     ("l" . "src lua")
-		     ("v" . "verse")))
+	;org
+	      (setq org-use-speed-commands t)
+		      (setq org-structure-template-alist
+			    '(
+			      ("a" . "export ascii")
+		       ("e" . "src emacs-lisp")
+		       ("t" . "src emacs-lisp :tangle \" \"")
+		       ("l" . "src lua")
+		       ("v" . "verse")))
 
-		    (keymap-global-set "C-c C-," 'org-insert-structure-template)
+		      (keymap-global-set "C-c C-," 'org-insert-structure-template)
 
 #+end_src
 * occur
@@ -623,5 +720,8 @@
   ;; (keymap-set xah-fly-command-map "g"
   ;; 	    (lambda () (interactive)
   ;; 	      (mode-command-or-xfk-command 'magit-status-mode 'magit-refresh            'dired-revert-buffer-or-xah-delete-current-text-block)))
-
+#+end_src
+* Minibuffer
+#+begin_src emacs-lisp :tangle "init.el"
+  ;; (keymap-set minibuffer-mode-map "C-r" (lambda () (interactive) (insert "~")(sleep-for 1)(insert "/")))
 #+end_src
