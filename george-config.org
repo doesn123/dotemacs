@@ -70,36 +70,36 @@
 #+end_src
 * package managment
 #+begin_src emacs-lisp :tangle "init.el"
-	    (setq package-archives
-			  '(("gnu-elpa" . "https://elpa.gnu.org/packages/")
-			    ("gnu-elpa-devel" . "https://elpa.gnu.org/devel/")
-			    ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-			    ("melpa" . "https://melpa.org/packages/")))
-(setq test "t1")
-		    ;; Highest number gets priority (what is not mentioned has priority 0)
-		    (setq package-archive-priorities
-			  '(("gnu-elpa" . 3)
-			    ("melpa" . 2)
-			    ("nongnu" . 1)))
+	      (setq package-archives
+			    '(("gnu-elpa" . "https://elpa.gnu.org/packages/")
+			      ("gnu-elpa-devel" . "https://elpa.gnu.org/devel/")
+			      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+			      ("melpa" . "https://melpa.org/packages/")))
+  
+		      ;; Highest number gets priority (what is not mentioned has priority 0)
+		      (setq package-archive-priorities
+			    '(("gnu-elpa" . 3)
+			      ("melpa" . 2)
+			      ("nongnu" . 1)))
 
-		    ; package management
-		    (defun gh-package-management (package)
-		      (unless (package-installed-p package)
-			(unless package-archive-contents
-		      (package-refresh-contents))
-			(package-install package)))
+		      ; package management
+		      (defun gh-package-management (package)
+			(unless (package-installed-p package)
+			  (unless package-archive-contents
+			(package-refresh-contents))
+			  (package-install package)))
 
-		    (gh-package-management 'xah-fly-keys)
-		    (gh-package-management 'orderless)
-; keybinding - -= (and shift+keys)
-		    (require 'xah-fly-keys)
-		    (xah-fly-keys-set-layout "colemak-dhm")
-		    (xah-fly-keys 1)
+		      (gh-package-management 'xah-fly-keys)
+		      (gh-package-management 'orderless)
+  ; keybinding - -= (and shift+keys)
+		      (require 'xah-fly-keys)
+		      (xah-fly-keys-set-layout "colemak-dhm")
+		      (xah-fly-keys 1)
 #+end_src
 * basic setup
 #+begin_src emacs-lisp :tangle "init.el"
   (add-to-list 'load-path '"~/.emacs.d/lisp/")
-
+(setq initial-buffer-choice "~/.emacs.d/scratch.org")
   (setq savehist-file (locate-user-emacs-file "savehist"))
   (setq history-length 100)
   (setq history-delete-duplicates t)
@@ -114,7 +114,6 @@
   (put 'narrow-to-region 'disabled t)
 
     (setq kill-read-only-ok t)
-
 #+end_src
 * world clock
 #+begin_src emacs-lisp :tangle "init.el"
@@ -123,10 +122,7 @@
 			  '(("America/Los_Angeles" "Lance (LA)")
 			    ("America/New_York" "Chris (NY)")
 			    ("Europe/Amsterdam" "Amsterdam")))
-
-
 #+end_src
-
 * keybindings
 #+begin_src emacs-lisp :tangle "init.el"
 		    (keymap-set key-translation-map "<escape>" "C-g")
@@ -163,7 +159,6 @@
 #+end_src
 * dired
 #+begin_src emacs-lisp :tangle "init.el"
-
 		    (keymap-set dired-mode-map "DEL" 'dired-up-directory)
 
 		      (define-key dired-mode-map (kbd "1") #'dired-do-shell-command)
@@ -216,7 +211,6 @@
 		    (keymap-set xah-fly-command-map "m" 'dired-mark-or-xah-beginning-of-line-or-block)
 		    (keymap-set xah-fly-command-map "g" 'dired-revert-buffer-or-xah-delete-current-text-block)
 		    ;; (keymap-set xah-fly-command-map "j" 'gh-dired-goto-file-or-undo)
-
 #+end_src
 * packages
 #+begin_src emacs-lisp :tangle "init.el"
@@ -252,7 +246,6 @@
 
 		    (when (display-graphic-p)
 		      (require 'all-the-icons))
-
 #+end_src
 * substitute
 #+begin_src emacs-lisp :tangle "init.el"
@@ -263,12 +256,6 @@
 		    ;; If you want a message reporting the matches that changed in the
 		    ;; given context.  We don't do it by default.
 		    (add-hook 'substitute-post-replace-functions #'substitute-report-operation)
-
-		    (let ((map global-map))
-		       (keymap-set map "M-s" #'substitute-target-below-point)
-		       (keymap-set map "M-r" #'substitute-target-above-point)
-		       (keymap-set map "M-d" #'substitute-target-in-defun)
-		       (keymap-set map "M-b" #'substitute-target-in-buffer))
 
 		    (dolist (hook '(text-mode-hook))
 		      (add-hook hook #'jinx-mode))
@@ -305,7 +292,7 @@
     ;; (keymap-set xah-fly-command-map "F" #'consult-locate)
     (keymap-set xah-fly-command-map "%" #'consult-buffer-other-frame)
     (keymap-set xah-fly-command-map "I" #'consult-org-heading)
-    (keymap-set xah-fly-command-map "R" #'consult-ripgrep)
+    ;; (keymap-set xah-fly-command-map "R" #'consult-ripgrep)
     (keymap-set xah-fly-command-map "M" #'consult-mark)
     (keymap-set xah-fly-command-map "B" #'consult-bookmark)
     (keymap-set xah-fly-command-map "G" #'consult-register-load)
@@ -313,11 +300,10 @@
     (keymap-set xah-fly-command-map "E" #'consult-register)
     (keymap-set xah-fly-command-map "'" #'consult-line)
     (keymap-set xah-fly-command-map "O" #'occur)
-    ;; (keymap-set xah-fly-command-map "" 'consult-line-multi) ;use '"' 
 
     ;;consult find commands (use hydra)
   ;fd,locate,grep
-  
+
     ;; consult-narrow
     ;; consult-org-agenda
     ;; consult-focus-lines
@@ -514,12 +500,16 @@
 	 ("G" consult-git-grep "git-grep")
 	 ("r" consult-ripgrep "ripgrep")
 	 ("m" consult-line-multi "line-multi")
-    	 ("m" consult-global-mark "global-mark")
+	 ("M" consult-global-mark "global-mark")
 	 ("k" consult-keep-lines "keep-lines")
+	 ("d" (consult-grep "~/other-dotemacs-files/") "dotemacs")
+	 ("V" (consult-grep "~/other-mpv-configs/") "mpv")
+	 ("v" (consult-fd "~/videos/" "mkv\\|mp4#") "videos")
+	 ("c" (lambda () (interactive) (find-file "~/.emacs.d/george-config.org") (consult-line)) "config")
 	 ("F" consult-focus-lines "focus-lines"))
-    
+
      (keymap-set xah-fly-command-map "F" #'hydra-consult-find/body)
-	  
+
 	  (defhydra hydra-register (:color blue)
 	    ("i" insert-register "insert")
 	    ("c" copy-to-register "copy")
@@ -533,6 +523,12 @@
 	    ("R" copy-rectangle-to-register "rect")
 	    ("f"   frameset-to-register "frameset")
 	    ("w" window-configuration-to-register "win"))
+
+  (defhydra hydra-substitute (:color blue)
+	    ("<up>" substitute-target-above-point "above")
+	    ("<down>" substitute-target-below-point "below")
+	    ("s" substitute-target-in-buffer "buffer")
+	    ("d" substitute-target-in-defun "defun"))
 
 	  (defhydra hydra-kmacro (:color blue)
 	    ("v" kmacro-view-macro "view")
@@ -565,30 +561,9 @@
 	  ;; ("n" kmacro-name-last-macro "name last"))
 
   (keymap-global-set "M-w" #'hydra-window/body)
-  (keymap-global-set "M-r" #'hydra-register/body)
-
-
-  (defun ora-ex-point-mark ()
-    (interactive)
-    (if rectangle-mark-mode
-	(exchange-point-and-mark)
-      (let ((mk (mark)))
-	(rectangle-mark-mode 1)
-	(goto-char mk))))
-
-  (defun ora-ex-point-mark ()
-    (interactive)
-    (if rectangle-mark-mode
-	(exchange-point-and-mark)
-      (let ((mk (mark)))
-	(rectangle-mark-mode 1)
-	(goto-char mk))))
-
+  (keymap-set xah-fly-command-map "R" 'hydra-register/body)
+  (keymap-set xah-fly-command-map "S" 'hydra-substitute/body)
 #+end_src
-
-#+RESULTS:
-: ora-ex-point-mark
-
 * mouse
 #+begin_src emacs-lisp :tangle "init.el"
 		    (keymap-global-set "<left-fringe> <mouse-1>" #'display-line-numbers-mode)
@@ -599,8 +574,6 @@
 		      "DOCSTRING"
 		      (interactive)
 		      (start-process "my-emacs-process" nil "emacs" "-Q"))
-
-
 #+end_src
 * mode line
 #+begin_src emacs-lisp :tangle "init.el"
@@ -679,10 +652,9 @@
 			(put construct 'risky-local-variable t))
 
   ;to add: **-,  line nums, % through document, Git, battery, get rid of padding when narrowed    534:		    ;buffer ;management
-
-
-		      ;buffer management
-
+#+end_src
+* buffer management
+#+begin_src emacs-lisp :tangle "init.el"
 		      (defun gh-make-window-current (window)
 			(select-window window))
 
@@ -698,8 +670,9 @@
 			       (display-buffer-reuse-window
 				display-buffer-below-selected)
 			       )))
-
-	;org
+#+end_src
+* org        
+#+begin_src emacs-lisp :tangle "init.el"
 	      (setq org-use-speed-commands t)
 		      (setq org-structure-template-alist
 			    '(
@@ -710,7 +683,6 @@
 		       ("v" . "verse")))
 
 		      (keymap-global-set "C-c C-," 'org-insert-structure-template)
-
 #+end_src
 * occur
 #+begin_src emacs-lisp :tangle "init.el"
@@ -719,14 +691,15 @@
 
 	(keymap-global-set "M-<left>" #'reb-prev-match)
 	(keymap-global-set "M-<right>" #'reb-next-match)
-
-
-      ;regex
+#+end_src
+* regex
+#+begin_src emacs-lisp :tangle "init.el"
       (setq reb-re-syntax 'string)
       (keymap-set xah-fly-leader-key-map "p" #'vr/query-replace)
       (keymap-set xah-fly-leader-key-map "p" #'vr/replace)
-
-  ;magit
+#+end_src
+* magit
+#+begin_src emacs-lisp :tangle "init.el"
   ;; keys to pass through to magit: l,d,s,x
 
 
@@ -741,6 +714,5 @@
   ;; 	      (mode-command-or-xfk-command 'magit-status-mode 'magit-refresh            'dired-revert-buffer-or-xah-delete-current-text-block)))
 #+end_src
 * Minibuffer
-#+begin_src emacs-lisp
-  ;; (persistent-scratch-mode 1)
+#+begin_src emacs-lisp :tangle "init.el"
 #+end_src

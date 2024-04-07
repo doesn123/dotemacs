@@ -71,7 +71,7 @@
 			    ("gnu-elpa-devel" . "https://elpa.gnu.org/devel/")
 			    ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 			    ("melpa" . "https://melpa.org/packages/")))
-(setq test "t1")
+
 		    ;; Highest number gets priority (what is not mentioned has priority 0)
 		    (setq package-archive-priorities
 			  '(("gnu-elpa" . 3)
@@ -93,21 +93,21 @@
 		    (xah-fly-keys 1)
 
 (add-to-list 'load-path '"~/.emacs.d/lisp/")
+(setq initial-buffer-choice "~/.emacs.d/scratch.org")
+  (setq savehist-file (locate-user-emacs-file "savehist"))
+  (setq history-length 100)
+  (setq history-delete-duplicates t)
+  (setq savehist-save-minibuffer-history t)
+  (setq savehist-additional-variables '(register-alist kill-ring))
+  (savehist-mode 1)
+  
+  (rainbow-delimiters-mode 1)
+  (find-file "~/.emacs.d/george-config.org")
+  (setq large-file-warning-threshold nil)
 
-(setq savehist-file (locate-user-emacs-file "savehist"))
-(setq history-length 100)
-(setq history-delete-duplicates t)
-(setq savehist-save-minibuffer-history t)
-(setq savehist-additional-variables '(register-alist kill-ring))
-(savehist-mode 1)
+  (put 'narrow-to-region 'disabled t)
 
-(rainbow-delimiters-mode 1)
-(find-file "~/.emacs.d/george-config.org")
-(setq large-file-warning-threshold nil)
-
-(put 'narrow-to-region 'disabled t)
-
-  (setq kill-read-only-ok t)
+    (setq kill-read-only-ok t)
 
 (setq display-time-world-time-format "%R // %z %Z	%A %d %B")
 (setq zoneinfo-style-world-list
@@ -239,12 +239,6 @@
 ;; given context.  We don't do it by default.
 (add-hook 'substitute-post-replace-functions #'substitute-report-operation)
 
-(let ((map global-map))
-   (keymap-set map "M-s" #'substitute-target-below-point)
-   (keymap-set map "M-r" #'substitute-target-above-point)
-   (keymap-set map "M-d" #'substitute-target-in-defun)
-   (keymap-set map "M-b" #'substitute-target-in-buffer))
-
 (dolist (hook '(text-mode-hook))
   (add-hook hook #'jinx-mode))
 
@@ -274,7 +268,7 @@
 ;; (keymap-set xah-fly-command-map "F" #'consult-locate)
   (keymap-set xah-fly-command-map "%" #'consult-buffer-other-frame)
   (keymap-set xah-fly-command-map "I" #'consult-org-heading)
-  (keymap-set xah-fly-command-map "R" #'consult-ripgrep)
+  ;; (keymap-set xah-fly-command-map "R" #'consult-ripgrep)
   (keymap-set xah-fly-command-map "M" #'consult-mark)
   (keymap-set xah-fly-command-map "B" #'consult-bookmark)
   (keymap-set xah-fly-command-map "G" #'consult-register-load)
@@ -282,7 +276,6 @@
   (keymap-set xah-fly-command-map "E" #'consult-register)
   (keymap-set xah-fly-command-map "'" #'consult-line)
   (keymap-set xah-fly-command-map "O" #'occur)
-  ;; (keymap-set xah-fly-command-map "" 'consult-line-multi) ;use '"' 
 
   ;;consult find commands (use hydra)
 ;fd,locate,grep
@@ -469,8 +462,12 @@
        ("G" consult-git-grep "git-grep")
        ("r" consult-ripgrep "ripgrep")
        ("m" consult-line-multi "line-multi")
-       ("m" consult-global-mark "global-mark")
+       ("M" consult-global-mark "global-mark")
        ("k" consult-keep-lines "keep-lines")
+       ("d" (consult-grep "~/other-dotemacs-files/") "dotemacs")
+       ("V" (consult-grep "~/other-mpv-configs/") "mpv")
+       ("v" (consult-fd "~/videos/" "mkv\\|mp4#") "videos")
+       ("c" (lambda () (interactive) (find-file "~/.emacs.d/george-config.org") (consult-line)) "config")
        ("F" consult-focus-lines "focus-lines"))
 
    (keymap-set xah-fly-command-map "F" #'hydra-consult-find/body)
@@ -488,6 +485,12 @@
 	  ("R" copy-rectangle-to-register "rect")
 	  ("f"   frameset-to-register "frameset")
 	  ("w" window-configuration-to-register "win"))
+
+(defhydra hydra-substitute (:color blue)
+	  ("<up>" substitute-target-above-point "above")
+	  ("<down>" substitute-target-below-point "below")
+	  ("s" substitute-target-in-buffer "buffer")
+	  ("d" substitute-target-in-defun "defun"))
 
 	(defhydra hydra-kmacro (:color blue)
 	  ("v" kmacro-view-macro "view")
@@ -520,24 +523,8 @@
 	;; ("n" kmacro-name-last-macro "name last"))
 
 (keymap-global-set "M-w" #'hydra-window/body)
-(keymap-global-set "M-r" #'hydra-register/body)
-
-
-(defun ora-ex-point-mark ()
-  (interactive)
-  (if rectangle-mark-mode
-      (exchange-point-and-mark)
-    (let ((mk (mark)))
-      (rectangle-mark-mode 1)
-      (goto-char mk))))
-
-(defun ora-ex-point-mark ()
-  (interactive)
-  (if rectangle-mark-mode
-      (exchange-point-and-mark)
-    (let ((mk (mark)))
-      (rectangle-mark-mode 1)
-      (goto-char mk))))
+(keymap-set xah-fly-command-map "R" 'hydra-register/body)
+(keymap-set xah-fly-command-map "S" 'hydra-substitute/body)
 
 (keymap-global-set "<left-fringe> <mouse-1>" #'display-line-numbers-mode)
 (keymap-global-set "<mouse-3>" #'eval-last-sexp)
@@ -624,157 +611,43 @@
 
 ;to add: **-,  line nums, % through document, Git, battery, get rid of padding when narrowed    534:		    ;buffer ;management
 
+(defun gh-make-window-current (window)
+  (select-window window))
 
-		    ;buffer management
+(setq display-buffer-alist
+      '(
+	("\\*Occur\\*"
+	 (display-buffer-reuse-window
+	  display-buffer-below-selected)
+	 (window-height . fit-window-to-buffer)
+	 (dedicated . t)
+	(body-function . gh-make-window-current))
+	("\\*helpful.*"
+	 (display-buffer-reuse-window
+	  display-buffer-below-selected)
+	 )))
 
-		    (defun gh-make-window-current (window)
-		      (select-window window))
+(setq org-use-speed-commands t)
+	(setq org-structure-template-alist
+	      '(
+		("a" . "export ascii")
+	 ("e" . "src emacs-lisp")
+	 ("t" . "src emacs-lisp :tangle \" \"")
+	 ("l" . "src lua")
+	 ("v" . "verse")))
 
-		    (setq display-buffer-alist
-			  '(
-			    ("\\*Occur\\*"
-			     (display-buffer-reuse-window
-			      display-buffer-below-selected)
-			     (window-height . fit-window-to-buffer)
-			     (dedicated . t)
-			    (body-function . gh-make-window-current))
-			    ("\\*helpful.*"
-			     (display-buffer-reuse-window
-			      display-buffer-below-selected)
-			     )))
-
-      ;org
-	    (setq org-use-speed-commands t)
-		    (setq org-structure-template-alist
-			  '(
-			    ("a" . "export ascii")
-		     ("e" . "src emacs-lisp")
-		     ("t" . "src emacs-lisp :tangle \" \"")
-		     ("l" . "src lua")
-		     ("v" . "verse")))
-
-		    (keymap-global-set "C-c C-," 'org-insert-structure-template)
-
-(setq-default mode-line-format
-				  '("%e"
-				    " "
-				    gh-my-mode-line-buffer-name
-				    gh-mode-line-padding
-				    gh-mode-line-narrowing
-				    gh-mode-line-kmacro
-				    gh-mode-line-buffer-read-only
-				    gh-mode-line-major-mode
-				    gh-mode-line-padding
-				    ;; gh-mode-line-git
-				    gh-mode-line-time-and-date
-				    ))
-
-		    (defvar-local gh-my-mode-line-buffer-name
-			'(:eval
-			    (format "%s "
-				    (propertize (buffer-name) 'face 'alert-normal-face))
-			    ))
-
-		    ;; (defvar-local gh-mode-line-git
-		    ;;     '(:eval
-		    ;;       (when (mode-line-window-selected-p)
-		    ;; 	(format "%s"
-		    ;; 		(propertize vc-mode 'face 'warning)))))
-
-		    (defvar-local gh-mode-line-major-mode
-			'(:eval
-			  (when (mode-line-window-selected-p)
-			  (format " %s "
-				  (propertize (symbol-name major-mode) 'face 'bold)))))
-
-		    (defvar-local gh-mode-line-time-and-date
-			'(:eval
-			  (when (mode-line-window-selected-p)
-			    (propertize (format-time-string " %a%e %b, %H:%M") 'face 'abbrev-table-name))))
-
-(defvar-local gh-mode-line-buffer-read-only
-		      '(:eval
-			(when buffer-read-only
-			  (if (mode-line-window-selected-p)
-			  (propertize " \(ro\)" 'face 'all-the-icons-blue)
-			  (propertize " \(ro\)" 'face 'shadow)))))
-
-		    (defvar-local gh-mode-line-padding
-			'(:eval
-			  (when (mode-line-window-selected-p)
-			    "---")))
-
-		    (defvar-local gh-mode-line-narrowing
-			'(:eval
-			  ;; (setq gh-mode-line-padding nil)
-			  (when (buffer-narrowed-p)
-			    (if (mode-line-window-selected-p)
-			    (propertize " \(narrowed\)" 'face 'error)
-			    (propertize " \(narrowed\)" 'face 'shadow)))))
-
-
-		    (defvar gh-mode-line-kmacro
-		      '(:eval
-			(when (and (mode-line-window-selected-p)
-				   defining-kbd-macro)
-			  " KMacro ")))
-
-		    (dolist (construct
-			     '(gh-mode-line-major-mode
-			       gh-mode-line-padding
-			       gh-mode-line-kmacro
-			       gh-mode-line-narrowing
-			       gh-mode-line-buffer-read-only
-			       gh-mode-line-time-and-date
-			       gh-my-mode-line-buffer-name))
-		      (put construct 'risky-local-variable t))
-
-;to add: **-,  line nums, % through document, Git, battery, get rid of padding when narrowed    534:		    ;buffer ;management
-
-
-		    ;buffer management
-
-		    (defun gh-make-window-current (window)
-		      (select-window window))
-
-		    (setq display-buffer-alist
-			  '(
-			    ("\\*Occur\\*"
-			     (display-buffer-reuse-window
-			      display-buffer-below-selected)
-			     (window-height . fit-window-to-buffer)
-			     (dedicated . t)
-			    (body-function . gh-make-window-current))
-			    ("\\*helpful.*"
-			     (display-buffer-reuse-window
-			      display-buffer-below-selected)
-			     )))
-
-      ;org
-	    (setq org-use-speed-commands t)
-		    (setq org-structure-template-alist
-			  '(
-			    ("a" . "export ascii")
-		     ("e" . "src emacs-lisp")
-		     ("t" . "src emacs-lisp :tangle \" \"")
-		     ("l" . "src lua")
-		     ("v" . "verse")))
-
-		    (keymap-global-set "C-c C-," 'org-insert-structure-template)
+	(keymap-global-set "C-c C-," 'org-insert-structure-template)
 
 (keymap-set occur-mode-map "M-<up>" ' previous-error-no-select)
-	  (keymap-set occur-mode-map "M-<down>" ' next-error-no-select)
+    (keymap-set occur-mode-map "M-<down>" ' next-error-no-select)
 
-      (keymap-global-set "M-<left>" #'reb-prev-match)
-      (keymap-global-set "M-<right>" #'reb-next-match)
+(keymap-global-set "M-<left>" #'reb-prev-match)
+(keymap-global-set "M-<right>" #'reb-next-match)
 
+(setq reb-re-syntax 'string)
+(keymap-set xah-fly-leader-key-map "p" #'vr/query-replace)
+(keymap-set xah-fly-leader-key-map "p" #'vr/replace)
 
-    ;regex
-    (setq reb-re-syntax 'string)
-    (keymap-set xah-fly-leader-key-map "p" #'vr/query-replace)
-    (keymap-set xah-fly-leader-key-map "p" #'vr/replace)
-
-;magit
 ;; keys to pass through to magit: l,d,s,x
 
 
@@ -787,3 +660,5 @@
 ;; (keymap-set xah-fly-command-map "g"
 ;; 	    (lambda () (interactive)
 ;; 	      (mode-command-or-xfk-command 'magit-status-mode 'magit-refresh            'dired-revert-buffer-or-xah-delete-current-text-block)))
+
+
