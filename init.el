@@ -1,11 +1,11 @@
 (setq inhibit-startup-message t)
 (setq inhibit-startup-echo-area-message "george")  
+(setq enable-recursive-minibuffers t)
 
 	  (menu-bar-mode -1)
 	  (tool-bar-mode -1)
 	  (scroll-bar-mode -1)
 	  (blink-cursor-mode -1)
-	  (setq enable-recursive-minibuffers t)
 
 	  (mapc
 	   (lambda (command)
@@ -20,23 +20,20 @@
 
 	  (set-face-attribute 'default nil :height 140)
 	  (fset 'yes-or-no-p 'y-or-n-p)
-	  (show-paren-mode)
+	  (show-paren-mode 1)
 	  (add-hook 'window-setup-hook 'toggle-frame-maximized)
 
 	  (setq custom-file (make-temp-file "emacs-custom-"))
 
 	  (global-visual-line-mode)
 
-	  ;; (setq display-time-day-and-date t)
-	  ;; (setq display-time-24hr-format t)
-	  ;; (setq display-time-format " %a %e %b %H:%M ")
 	  (setq display-time-default-load-average nil)
 
 	  (setq kill-buffer-query-functions
 		  (remq 'process-kill-buffer-query-function
 			 kill-buffer-query-functions))
 
-	  (display-time-mode 1)
+	  ;; (display-time-mode -1)
 
 	  (defun gh-toggle-menu-bar-mode ()
 		  (interactive)
@@ -59,8 +56,8 @@
 
 		  (defun gh-load-random-ef-theme-variant-dep-on-time-of-day ()
 		    (let ((now (string-to-number (format-time-string "%H" (current-time)))))
-		    (if (and (<= now 18) ;time of dark variant at night
-			     (>= now 7)) ;time of light variant in the morning
+		    (if (and (<= now 19)
+			     (>= now 7))
 		  (ef-themes-load-random 'light)
 		  (ef-themes-load-random 'dark))))
 
@@ -96,7 +93,14 @@
 		    (xah-fly-keys 1)
 
 (add-to-list 'load-path '"~/.emacs.d/lisp/")
-;; (savehist-mode 1)
+
+(setq savehist-file (locate-user-emacs-file "savehist"))
+(setq history-length 100)
+(setq history-delete-duplicates t)
+(setq savehist-save-minibuffer-history t)
+(setq savehist-additional-variables '(register-alist kill-ring))
+(savehist-mode 1)
+
 (rainbow-delimiters-mode 1)
 (find-file "~/.emacs.d/george-config.org")
 (setq large-file-warning-threshold nil)
@@ -178,7 +182,7 @@
 	    ;; 
 	      ;; (if (eq major-mode 'dired-mode)
 		  ;; (gh-dired-goto-file (file))
-		;; (undo)))
+		;; (undo))))
 
 	    ;; (defun gh-dired-goto-file (file)
 	      ;; (interactive "f")
@@ -267,28 +271,31 @@
   (interactive)
   (insert "`"))
 
-(keymap-set xah-fly-command-map "F" #'consult-locate)
-(keymap-set xah-fly-command-map "%" #'consult-buffer-other-frame)
-(keymap-set xah-fly-command-map "I" #'consult-org-heading)
-(keymap-set xah-fly-command-map "R" #'consult-ripgrep)
-(keymap-set xah-fly-command-map "M" #'consult-mark)
-(keymap-set xah-fly-command-map "B" #'consult-bookmark)
-(keymap-set xah-fly-command-map "G" #'consult-register-load)
-(keymap-set xah-fly-command-map "?" #'consult-info)
-(keymap-set xah-fly-command-map "E" #'consult-register)
-(keymap-set xah-fly-command-map "'" #'consult-line)
-(keymap-set xah-fly-command-map "O" #'occur)
-;; (keymap-set xah-fly-command-map """ 'consult-line-multi)
+;; (keymap-set xah-fly-command-map "F" #'consult-locate)
+  (keymap-set xah-fly-command-map "%" #'consult-buffer-other-frame)
+  (keymap-set xah-fly-command-map "I" #'consult-org-heading)
+  (keymap-set xah-fly-command-map "R" #'consult-ripgrep)
+  (keymap-set xah-fly-command-map "M" #'consult-mark)
+  (keymap-set xah-fly-command-map "B" #'consult-bookmark)
+  (keymap-set xah-fly-command-map "G" #'consult-register-load)
+  (keymap-set xah-fly-command-map "?" #'consult-info)
+  (keymap-set xah-fly-command-map "E" #'consult-register)
+  (keymap-set xah-fly-command-map "'" #'consult-line)
+  (keymap-set xah-fly-command-map "O" #'occur)
+  ;; (keymap-set xah-fly-command-map "" 'consult-line-multi) ;use '"' 
 
-;; consult-narrow
-;; consult-org-agenda
-;; consult-focus-lines
-;; consult-global-mark
-;; consult-org-heading
-;; consult-complex-command
-(keymap-global-set "s-a" 'consult-yank-from-kill-ring)
+  ;;consult find commands (use hydra)
+;fd,locate,grep
 
-(global-set-key (kbd "C-h f") #'helpful-callable)
+  ;; consult-narrow
+  ;; consult-org-agenda
+  ;; consult-focus-lines
+  ;; consult-global-mark
+  ;; consult-org-heading
+  ;; consult-complex-command
+  (keymap-global-set "s-a" 'consult-yank-from-kill-ring)
+
+(keymap-global-set "C-h f" #'helpful-callable)
 
 (keymap-global-set "C-h v" #'helpful-variable)
 (keymap-global-set "C-h k" #'helpful-key)
@@ -360,7 +367,7 @@
 		("C-g" nil)
 		("RET" nil)
 		)
-(global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
+(keymap-global-set "C-x SPC" 'hydra-rectangle/body)
 
 	    (defun gh-paste-clipboard-into-buffer ()
 	      "Paste contents of clipboard into current buffer"
@@ -440,7 +447,7 @@
 
 	  (keymap-global-set "C-c n" #'narrow-or-widen-dwim)
 
-  	(defhydra hydra-artist (:pre (artist-mode) :color pink :post (artist-mode-off))
+	(defhydra hydra-artist (:pre (artist-mode) :color pink :post (artist-mode-off))
 	  ("C-p" artist-select-op-pen-line "pen")
 	  ("C-r" artist-select-op-rectangle "rect")
 	  ("C-l" artist-select-op-line "line")
@@ -453,21 +460,34 @@
 	  ("C-q" nil "quit")
 	  ("C-h" backward-char "back"))
 
-	(global-set-key (kbd "M-a") #'hydra-artist/body)
+	(keymap-global-set "M-a" #'hydra-artist/body)
+
+(defhydra hydra-consult-find (:color blue)
+       ("f" consult-fd "fd")
+       ("l" consult-locate "locate")
+       ("g" consult-grep "grep")
+       ("G" consult-git-grep "git-grep")
+       ("r" consult-ripgrep "ripgrep")
+       ("m" consult-line-multi "line-multi")
+       ("m" consult-global-mark "global-mark")
+       ("k" consult-keep-lines "keep-lines")
+       ("F" consult-focus-lines "focus-lines"))
+
+   (keymap-set xah-fly-command-map "F" #'hydra-consult-find/body)
 
 	(defhydra hydra-register (:color blue)
-	  ("j" jump-to-register "jump")
-	  ("i" jump-to-register "insert")
-	  ("k" copy-to-register "copy")
+	  ("i" insert-register "insert")
+	  ("c" copy-to-register "copy")
 	  ("p" point-to-register "point")
-	  ("v" view-register "view")
 	  ("a" append-register "append")
-	  ("c" increment-register "increment")
+	  ("+" increment-register "increment")
 	  ("m" kmacro-register "macro")
 	  ("n" number-to-register "number")
 	  ("e" prepend-to-register "prepent")
-	  ("r" rectangle-to-register "rect")
-	  ("w" window-to-register "win"))
+	  ("r" consult-register "consult")
+	  ("R" copy-rectangle-to-register "rect")
+	  ("f"   frameset-to-register "frameset")
+	  ("w" window-configuration-to-register "win"))
 
 	(defhydra hydra-kmacro (:color blue)
 	  ("v" kmacro-view-macro "view")
@@ -484,7 +504,6 @@
 	  ("d" kmacro-display-counter "display counter")
 	  ("n" kmacro-name-last-macro "name last"))
 
-
 	;; (defhydra hydra-kmacro (:color blue)
 	;; ("v" kmacro-view-macro "view")
 	;; ;; ("o" kmacro-pop-ring "pop")
@@ -500,8 +519,8 @@
 	;; ("d" kmacro-display-counter "display counter")
 	;; ("n" kmacro-name-last-macro "name last"))
 
-(global-set-key (kbd "M-w") #'hydra-window/body)
-(global-set-key (kbd "M-r") #'hydra-register/body)
+(keymap-global-set "M-w" #'hydra-window/body)
+(keymap-global-set "M-r" #'hydra-register/body)
 
 
 (defun ora-ex-point-mark ()
@@ -545,10 +564,9 @@
 
 		    (defvar-local gh-my-mode-line-buffer-name
 			'(:eval
-			  (when (mode-line-window-selected-p)
 			    (format "%s "
-				    (propertize (buffer-name) 'face 'warning))
-			    )))
+				    (propertize (buffer-name) 'face 'alert-normal-face))
+			    ))
 
 		    ;; (defvar-local gh-mode-line-git
 		    ;;     '(:eval
@@ -570,7 +588,9 @@
 (defvar-local gh-mode-line-buffer-read-only
 		      '(:eval
 			(when buffer-read-only
-				    (propertize " \(ro\)" 'face 'all-the-icons-blue))))
+			  (if (mode-line-window-selected-p)
+			  (propertize " \(ro\)" 'face 'all-the-icons-blue)
+			  (propertize " \(ro\)" 'face 'shadow)))))
 
 		    (defvar-local gh-mode-line-padding
 			'(:eval
@@ -580,9 +600,118 @@
 		    (defvar-local gh-mode-line-narrowing
 			'(:eval
 			  ;; (setq gh-mode-line-padding nil)
-			  (when (and (buffer-narrowed-p)
-				     (mode-line-window-selected-p))
-			    (propertize " \(Narrowed\)" 'face 'error))))
+			  (when (buffer-narrowed-p)
+			    (if (mode-line-window-selected-p)
+			    (propertize " \(narrowed\)" 'face 'error)
+			    (propertize " \(narrowed\)" 'face 'shadow)))))
+
+
+		    (defvar gh-mode-line-kmacro
+		      '(:eval
+			(when (and (mode-line-window-selected-p)
+				   defining-kbd-macro)
+			  " KMacro ")))
+
+		    (dolist (construct
+			     '(gh-mode-line-major-mode
+			       gh-mode-line-padding
+			       gh-mode-line-kmacro
+			       gh-mode-line-narrowing
+			       gh-mode-line-buffer-read-only
+			       gh-mode-line-time-and-date
+			       gh-my-mode-line-buffer-name))
+		      (put construct 'risky-local-variable t))
+
+;to add: **-,  line nums, % through document, Git, battery, get rid of padding when narrowed    534:		    ;buffer ;management
+
+
+		    ;buffer management
+
+		    (defun gh-make-window-current (window)
+		      (select-window window))
+
+		    (setq display-buffer-alist
+			  '(
+			    ("\\*Occur\\*"
+			     (display-buffer-reuse-window
+			      display-buffer-below-selected)
+			     (window-height . fit-window-to-buffer)
+			     (dedicated . t)
+			    (body-function . gh-make-window-current))
+			    ("\\*helpful.*"
+			     (display-buffer-reuse-window
+			      display-buffer-below-selected)
+			     )))
+
+      ;org
+	    (setq org-use-speed-commands t)
+		    (setq org-structure-template-alist
+			  '(
+			    ("a" . "export ascii")
+		     ("e" . "src emacs-lisp")
+		     ("t" . "src emacs-lisp :tangle \" \"")
+		     ("l" . "src lua")
+		     ("v" . "verse")))
+
+		    (keymap-global-set "C-c C-," 'org-insert-structure-template)
+
+(setq-default mode-line-format
+				  '("%e"
+				    " "
+				    gh-my-mode-line-buffer-name
+				    gh-mode-line-padding
+				    gh-mode-line-narrowing
+				    gh-mode-line-kmacro
+				    gh-mode-line-buffer-read-only
+				    gh-mode-line-major-mode
+				    gh-mode-line-padding
+				    ;; gh-mode-line-git
+				    gh-mode-line-time-and-date
+				    ))
+
+		    (defvar-local gh-my-mode-line-buffer-name
+			'(:eval
+			    (format "%s "
+				    (propertize (buffer-name) 'face 'alert-normal-face))
+			    ))
+
+		    ;; (defvar-local gh-mode-line-git
+		    ;;     '(:eval
+		    ;;       (when (mode-line-window-selected-p)
+		    ;; 	(format "%s"
+		    ;; 		(propertize vc-mode 'face 'warning)))))
+
+		    (defvar-local gh-mode-line-major-mode
+			'(:eval
+			  (when (mode-line-window-selected-p)
+			  (format " %s "
+				  (propertize (symbol-name major-mode) 'face 'bold)))))
+
+		    (defvar-local gh-mode-line-time-and-date
+			'(:eval
+			  (when (mode-line-window-selected-p)
+			    (propertize (format-time-string " %a%e %b, %H:%M") 'face 'abbrev-table-name))))
+
+(defvar-local gh-mode-line-buffer-read-only
+		      '(:eval
+			(when buffer-read-only
+			  (if (mode-line-window-selected-p)
+			  (propertize " \(ro\)" 'face 'all-the-icons-blue)
+			  (propertize " \(ro\)" 'face 'shadow)))))
+
+		    (defvar-local gh-mode-line-padding
+			'(:eval
+			  (when (mode-line-window-selected-p)
+			    "---")))
+
+		    (defvar-local gh-mode-line-narrowing
+			'(:eval
+			  ;; (setq gh-mode-line-padding nil)
+			  (when (buffer-narrowed-p)
+			    (if (mode-line-window-selected-p)
+			    (propertize " \(narrowed\)" 'face 'error)
+			    (propertize " \(narrowed\)" 'face 'shadow)))))
+
 
 		    (defvar gh-mode-line-kmacro
 		      '(:eval
@@ -658,5 +787,3 @@
 ;; (keymap-set xah-fly-command-map "g"
 ;; 	    (lambda () (interactive)
 ;; 	      (mode-command-or-xfk-command 'magit-status-mode 'magit-refresh            'dired-revert-buffer-or-xah-delete-current-text-block)))
-
-;; (keymap-set minibuffer-mode-map "C-r" (lambda () (interactive) (insert "~")(sleep-for 1)(insert "/")))
