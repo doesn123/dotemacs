@@ -1,70 +1,64 @@
 (setq inhibit-startup-message t)
-(setq inhibit-startup-echo-area-message "george")  
-(setq enable-recursive-minibuffers t)
+  (setq inhibit-startup-echo-area-message "george")
+  (setq enable-recursive-minibuffers t)
+  (minibuffer-depth-indicate-mode 1)
+;; (add-hook 'Info-mode-hook #'xah-fly-insert-mode-activate)
+	    (menu-bar-mode -1)
+	    (tool-bar-mode -1)
+	    (scroll-bar-mode -1)
+	    (blink-cursor-mode -1)
 
-	  (menu-bar-mode -1)
-	  (tool-bar-mode -1)
-	  (scroll-bar-mode -1)
-	  (blink-cursor-mode -1)
+	    (mapc
+	     (lambda (command)
+		     (put command 'disabled nil))
+	     '(narrow-to-region upcase-region downcase-region))
 
-	  (mapc
-	   (lambda (command)
-		   (put command 'disabled nil))
-	   '(narrow-to-region upcase-region downcase-region))
+	    ;; Make native compilation silent and prune its cache.
+	    (when (native-comp-available-p)
+		    (setq native-compile-prune-cache t))
 
-	  ;; Make native compilation silent and prune its cache.
-	  (when (native-comp-available-p)
-		  (setq native-compile-prune-cache t))
+	    (add-hook 'after-init-hook (lambda () (set-frame-name "home")))
 
-	  (add-hook 'after-init-hook (lambda () (set-frame-name "home")))
+	    (set-face-attribute 'default nil :height 140)
+	    (fset 'yes-or-no-p 'y-or-n-p)
+	    (show-paren-mode 1)
+	    (add-hook 'window-setup-hook 'toggle-frame-maximized)
 
-	  (set-face-attribute 'default nil :height 140)
-	  (fset 'yes-or-no-p 'y-or-n-p)
-	  (show-paren-mode 1)
-	  (add-hook 'window-setup-hook 'toggle-frame-maximized)
+	    (setq custom-file (make-temp-file "emacs-custom-"))
 
-	  (setq custom-file (make-temp-file "emacs-custom-"))
+	    (global-visual-line-mode)
 
-	  (global-visual-line-mode)
+	    (setq display-time-default-load-average nil)
 
-	  (setq display-time-default-load-average nil)
+	    (setq kill-buffer-query-functions
+		    (remq 'process-kill-buffer-query-function
+			   kill-buffer-query-functions))
 
-	  (setq kill-buffer-query-functions
-		  (remq 'process-kill-buffer-query-function
-			 kill-buffer-query-functions))
+	    (keymap-global-set "<f10>" 'menu-bar-mode)
+		    ; Themes
+		    (defvar gh-modus-themes-light
+			   '(modus-operandi
+			     modus-operandi-tritanopia
+			     modus-operandi-deuteranopia
+			     modus-operandi-tinted))
 
-	  ;; (display-time-mode -1)
+		    (defvar gh-modus-themes-dark
+			   '(modus-vivendi
+			     modus-vivendi-tinted
+			     modus-vivendi-deuteranopia
+			     modus-vivendi-tritanopia))
 
-	  (defun gh-toggle-menu-bar-mode ()
-		  (interactive)
-		  (menu-bar-mode 'toggle))
+		    (defun gh-load-random-ef-theme-variant-dep-on-time-of-day ()
+		      (let ((now (string-to-number (format-time-string "%H" (current-time)))))
+		      (if (and (<= now 19)
+			       (>= now 7))
+		    (ef-themes-load-random 'light)
+		    (ef-themes-load-random 'dark))))
 
+		    (add-hook 'after-init-hook #'gh-load-random-ef-theme-variant-dep-on-time-of-day)
 
-	  (keymap-global-set "<f10>" 'gh-toggle-menu-bar-mode)
-		  ; Themes
-		  (defvar gh-modus-themes-light
-			 '(modus-operandi
-			   modus-operandi-tritanopia     
-			   modus-operandi-deuteranopia
-			   modus-operandi-tinted))
-
-		  (defvar gh-modus-themes-dark
-			 '(modus-vivendi                 
-			   modus-vivendi-tinted          
-			   modus-vivendi-deuteranopia    
-			   modus-vivendi-tritanopia))
-
-		  (defun gh-load-random-ef-theme-variant-dep-on-time-of-day ()
-		    (let ((now (string-to-number (format-time-string "%H" (current-time)))))
-		    (if (and (<= now 19)
-			     (>= now 7))
-		  (ef-themes-load-random 'light)
-		  (ef-themes-load-random 'dark))))
-
-		  (add-hook 'after-init-hook #'gh-load-random-ef-theme-variant-dep-on-time-of-day)
-
-		  (setq consult-themes
-			'("ef-\\|modus.*"))
+		    (setq consult-themes
+			  '("ef-\\|modus.*"))
 
 (setq package-archives
 			  '(("gnu-elpa" . "https://elpa.gnu.org/packages/")
@@ -94,13 +88,13 @@
 
 (add-to-list 'load-path '"~/.emacs.d/lisp/")
 (setq initial-buffer-choice "~/.emacs.d/scratch.org")
-  (setq savehist-file (locate-user-emacs-file "savehist"))
+  ;; (setq savehist-file (locate-user-emacs-file "savehist"))
   (setq history-length 100)
   (setq history-delete-duplicates t)
-  (setq savehist-save-minibuffer-history t)
-  (setq savehist-additional-variables '(register-alist kill-ring))
-  (savehist-mode 1)
-  
+  ;; (setq savehist-save-minibuffer-history t)
+  ;; (setq savehist-additional-variables '(register-alist kill-ring))
+  ;; (savehist-mode 1)
+
   (rainbow-delimiters-mode 1)
   (find-file "~/.emacs.d/george-config.org")
   (setq large-file-warning-threshold nil)
@@ -123,7 +117,6 @@
 (keymap-set xah-fly-command-map "8" 'er/expand-region)
 
 (keymap-set xah-fly-leader-key-map "t" 'consult-buffer)
-(keymap-set xah-fly-leader-key-map "SPC" 'embark-dwim)
 
 ;; (keymap-global-set "C-|" (lambda () (interactive) (insert "~")))
 (keymap-global-set "<f2>" 'rename-file)
@@ -146,57 +139,82 @@
       completion-category-overrides '((file (styles basic partial-completion))))
 
 (keymap-set dired-mode-map "DEL" 'dired-up-directory)
+		      (keymap-set xah-fly-leader-key-map "d" (lambda (dir) (interactive "Ddir: ") (dired dir)))
+		  (define-key dired-mode-map (kbd "1") #'dired-do-shell-command)
+		  (define-key dired-mode-map (kbd "R") #'ignore)
 
-	      (define-key dired-mode-map (kbd "1") #'dired-do-shell-command)
+		(defun gh-dired-setup ()
+		  (all-the-icons-dired-mode 1))
+		(global-hl-line-mode)
+		(add-hook 'dired-mode-hook #'dired-hide-details-mode)
+		(add-hook 'dired-mode-hook #'all-the-icons-dired-mode)
+		(add-hook 'dired-mode-hook #'hl-line-mode)
+		(setq dired-dwim-target t)
+		(setq dired-kill-when-opening-new-dired-buffer t)
+		(setq delete-by-moving-to-trash t)
+		(setq dired-listing-switches "-AGgFhlv --group-directories-first --time-style=long-iso")
+		(setq dired-recursive-copies 'always)
+		(setq dired-recursive-deletes 'always)
+(setq dired-auto-revert-buffer #'dired-directory-changed-p)
+(setq dired-mouse-drag-files t)
 
-	    (defun gh-dired-setup ()
-	      (all-the-icons-dired-mode 1))
-	    (global-hl-line-mode)
-	    (add-hook 'dired-mode-hook #'dired-hide-details-mode)
-	    (add-hook 'dired-mode-hook #'all-the-icons-dired-mode)
-	    (add-hook 'dired-mode-hook #'hl-line-mode)
-	    (setq dired-dwim-target t)
-	    (setq dired-kill-when-opening-new-dired-buffer t)
-	    (setq delete-by-moving-to-trash t)
-	    (setq dired-listing-switches "-AGgFhlv --group-directories-first --time-style=long-iso")
-	    (setq dired-recursive-copies 'always)
-	    (setq dired-recursive-deletes 'always)
+		(keymap-set dired-mode-map "<f10>" (lambda () (interactive) (dired default-directory "-lRh")))
 
-	    (keymap-set dired-mode-map "<f10>" (lambda () (interactive) (dired default-directory "-lR")))
+	      (defun dired-mark-or-xah-beginning-of-line-or-block ()
+		(interactive)
+		(if (eq major-mode 'dired-mode)
+		    (dired-mark 1)
+		  (xah-beginning-of-line-or-block)))
 
-	    (defun dired-mark-or-xah-beginning-of-line-or-block ()
-	      (interactive)
-	      (if (eq major-mode 'dired-mode)
-		  (dired-mark 1)
-		(xah-beginning-of-line-or-block)))
+    (defun dired-revert-buffer-or-xah-delete-current-text-block ()
+		(interactive)
+		(if (eq major-mode 'dired-mode)
+		    (revert-buffer)
+		  (xah-delete-current-text-block)))
 
-(defun dired-revert-buffer-or-xah-delete-current-text-block ()
-	    (interactive)
-	    (if (eq major-mode 'dired-mode)
-		(revert-buffer)
-	      (xah-delete-current-text-block)))
+    (defun dired-do-rename-or-newline-without-break-of-line ()
+		(interactive)
+		(if (eq major-mode 'dired-mode)
+		    (dired-do-rename)
+		  (newline-without-break-of-line)))
 
-	    ;; (defun gh-dired-goto-file-or-undo (&opt file)
-	      ;; (interactive)
-	      ;; (or (eq major-mode 'dired-mode)
-	    ;; 
-	      ;; (if (eq major-mode 'dired-mode)
-		  ;; (gh-dired-goto-file (file))
-		;; (undo))))
+		;; (defun gh-dired-goto-file-or-undo (&opt file)
+		;;   (interactive "fFile: ")
+		;;   (if (eq major-mode 'dired-mode)
+		;; 	  (gh-dired-goto-file (file))
+		;; 	(undo)))
 
-	    ;; (defun gh-dired-goto-file (file)
-	      ;; (interactive "f")
-	      ;; (dired-goto-file (expand-file-name file)))
+		;; (defun gh-dired-goto-file (file)
+		;;   (interactive "f")
+		;;   (dired-goto-file (expand-file-name file)))
 
-	    (defun gh-double-command (mode mode-command other-command)
-	      (interactive)
-	      (if (eq major-mode mode)
-		  mode-command
-		other-command))
+		(defun gh-double-command (mode mode-command other-command)
+		  (interactive)
+		  (if (eq major-mode mode)
+		      mode-command
+		    other-command))
 
-	    (keymap-set xah-fly-command-map "m" 'dired-mark-or-xah-beginning-of-line-or-block)
-	    (keymap-set xah-fly-command-map "g" 'dired-revert-buffer-or-xah-delete-current-text-block)
-	    ;; (keymap-set xah-fly-command-map "j" 'gh-dired-goto-file-or-undo)
+	  (keymap-set xah-fly-command-map "r" #'dired-do-rename-or-newline-without-break-of-line)
+
+		  (define-key dired-mode-map (kbd "r") #'dired-do-rename-or-newline-without-break-of-line)
+		(keymap-set xah-fly-command-map "m" 'dired-mark-or-xah-beginning-of-line-or-block)
+		(keymap-set xah-fly-command-map "g" 'dired-revert-buffer-or-xah-delete-current-text-block)
+		(keymap-set xah-fly-command-map "r" #'dired-do-rename-or-newline-without-break-of-line)
+		;; (keymap-set xah-fly-command-map "j" 'gh-dired-goto-file-or-undo)
+
+    (defun dired-duplicate-this-file ()
+    "Duplicate file on this line."
+    (interactive)
+    (let* ((this  (dired-get-filename t))
+	   (ctr   1)
+	   (new   (format "%s[%d]" this ctr)))
+      (while (file-exists-p new)
+	(setq ctr  (1+ ctr)
+	      new  (format "%s[%d]" this ctr)))
+       (dired-copy-file this new nil))
+    (revert-buffer))
+
+		      (keymap-set dired-mode-map "s-d" #'dired-duplicate-this-file)
 
 (gh-package-management 'crux)
 (gh-package-management 'hydra)
@@ -226,36 +244,39 @@
 
 (smooth-scrolling-mode 1)
 ;; (require 'savekill)
-(setq savehist-additional-variables '(register-alist kill-ring))
+;; (setq savehist-additional-variables '(register-alist kill-ring))
 
 (when (display-graphic-p)
   (require 'all-the-icons))
 
 (require 'substitute)
 
-(setq substitute-fixed-letter-case t)
+ (setq substitute-fixed-letter-case t)
 
-;; If you want a message reporting the matches that changed in the
-;; given context.  We don't do it by default.
-(add-hook 'substitute-post-replace-functions #'substitute-report-operation)
+ ;; If you want a message reporting the matches that changed in the
+ ;; given context.  We don't do it by default.
+ (add-hook 'substitute-post-replace-functions #'substitute-report-operation)
 
-(dolist (hook '(text-mode-hook))
-  (add-hook hook #'jinx-mode))
+ (dolist (hook '(text-mode-hook))
+   (add-hook hook #'jinx-mode))
 
-;(keymap-global-set "C-/" #'jinx-correct)
-(vertico-mode)
-(marginalia-mode)
-(battery-notifier-mode)
+ ;(keymap-global-set "C-/" #'jinx-correct)
+ (vertico-mode)
+ (marginalia-mode)
+ (battery-notifier-mode)
 
-(add-hook 'after-init-hook #'fancy-battery-mode)
+ (add-hook 'after-init-hook #'fancy-battery-mode)
 
-(setq fancy-battery-show-percentage t)
+ (setq fancy-battery-show-percentage t)
 
-(keymap-global-set "<f7>" 'eshell)
-(keymap-global-set "C-." 'embark-act)
+ (keymap-global-set "<f7>" 'eshell)
+; (keymap-set eshell-mode-map "C-S-<down>" #'eshell-next-prompt)
+; (keymap-set eshell-mode-map "C-S-<up>" #'eshell-previous-prompt)
+ (keymap-global-set "C-." 'embark-act)
+ (keymap-set minibuffer-mode-map "C-," #'embark-become)
+ (keymap-set xah-fly-command-map "," #'embark-act)
 
 (setq-default abbrev-mode t)
-
 
 (defun tilde-symbol-insert ()
   (interactive)
@@ -309,7 +330,7 @@
 
 (keymap-set dired-mode-map "M-RET" 'browse-url-of-dired-file)
 
-(defun umount-other-docs 
+(defun umount-other-docs
     ()
   (interactive)
   (shell-command "sudo umount ~/other-docs&")
@@ -326,43 +347,7 @@
     (revert-buffer)
     )
 
-(defun hydra-ex-point-mark ()
-	  "Exchange point and mark."
-	  (interactive)
-	  (if rectangle-mark-mode
-	      (rectangle-exchange-point-and-mark)
-	    (let ((mk (mark)))
-	      (rectangle-mark-mode 1)
-	      (goto-char mk))))
-
-	  (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
-					       :color pink
-					       :post (deactivate-mark))
-		"
-	    _s_tring _d_:yank _b_:reset _c_opy _j_:undo _e_xchange _x_kill _n_umbers _o_pen c_l_ear _w_hitespace re_g_ister
-		      "
-		("e" hydra-ex-point-mark nil)
-		  ("o" open-rectangle nil)
-		("c" copy-rectangle-as-kill nil)
-		("b" (if (region-active-p)
-			 (deactivate-mark)
-		       (rectangle-mark-mode 1)) nil)
-		("d" yank-rectangle nil)
-		("g" copy-rectangle-to-register nil)
-		("w" delete-whitespace-rectangle nil)
-		("n" rectangle-number-lines nil)
-		("l" clear-rectangle nil)
-		("j" undo nil)
-		("s" string-rectangle nil)
-		("x" kill-rectangle nil)
-		("<left>" rectangle-left-char nil :color pink)
-		("<right>" rectangle-right-char nil :color pink)
-		("C-g" nil)
-		("RET" nil)
-		)
-(keymap-global-set "C-x SPC" 'hydra-rectangle/body)
-
-	    (defun gh-paste-clipboard-into-buffer ()
+(defun gh-paste-clipboard-into-buffer ()
 	      "Paste contents of clipboard into current buffer"
 	      (interactive)
 	      (xah-new-empty-buffer)
@@ -436,24 +421,59 @@
 	  (add-hook 'LaTeX-mode-hook
 		    (lambda ()
 		      (define-key LaTeX-mode-map "\C-xn"
-				  nil)))
+				  )))
 
 	  (keymap-global-set "C-c n" #'narrow-or-widen-dwim)
 
-	(defhydra hydra-artist (:pre (artist-mode) :color pink :post (artist-mode-off))
-	  ("C-p" artist-select-op-pen-line "pen")
-	  ("C-r" artist-select-op-rectangle "rect")
-	  ("C-l" artist-select-op-line "line")
-	  ("C-c" artist-select-op-circle "circle")
-	  ("C-s" artist-select-op-square "square")
-	  ("C-s" artist-select-op-square "square")
-	  ("C-e" artist-select-op-ellipse "ellipse")
-	  ("C-y" artist-select-op-poly-line "poly line")
-	  ("C-z" artist-select-op-spray-con "spray can")
-	  ("C-q" nil "quit")
-	  ("C-h" backward-char "back"))
+	;; (defhydra hydra-artist (:pre (artist-mode) :color pink :post (artist-mode-off))
+	;;   ("C-p" artist-select-op-pen-line "pen")
+	;;   ("C-r" artist-select-op-rectangle "rect")
+	;;   ("C-l" artist-select-op-line "line")
+	;;   ("C-c" artist-select-op-circle "circle")
+	;;   ("C-s" artist-select-op-square "square")
+	;;   ("C-s" artist-select-op-square "square")
+	;;   ("C-e" artist-select-op-ellipse "ellipse")
+	;;   ("C-y" artist-select-op-poly-line "poly line")
+	;;   ("C-z" artist-select-op-spray-con "spray can")
+	;;   ("C-q"  "quit" :color blue)
+	;;   ("C-h" backward-char "back"))
 
-	(keymap-global-set "M-a" #'hydra-artist/body)
+	;; (keymap-global-set "M-a" #'hydra-artist/body) 
+
+	    (defun hydra-ex-point-mark ()
+	    "Exchange point and mark."
+	    (interactive)
+	    (if rectangle-mark-mode
+		(rectangle-exchange-point-and-mark)
+	      (let ((mk (mark)))
+		(rectangle-mark-mode 1)
+		(goto-char mk))))
+
+	      (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
+						   :color pink
+						   :post (deactivate-mark))
+
+			("e" hydra-ex-point-mark "exchange")
+			("o" open-rectangle "open")
+			("c" copy-rectangle-as-kill "copy")
+			("b" (if (region-active-p nil)
+				 (deactivate-mark)
+			       (rectangle-mark-mode 1)))
+			("d" yank-rectangle "yank")
+			("r" set-mark-command "reset")
+			("g" copy-rectangle-to-register "register")
+			("w" delete-whitespace-rectangle "del whitespace")
+			("n" rectangle-number-lines "nums")
+			("l" clear-rectangle "clear")
+			("j" undo "undo")
+			("s" string-rectangle "string")
+			("x" kill-rectangle "kill")
+			("<left>" rectangle-left-char "left" :color pink)
+			("<right>" rectangle-right-char "right" :color pink)
+			("C-g" nil)
+			("RET" nil))
+
+  (keymap-global-set "C-x SPC" 'hydra-rectangle/body)
 
 (defhydra hydra-consult-find (:color blue)
        ("f" consult-fd "fd")
@@ -492,42 +512,36 @@
 	  ("s" substitute-target-in-buffer "buffer")
 	  ("d" substitute-target-in-defun "defun"))
 
-	(defhydra hydra-kmacro (:color blue)
-	  ("v" kmacro-view-macro "view")
+(defhydra hydra-kmacro (:color pink)
 	  ;; ("o" kmacro-pop-ring "pop")
 	  ;; ("p" kmacro-push-ring "push")
 	  ;; ("h" kmacro-ring-head "ring head")
-	  ("w" kmacro-swap-ring "swap")
-	  ("e" kmacro-edit-macro "edit")
-	  ("b" kmacro-bind-to-key "bind")
-	  ("s" kmacro-set-counter "set counter")
-	  ("a" kmacro-add-counter "add counter")
-	  ("i" kmacro-insert-counter "insert counter")
-	  ("r" kmacro-to-register "reg")
-	  ("d" kmacro-display-counter "display counter")
-	  ("n" kmacro-name-last-macro "name last"))
+	  ("C-k" kmacro-start-macro-or-insert-counter "start")
+	  ("C-w" kmacro-swap-ring "swap")
+	  ("C-c" consult-kmacro "consult")
+	  ("C-e" kmacro-edit-macro "edit")
+	  ("C-E" kmacro-edit-macro-repeat "edit-repeat")
+	  ("C-b" kmacro-bind-to-key "bind")
+	  ("C-s" kmacro-set-counter "set counter")
+	  ("C-a" kmacro-add-counter "add counter")
+	  ("C-RET" kmacro-end-and-call-macro "end and call" :color blue)
+	  ("C-M-RET" kmacro-call-ring-2nd-repeat "end and call second")
+	  ("C-x" kmacro-delete-ring-head "delete")
+	  ("C-i" kmacro-insert-counter "insert counter")
+	  ("C-l" kmacro-edit-lossage "lossage")
+	  ("C-r" kmacro-to-register "register")
+	  ("C-<down>" kmacro-cycle-ring-next "next")
+	  ("C-<up>" kmacro-cycle-ring-previous "previous")
+	  ("C-r" apply-macro-to-region-lines "region")
+	  ("C-n" kmacro-name-last-macro "name last"))
 
-	;; (defhydra hydra-kmacro (:color blue)
-	;; ("v" kmacro-view-macro "view")
-	;; ;; ("o" kmacro-pop-ring "pop")
-	;; ;; ("p" kmacro-push-ring "push")
-	;; ;; ("h" kmacro-ring-head "ring head")
-	;; ("w" kmacro-swap-ring "swap")
-	;; ("e" kmacro-edit-macro "edit")
-	;; ("b" kmacro-bind-to-key "bind")
-	;; ("s" kmacro-set-counter "set counter")
-	;; ("a" kmacro-add-counter "add counter")
-	;; ("i" kmacro-insert-counter "insert counter")
-	;; ("r" kmacro-to-register "reg")
-	;; ("d" kmacro-display-counter "display counter")
-	;; ("n" kmacro-name-last-macro "name last"))
-
-(keymap-global-set "M-w" #'hydra-window/body)
+(keymap-set xah-fly-command-map "K" 'hydra-kmacro/body)
 (keymap-set xah-fly-command-map "R" 'hydra-register/body)
 (keymap-set xah-fly-command-map "S" 'hydra-substitute/body)
 
+(keymap-global-set "M-w" #'hydra-window/body)
+
 (keymap-global-set "<left-fringe> <mouse-1>" #'display-line-numbers-mode)
-(keymap-global-set "<mouse-3>" #'eval-last-sexp)
 
 
 (defun emacs-Q ()
@@ -547,13 +561,21 @@
 				    gh-mode-line-padding
 				    ;; gh-mode-line-git
 				    gh-mode-line-time-and-date
+				    gh-my-mode-line-info-current-node
 				    ))
 
 		    (defvar-local gh-my-mode-line-buffer-name
 			'(:eval
 			    (format "%s "
-				    (propertize (buffer-name) 'face 'alert-normal-face))
-			    ))
+				    (if (mode-line-window-selected-p)
+					(propertize (buffer-name) 'face 'italic)
+				      (propertize (buffer-name) 'face 'shadow)))))
+
+(defvar-local gh-my-mode-line-info-current-node
+			'(:eval
+			    (format "%s "
+					(propertize Info-current-node 'face 'italic)
+				      )))
 
 		    ;; (defvar-local gh-mode-line-git
 		    ;;     '(:eval
@@ -563,14 +585,13 @@
 
 		    (defvar-local gh-mode-line-major-mode
 			'(:eval
-			  (when (mode-line-window-selected-p)
 			  (format " %s "
-				  (propertize (symbol-name major-mode) 'face 'bold)))))
+				  (propertize (symbol-name major-mode) 'face 'bold))))
 
 		    (defvar-local gh-mode-line-time-and-date
 			'(:eval
 			  (when (mode-line-window-selected-p)
-			    (propertize (format-time-string " %a%e %b, %H:%M") 'face 'abbrev-table-name))))
+			    (propertize (format-time-string " %a %e %b, %H:%M") 'face 'diff-header))))
 
 (defvar-local gh-mode-line-buffer-read-only
 		      '(:eval
@@ -597,13 +618,14 @@
 		      '(:eval
 			(when (and (mode-line-window-selected-p)
 				   defining-kbd-macro)
-			  " KMacro ")))
+			 (propertize " KMacro " 'face 'alert-urgent-face))))
 
 		    (dolist (construct
 			     '(gh-mode-line-major-mode
 			       gh-mode-line-padding
 			       gh-mode-line-kmacro
 			       gh-mode-line-narrowing
+			       gh-my-mode-line-info-current-node
 			       gh-mode-line-buffer-read-only
 			       gh-mode-line-time-and-date
 			       gh-my-mode-line-buffer-name))
@@ -625,18 +647,31 @@
 	("\\*helpful.*"
 	 (display-buffer-reuse-window
 	  display-buffer-below-selected)
-	 )))
+	 )
+	))
 
-(setq org-use-speed-commands t)
-	(setq org-structure-template-alist
-	      '(
-		("a" . "export ascii")
-	 ("e" . "src emacs-lisp")
-	 ("t" . "src emacs-lisp :tangle \" \"")
-	 ("l" . "src lua")
-	 ("v" . "verse")))
+(keymap-global-set "C-c c" #'org-capture)
 
-	(keymap-global-set "C-c C-," 'org-insert-structure-template)
+  (defun org-table-check-cell ()
+  (interactive)
+  (let ((cell (org-table-get-field)))
+    (if (string-match "[[:graph:]]" cell)
+	(org-table-blank-field)
+      (insert "X")
+      (org-table-align))
+    (org-table-next-row)))
+
+	  (keymap-set org-mode-map "M-n" 'org-table-check-cell)
+  (setq org-use-speed-commands t)
+	  (setq org-structure-template-alist
+		'(
+		  ("a" . "export ascii")
+	   ("e" . "src emacs-lisp")
+	   ("t" . "src emacs-lisp :tangle \" \"")
+	   ("l" . "src lua")
+	   ("v" . "verse")))
+
+	  (keymap-global-set "C-c C-," 'org-insert-structure-template)
 
 (keymap-set occur-mode-map "M-<up>" ' previous-error-no-select)
     (keymap-set occur-mode-map "M-<down>" ' next-error-no-select)

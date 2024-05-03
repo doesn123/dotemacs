@@ -1,1 +1,176 @@
-* 
+make a3 YT3 video about Patreon.
+new welcome video
+
+Lance3 2d vid not uploaded
+aprl 21st videos!
+- Prot
+  using denote filenames in shell - can't autocomplete from title
+
+  review my game - bad quality - shall i upload?
+
+  when you have two groups, run them in both directions
+
+  #buffer doesn't work in eshell
+* TODO grow mushrooms
+ttt
+* TODO - screenshots
+* work on Emacs taxes system
+
+* make sure invoices have been paid
+* make sure rent have been paid
+* TODO go through notes
+
+* DONE upload
+
+* TODO email
+
+* TODO record Yang videos
+
+* TODO income taxes/omzetb. book appointment
+
+* TODO backup system
+
+* TODO YT issues
+
+* TODO dig hole
+
+* TODO budget thuis
+
+* TODO ios focus mode
+** modes
+- learn
+- communicate
+- sleep
+- bike
+- chill
+- travel
+- practice
+
+* TODO I've got all vids from Lance?
+
+* TODO get 180 euros back?
+
+* TODO git - scratch.org
+
+* TODO email
+
+* TODO read
+
+* Dired
+
+* Bristolroodstraat 136
+- internet is 25 for 6 months and then 33 for the last 6 months - therefore 29 per month
+- energy 137 per month. fixed contract, must let them know a month before we cancel when we have to leave. roughly 50eu cancellation fee
+- therefore internet + energy is 41,50 pp
+- rent is 1372,80: 343 for G and A and 358 for O and 328 for C
+- A owes me 384,5. C owes me 369.50 and O owes me 399.5
+
+** Lance
+yt link in advance, schedule all public events?
+send out email
+*** TODO send out Lance invites, bros
+*** TODO ask Lance - sent to his students yet?
+*** TODO move webcam, patreon early
+*** TODO video for yt and for patreon
+*** TODO check my webcam / mic / obs
+*** TODO 'plan' setup with emacs
+*** TODO check time in PT for livestreams
+patreon community chat
+** questions for game
+i had 3 options - do i need to end with 3?
+consider an early sacrifice?
+g6?
+don't like how you had the d2 connect
+timing of e2
+efficency of stones on board
+
+*** Lance vs G recordings I have
+missing - 2nd 4 stone recent game
+last game - even
+another misc game?
+
+* Linux
+** bluetooth (to get play/pause buttons working)
+bluesman enables bluetooth app in start menu
+https://denzveloper.github.io/BT-MPRIS/
+
+Be sure your PC/Laptop Have a Bluetooth Support.
+    Install “bluez” package^
+    Install “bluez-utils” package^
+    Create the file in systemd directory, in this exact location: ~/.config/systemd/user/mpris-proxy.service. The file should contain these lines:
+
+[Unit]
+Description=Forward bluetooth media controls to MPRIS
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/mpris-proxy
+
+[Install]
+WantedBy=default.target
+
+Start service with user flag (“–user”)
+
+systemctl --user start mpris-proxy.service
+
+then check it, its running? MPRIS Command and test it on your bluetooth device.
+
+If you want to start automaticly you can
+
+systemctl --user enable mpris-proxy.service
+
+^(maybe different depending on your distro)
+
+- go on 'Sound' - fiddle around
+
+
+updates description 40 euros. add Patreon.
+
+* handi as even
+dont blindly follow joseki. dont sac stones unneccaraily, just settle the initial stone
+
+* flower go
+** misc
+- interactive? w/timestamps to videos?
+- what's most important to do with Lance in person?
+- gobooks
+- talk to Kim
+- vc
+- ask for feedback from: mum, rose, nicki
+
+* taxes
+
+| desc | fac.num | ex BTW | BTW | BTW% | band | bill to | DOI | date concert | employer VAT | expenses | total | received |
+
+(setq org-capture-templates
+'(("w"
+"Elliptical Trainer"
+table-line
+(file+olp "~/org/artha.org" "Workout" "2017" "2017-01 January" "Workout (Elliptical Trainer)")
+"| # | %t | %^{time} | | %^{distance} | | %^{level} |" :table-line-pos "II-1")))
+
+1st 4 stone is uploaded
+
+* players in the Amsterdam scene
+** bass
+- Bjork Semay
+- Pedro Ivo
+- Omer Govreen
+- Pietro Elia
+- Aaron Lumley
+- Raoul van der Weide
+- Wilbert de Joode
+- William Barrett
+- Esat Ekincioglu
+- Rita Karpati
+** cello
+- Pau Sola
+- Raoul van der Weide
+- Harold Austbo
+** trombone
+- Oliver Emmitt
+- Joost Buis
+- Salvoandrea Lucifori
+** tuba
+- Axel
+- Salvoandrea Lucifori
