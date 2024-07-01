@@ -87,7 +87,7 @@
 		    (xah-fly-keys 1)
 
 (add-to-list 'load-path '"~/.emacs.d/lisp/")
-(setq initial-buffer-choice "~/.emacs.d/scratch.org")
+(setq initial-buffer-choice "~/org/scratch.org")
   ;; (setq savehist-file (locate-user-emacs-file "savehist"))
   (setq history-length 100)
   (setq history-delete-duplicates t)
@@ -217,64 +217,64 @@
 		      (keymap-set dired-mode-map "s-d" #'dired-duplicate-this-file)
 
 (gh-package-management 'crux)
-(gh-package-management 'hydra)
-(gh-package-management 'visual-regexp)
-(gh-package-management 'denote)
-(gh-package-management 'smooth-scrolling)
-(gh-package-management 'helpful)
-(gh-package-management 'all-the-icons-dired)
-(gh-package-management 'expand-region)
-(gh-package-management 'ef-themes)
-(gh-package-management 'embark)
-(gh-package-management 'embark-consult)
-(gh-package-management 'jinx)
-(gh-package-management 'magit)
-(gh-package-management 'marginalia)
-(gh-package-management 'modus-themes)
-(gh-package-management 'orderless)
-(gh-package-management 'try)
-(gh-package-management 'vertico)
-(gh-package-management 'vertico)
-(gh-package-management 'xah-fly-keys)
-(gh-package-management 'substitute)
-(gh-package-management 'battery-notifier)
-(gh-package-management 'rainbow-delimiters)
-(gh-package-management 'fancy-battery)
-;; (gh-package-management 'savekill)
+  (gh-package-management 'hydra)
+  (gh-package-management 'visual-regexp)
+  (gh-package-management 'denote)
+  (gh-package-management 'smooth-scrolling)
+  (gh-package-management 'helpful)
+  (gh-package-management 'all-the-icons-dired)
+  (gh-package-management 'expand-region)
+  (gh-package-management 'ef-themes)
+  (gh-package-management 'embark)
+  (gh-package-management 'embark-consult)
+;  (gh-package-management 'jinx)
+  (gh-package-management 'magit)
+  (gh-package-management 'marginalia)
+  (gh-package-management 'modus-themes)
+  (gh-package-management 'orderless)
+  (gh-package-management 'try)
+  (gh-package-management 'vertico)
+  (gh-package-management 'vertico)
+  (gh-package-management 'xah-fly-keys)
+  (gh-package-management 'substitute)
+  (gh-package-management 'battery-notifier)
+  (gh-package-management 'rainbow-delimiters)
+  (gh-package-management 'fancy-battery)
+  ;; (gh-package-management 'savekill)
 
-(smooth-scrolling-mode 1)
-;; (require 'savekill)
-;; (setq savehist-additional-variables '(register-alist kill-ring))
+  (smooth-scrolling-mode 1)
+  ;; (require 'savekill)
+  ;; (setq savehist-additional-variables '(register-alist kill-ring))
 
-(when (display-graphic-p)
-  (require 'all-the-icons))
+  (when (display-graphic-p)
+    (require 'all-the-icons))
 
 (require 'substitute)
 
- (setq substitute-fixed-letter-case t)
+  (setq substitute-fixed-letter-case t)
 
- ;; If you want a message reporting the matches that changed in the
- ;; given context.  We don't do it by default.
- (add-hook 'substitute-post-replace-functions #'substitute-report-operation)
+  ;; If you want a message reporting the matches that changed in the
+  ;; given context.  We don't do it by default.
+  (add-hook 'substitute-post-replace-functions #'substitute-report-operation)
 
- (dolist (hook '(text-mode-hook))
-   (add-hook hook #'jinx-mode))
+;  (dolist (hook '(text-mode-hook))
+ ;   (add-hook hook #'jinx-mode))
 
- ;(keymap-global-set "C-/" #'jinx-correct)
- (vertico-mode)
- (marginalia-mode)
- (battery-notifier-mode)
+  ;(keymap-global-set "C-/" #'jinx-correct)
+  (vertico-mode)
+  (marginalia-mode)
+  (battery-notifier-mode)
 
- (add-hook 'after-init-hook #'fancy-battery-mode)
+  (add-hook 'after-init-hook #'fancy-battery-mode)
 
- (setq fancy-battery-show-percentage t)
+  (setq fancy-battery-show-percentage t)
 
- (keymap-global-set "<f7>" 'eshell)
-; (keymap-set eshell-mode-map "C-S-<down>" #'eshell-next-prompt)
-; (keymap-set eshell-mode-map "C-S-<up>" #'eshell-previous-prompt)
- (keymap-global-set "C-." 'embark-act)
- (keymap-set minibuffer-mode-map "C-," #'embark-become)
- (keymap-set xah-fly-command-map "," #'embark-act)
+  (keymap-global-set "<f7>" 'eshell)
+ ; (keymap-set eshell-mode-map "C-S-<down>" #'eshell-next-prompt)
+ ; (keymap-set eshell-mode-map "C-S-<up>" #'eshell-previous-prompt)
+  (keymap-global-set "C-." 'embark-act)
+  (keymap-set minibuffer-mode-map "C-," #'embark-become)
+  (keymap-set xah-fly-command-map "," #'embark-act)
 
 (setq-default abbrev-mode t)
 
@@ -652,6 +652,9 @@
 
 (keymap-global-set "C-c c" #'org-capture)
 
+(setq org-capture-templates
+      '(("a" "a template" item (file "scratch.org"))))
+
   (defun org-table-check-cell ()
   (interactive)
   (let ((cell (org-table-get-field)))
@@ -667,6 +670,7 @@
 		'(
 		  ("a" . "export ascii")
 	   ("e" . "src emacs-lisp")
+	   ("o" . "src org-mode")
 	   ("t" . "src emacs-lisp :tangle \" \"")
 	   ("l" . "src lua")
 	   ("v" . "verse")))
