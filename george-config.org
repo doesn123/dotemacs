@@ -621,10 +621,10 @@
     (interactive)
     (start-process "my-emacs-process" nil "emacs" "-Q"))
 
-  (defun emacs-TEST ()
-		      "DOCSTRING"
+  (defun emacs-vanilla ()
+		      "a clean emacs config for bug testing"
 		      (interactive)
-		      (start-process "my-emacs-process" nil "emacs" "-q" "-l" "~/.emacs.d-TEST/init.el"))
+		      (start-process "my-emacs-process" nil "emacs" "-q" "-l" "~/.emacs.d/.emacs.d-vanilla/init.el"))
 
   
 
@@ -822,6 +822,3 @@
       (async-shell-command "/usr/bin/java -jar /home/george/Downloads/cgoban.jar" nil)
     (message "Java has been killed (Cgoban)")))
 #+end_src
-
-(start-process "/usr/bin/java -jar /home/george/Downloads/cgoban.jar" nil)
-(start-process (get-process "java")

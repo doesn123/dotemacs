@@ -1,7 +1,10 @@
 *
-
 !.gitignore
 !init.el
 !scratch.org
 !george-config.org
 !custom.el
+
+!*/
+.emacs.d-vanilla/*
+!.emacs.d-vanilla/init.el

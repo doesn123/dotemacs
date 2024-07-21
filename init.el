@@ -578,10 +578,10 @@
   (interactive)
   (start-process "my-emacs-process" nil "emacs" "-Q"))
 
-(defun emacs-TEST ()
-		    "DOCSTRING"
+(defun emacs-vanilla ()
+		    "a clean emacs config for bug testing"
 		    (interactive)
-		    (start-process "my-emacs-process" nil "emacs" "-q" "-l" "~/.emacs.d-TEST/init.el"))
+		    (start-process "my-emacs-process" nil "emacs" "-q" "-l" "~/.emacs.d/.emacs.d-vanilla/init.el"))
 
 (setq-default mode-line-format
 				  '("%e"
