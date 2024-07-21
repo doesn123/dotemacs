@@ -4,6 +4,7 @@
 !scratch.org
 !george-config.org
 !custom.el
+!early-init.el
 
 !*/
 .emacs.d-vanilla/*
