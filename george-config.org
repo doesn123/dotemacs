@@ -93,13 +93,13 @@
 * basic setup
 #+begin_src emacs-lisp :tangle "init.el"
     (add-to-list 'load-path '"~/.emacs.d/lisp/")
-  (setq initial-buffer-choice "~/org/scratch.org")
-    ;; (setq savehist-file (locate-user-emacs-file "savehist"))
+  ;; (setq initial-buffer-choice "~/org/scratch.org")
     (setq history-length 100)
     (setq history-delete-duplicates t)
-    ;; (setq savehist-save-minibuffer-history t)
-    ;; (setq savehist-additional-variables '(register-alist kill-ring))
-    ;; (savehist-mode 1)
+    (setq savehist-save-minibuffer-history t)
+    (setq savehist-additional-variables '(register-alist kill-ring))
+    (savehist-mode 1)
+    (save-place-mode 1)
 
     (rainbow-delimiters-mode 1)
     (find-file "~/.emacs.d/george-config.org")
@@ -119,30 +119,42 @@
 #+end_src
 * keybindings
 #+begin_src emacs-lisp :tangle "init.el"
-		    (keymap-set key-translation-map "<escape>" "C-g")
-		    (keymap-set xah-fly-command-map "." 'crux-other-window-or-switch-buffer)
-		    (keymap-set xah-fly-command-map "," 'ignore)
-		    ;; (keymap-set xah-fly-command-map ">" (lambda () (interactive) (switch-to-buffer (other-buffer (current-buffer)))))
+    (keymap-set key-translation-map "<escape>" "C-g")
 
-		    (keymap-set xah-fly-command-map "8" 'er/expand-region)
+  (setq text-scale-mode-step 1)
+    (keymap-set xah-fly-command-map "." 'crux-other-window-or-switch-buffer)
+    (keymap-set xah-fly-command-map "," 'ignore)
 
-		    (keymap-set xah-fly-leader-key-map "t" 'consult-buffer)
+    (keymap-set xah-fly-command-map ">" #'gh/switch-to-buffer-before-previous)
 
-		    ;; (keymap-global-set "C-|" (lambda () (interactive) (insert "~")))
-		    (keymap-global-set "<f2>" 'rename-file)
-		    (keymap-global-set "s-v" 'helpful-variable)
-		    (keymap-global-set "s-f" 'helpful-callable)
-		    (keymap-global-set "<f12>" 'dabbrev-expand)
-		    (keymap-global-set "C-x C-s" #'eval-expression)
-		    (keymap-global-set "C-x C-x" #'eval-defun)
-		    (keymap-global-set "s-b" #'eval-buffer)
-		    (keymap-global-set "C-x C-a" #'eval-expression)
-		    (keymap-global-set "C-v" #'xah-paste-or-paste-previous)
-		    (keymap-global-set "s-d" (lambda () (interactive) (duplicate-line) (next-line)))
-		    (keymap-global-set "C-n" #'scratch-buffer)
+  (defun gh/switch-to-buffer-before-previous ()
+    (interactive)
+    (switch-to-buffer (other-buffer (other-buffer))))
 
-		    (keymap-global-set "M-<up>" (lambda () (interactive) (scroll-other-window-down 1)))
-		    (keymap-global-set "M-<down>" (lambda () (interactive) (scroll-other-window 1)))
+
+
+
+    ;; (keymap-set xah-fly-command-map ">" (lambda () (interactive) (switch-to-buffer (other-buffer (current-buffer)))))
+
+    (keymap-set xah-fly-command-map "8" 'er/expand-region)
+
+    (keymap-set xah-fly-leader-key-map "t" 'consult-buffer)
+
+    ;; (keymap-global-set "C-|" (lambda () (interactive) (insert "~")))
+    (keymap-global-set "<f2>" 'rename-file)
+    (keymap-global-set "s-v" 'helpful-variable)
+    (keymap-global-set "s-f" 'helpful-callable)
+    (keymap-global-set "<f12>" 'dabbrev-expand)
+    (keymap-global-set "C-x C-s" #'eval-expression)
+    (keymap-global-set "C-x C-x" #'eval-defun)
+    (keymap-global-set "s-b" #'eval-buffer)
+    (keymap-global-set "C-x C-a" #'eval-expression)
+    (keymap-global-set "C-v" #'xah-paste-or-paste-previous)
+    (keymap-global-set "s-d" (lambda () (interactive) (duplicate-line) (next-line)))
+    (keymap-global-set "C-n" #'xah-new-empty-buffer)
+
+    (keymap-global-set "M-<up>" (lambda () (interactive) (scroll-other-window-down 1)))
+    (keymap-global-set "M-<down>" (lambda () (interactive) (scroll-other-window 1)))
 #+end_src
 * orderless
 #+begin_src emacs-lisp :tangle "init.el"
@@ -267,32 +279,44 @@
 #+end_src
 * substitute
 #+begin_src emacs-lisp :tangle "init.el"
-  (require 'substitute)
+    (require 'substitute)
 
-  (setq substitute-fixed-letter-case t)
+    (setq substitute-fixed-letter-case t)
 
-  ;; If you want a message reporting the matches that changed in the
-  ;; given context.  We don't do it by default.
-  (add-hook 'substitute-post-replace-functions #'substitute-report-operation)
+    ;; If you want a message reporting the matches that changed in the
+    ;; given context.  We don't do it by default.
+    (add-hook 'substitute-post-replace-functions #'substitute-report-operation)
 
-;  (dolist (hook '(text-mode-hook))
- ;   (add-hook hook #'jinx-mode))
+  ;  (dolist (hook '(text-mode-hook))
+   ;   (add-hook hook #'jinx-mode))
 
-  ;(keymap-global-set "C-/" #'jinx-correct)
-  (vertico-mode)
-  (marginalia-mode)
-  (battery-notifier-mode)
+    ;(keymap-global-set "C-/" #'jinx-correct)
+    (vertico-mode)
+    (marginalia-mode)
+    (battery-notifier-mode)
 
-  (add-hook 'after-init-hook #'fancy-battery-mode)
+    (add-hook 'after-init-hook #'fancy-battery-mode)
 
-  (setq fancy-battery-show-percentage t)
+    (setq fancy-battery-show-percentage t)
 
-  (keymap-global-set "<f7>" 'eshell)
- ; (keymap-set eshell-mode-map "C-S-<down>" #'eshell-next-prompt)
- ; (keymap-set eshell-mode-map "C-S-<up>" #'eshell-previous-prompt)
-  (keymap-global-set "C-." 'embark-act)
-  (keymap-set minibuffer-mode-map "C-," #'embark-become)
-  (keymap-set xah-fly-command-map "," #'embark-act)
+    (keymap-global-set "<f7>" 'eshell)
+   ; (keymap-set eshell-mode-map "C-S-<down>" #'eshell-next-prompt)
+   ; (keymap-set eshell-mode-map "C-S-<up>" #'eshell-previous-prompt)
+    (keymap-global-set "C-." 'embark-act)
+  (keymap-set minibuffer-mode-map "C-," #'embark-act)
+
+  (defun gh/embark-act-or-cycle ()
+    (interactive)
+    (if (eq last-command 'embark-act)
+	(embark-cycle)
+      (embark-act)))
+
+      (keymap-set xah-fly-command-map "," #'gh/embark-act-or-cycle)
+      (keymap-set xah-fly-command-map "," #'embark-act)
+
+
+
+
 #+end_src
 * abbrev mode
 #+begin_src emacs-lisp :tangle "init.el"
@@ -310,6 +334,7 @@
 #+begin_src emacs-lisp :tangle "init.el"
     ;; (keymap-set xah-fly-command-map "F" #'consult-locate)
     (keymap-set xah-fly-command-map "%" #'consult-buffer-other-frame)
+    (keymap-set xah-fly-command-map ";" #'consult-org-heading)
     (keymap-set xah-fly-command-map "I" #'consult-org-heading)
     ;; (keymap-set xah-fly-command-map "R" #'consult-ripgrep)
     (keymap-set xah-fly-command-map "M" #'consult-mark)
@@ -356,7 +381,15 @@
 		    (define-key vertico-map (kbd "C-<up>") 'previous-history-element)
 		    (define-key vertico-map (kbd "C-<down>") 'next-history-element)
 		    (define-key vertico-map (kbd "C-v") 'xah-paste-or-paste-previous)
+		    (define-key vertico-map (kbd "<next>") #'vertico-scroll-up)
+		    (define-key vertico-map (kbd "<prior>") #'vertico-scroll-down)
+		    (define-key vertico-map (kbd "C-<prior>") #'vertico-first)
+		    (define-key vertico-map (kbd "C-<next>") #'vertico-last)
+		    (define-key vertico-map (kbd "C-c") #'vertico-save)
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
 
+  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 		    (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy) ;clears previous file path after typing '~/'
 
 		    (keymap-set dired-mode-map "M-RET" 'browse-url-of-dired-file)
@@ -404,7 +437,7 @@
       ;; 	  (unless (and (equal (buffer-name) "george-config.org")
       ;; 		       buffer-read-only
       ;; 		       (not (eq major-mode 'dired-mode))
-      ;; 		       (quit-window))))
+  ;; 		       (quit-window))))
 
       ;; (define-key xah-fly-command-map (kbd "q") #'my-q-insert-or-quit-window)
 
@@ -580,13 +613,21 @@
 #+end_src
 * mouse
 #+begin_src emacs-lisp :tangle "init.el"
-		    (keymap-global-set "<left-fringe> <mouse-1>" #'display-line-numbers-mode)
+  (keymap-global-set "<left-fringe> <mouse-1>" #'display-line-numbers-mode)
 
 
-		    (defun emacs-Q ()
+  (defun emacs-Q ()
+    "DOCSTRING"
+    (interactive)
+    (start-process "my-emacs-process" nil "emacs" "-Q"))
+
+  (defun emacs-TEST ()
 		      "DOCSTRING"
 		      (interactive)
-		      (start-process "my-emacs-process" nil "emacs" "-Q"))
+		      (start-process "my-emacs-process" nil "emacs" "-q" "-l" "~/.emacs.d-TEST/init.el"))
+
+  
+
 #+end_src
 * mode line
 #+begin_src emacs-lisp :tangle "init.el"
@@ -632,7 +673,7 @@
 		      (defvar-local gh-mode-line-time-and-date
 			  '(:eval
 			    (when (mode-line-window-selected-p)
-			      (propertize (format-time-string " %a %e %b, %H:%M") 'face 'diff-header))))
+			      (propertize (format-time-string " %a %e %b, %H:%M ") 'face 'diff-header))))
 
   (defvar-local gh-mode-line-buffer-read-only
 			'(:eval
@@ -676,51 +717,55 @@
 #+end_src
 * buffer management
 #+begin_src emacs-lisp :tangle "init.el"
-			(defun gh-make-window-current (window)
-			  (select-window window))
+  (defun gh-make-window-current (window)
+    (select-window window))
 
-			(setq display-buffer-alist
-			      '(
-				("\\*Occur\\*"
-				 (display-buffer-reuse-window
-				  display-buffer-below-selected)
-				 (window-height . fit-window-to-buffer)
-				 (dedicated . t)
-				(body-function . gh-make-window-current))
-				("\\*helpful.*"
-				 (display-buffer-reuse-window
-				  display-buffer-below-selected)
-				 )
-				))
+			(setq display-buffer-alist nil)
+  ;; (setq display-buffer-alist
+  ;;       '(
+  ;; 	("\\*Occur\\*"
+  ;; 	 (display-buffer-reuse-window
+  ;; 	  display-buffer-below-selected)
+  ;; 	 (window-height . fit-window-to-buffer)
+  ;; 	 (dedicated . t)
+  ;; 	(body-function . gh-make-window-current))
+  ;; 	("\\*helpful.*"
+  ;; 	 (display-buffer-reuse-window
+  ;; 	  display-buffer-below-selected)
+  ;; 	 )
+  ;; 	))
 #+end_src
 * org
 #+begin_src emacs-lisp :tangle "init.el"
-    (keymap-global-set "C-c c" #'org-capture)
+    (require 'org-tempo)
 
-    (setq org-capture-templates
-	  '(("a" "a template" item (file "scratch.org"))))
+  (keymap-global-set "C-c c" #'org-capture)
 
-      (defun org-table-check-cell ()
-      (interactive)
-      (let ((cell (org-table-get-field)))
-	(if (string-match "[[:graph:]]" cell)
-	    (org-table-blank-field)
-	  (insert "X")
-	  (org-table-align))
-	(org-table-next-row)))
+  (setq org-capture-templates
+	'(("a" "a template" item (file "scratch.org"))))
 
-	      (keymap-set org-mode-map "M-n" 'org-table-check-cell)
-      (setq org-use-speed-commands t)
-	      (setq org-structure-template-alist
-		    '(
-		      ("a" . "export ascii")
-	       ("e" . "src emacs-lisp")
-	       ("o" . "src org-mode")
-	       ("t" . "src emacs-lisp :tangle \" \"")
-	       ("l" . "src lua")
-	       ("v" . "verse")))
+    (defun org-table-check-cell ()
+    (interactive)
+    (let ((cell (org-table-get-field)))
+      (if (string-match "[[:graph:]]" cell)
+	  (org-table-blank-field)
+	(insert "X")
+	(org-table-align))
+      (org-table-next-row)))
 
-	      (keymap-global-set "C-c C-," 'org-insert-structure-template)
+	    (keymap-set org-mode-map "M-n" 'org-table-check-cell)
+	    (keymap-set org-mode-map "C-c e" 'org-table-edit-field)
+    (setq org-use-speed-commands t)
+	    (setq org-structure-template-alist
+		  '(
+		    ("a" . "export ascii")
+	     ("e" . "src emacs-lisp")
+	     ("o" . "src org-mode")
+	     ("t" . "src emacs-lisp :tangle \" \"")
+	     ("l" . "src lua")
+	     ("v" . "verse")))
+
+	    (keymap-global-set "C-c C-," 'org-insert-structure-template)
 #+end_src
 * occur
 #+begin_src emacs-lisp :tangle "init.el"
@@ -751,6 +796,32 @@
   ;; 	    (lambda () (interactive)
   ;; 	      (mode-command-or-xfk-command 'magit-status-mode 'magit-refresh            'dired-revert-buffer-or-xah-delete-current-text-block)))
 #+end_src
-* Minibuffer
+* minibuffer
 #+begin_src emacs-lisp :tangle "init.el"
+      (defun gh/minibuffer-backward-kill-when-file-completing (arg)
+      (interactive "p")
+      (if minibuffer-completing-file-name
+	  (if (string-match-p "/." (minibuffer-contents))
+	      (zap-up-to-char (- arg) ?/)
+	    (delete-minibuffer-contents)
+	    (backward-delete-char-untabify 1))
+	(delete-backward-char arg)))
+
+      (keymap-set minibuffer-mode-map "DEL" #'gh/minibuffer-backward-kill-when-file-completing)
+
+
 #+end_src
+
+* Misc
+#+begin_src emacs-lisp :tangle "init.el"
+  (defun kill-cgoban-java-process (arg)
+    (interactive "P")
+    (if arg
+	(async-shell-command "pkill java" nil)
+      (async-shell-command "pkill java" nil)
+      (async-shell-command "/usr/bin/java -jar /home/george/Downloads/cgoban.jar" nil)
+    (message "Java has been killed (Cgoban)")))
+#+end_src
+
+(start-process "/usr/bin/java -jar /home/george/Downloads/cgoban.jar" nil)
+(start-process (get-process "java")

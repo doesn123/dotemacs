@@ -87,13 +87,13 @@
 		    (xah-fly-keys 1)
 
 (add-to-list 'load-path '"~/.emacs.d/lisp/")
-(setq initial-buffer-choice "~/org/scratch.org")
-  ;; (setq savehist-file (locate-user-emacs-file "savehist"))
+;; (setq initial-buffer-choice "~/org/scratch.org")
   (setq history-length 100)
   (setq history-delete-duplicates t)
-  ;; (setq savehist-save-minibuffer-history t)
-  ;; (setq savehist-additional-variables '(register-alist kill-ring))
-  ;; (savehist-mode 1)
+  (setq savehist-save-minibuffer-history t)
+  (setq savehist-additional-variables '(register-alist kill-ring))
+  (savehist-mode 1)
+  (save-place-mode 1)
 
   (rainbow-delimiters-mode 1)
   (find-file "~/.emacs.d/george-config.org")
@@ -110,29 +110,41 @@
 	("Europe/Amsterdam" "Amsterdam")))
 
 (keymap-set key-translation-map "<escape>" "C-g")
-(keymap-set xah-fly-command-map "." 'crux-other-window-or-switch-buffer)
-(keymap-set xah-fly-command-map "," 'ignore)
-;; (keymap-set xah-fly-command-map ">" (lambda () (interactive) (switch-to-buffer (other-buffer (current-buffer)))))
 
-(keymap-set xah-fly-command-map "8" 'er/expand-region)
+(setq text-scale-mode-step 1)
+  (keymap-set xah-fly-command-map "." 'crux-other-window-or-switch-buffer)
+  (keymap-set xah-fly-command-map "," 'ignore)
 
-(keymap-set xah-fly-leader-key-map "t" 'consult-buffer)
+  (keymap-set xah-fly-command-map ">" #'gh/switch-to-buffer-before-previous)
 
-;; (keymap-global-set "C-|" (lambda () (interactive) (insert "~")))
-(keymap-global-set "<f2>" 'rename-file)
-(keymap-global-set "s-v" 'helpful-variable)
-(keymap-global-set "s-f" 'helpful-callable)
-(keymap-global-set "<f12>" 'dabbrev-expand)
-(keymap-global-set "C-x C-s" #'eval-expression)
-(keymap-global-set "C-x C-x" #'eval-defun)
-(keymap-global-set "s-b" #'eval-buffer)
-(keymap-global-set "C-x C-a" #'eval-expression)
-(keymap-global-set "C-v" #'xah-paste-or-paste-previous)
-(keymap-global-set "s-d" (lambda () (interactive) (duplicate-line) (next-line)))
-(keymap-global-set "C-n" #'scratch-buffer)
+(defun gh/switch-to-buffer-before-previous ()
+  (interactive)
+  (switch-to-buffer (other-buffer (other-buffer))))
 
-(keymap-global-set "M-<up>" (lambda () (interactive) (scroll-other-window-down 1)))
-(keymap-global-set "M-<down>" (lambda () (interactive) (scroll-other-window 1)))
+
+
+
+  ;; (keymap-set xah-fly-command-map ">" (lambda () (interactive) (switch-to-buffer (other-buffer (current-buffer)))))
+
+  (keymap-set xah-fly-command-map "8" 'er/expand-region)
+
+  (keymap-set xah-fly-leader-key-map "t" 'consult-buffer)
+
+  ;; (keymap-global-set "C-|" (lambda () (interactive) (insert "~")))
+  (keymap-global-set "<f2>" 'rename-file)
+  (keymap-global-set "s-v" 'helpful-variable)
+  (keymap-global-set "s-f" 'helpful-callable)
+  (keymap-global-set "<f12>" 'dabbrev-expand)
+  (keymap-global-set "C-x C-s" #'eval-expression)
+  (keymap-global-set "C-x C-x" #'eval-defun)
+  (keymap-global-set "s-b" #'eval-buffer)
+  (keymap-global-set "C-x C-a" #'eval-expression)
+  (keymap-global-set "C-v" #'xah-paste-or-paste-previous)
+  (keymap-global-set "s-d" (lambda () (interactive) (duplicate-line) (next-line)))
+  (keymap-global-set "C-n" #'xah-new-empty-buffer)
+
+  (keymap-global-set "M-<up>" (lambda () (interactive) (scroll-other-window-down 1)))
+  (keymap-global-set "M-<down>" (lambda () (interactive) (scroll-other-window 1)))
 
 (require 'orderless)
 (setq completion-styles '(orderless basic)
@@ -273,8 +285,16 @@
  ; (keymap-set eshell-mode-map "C-S-<down>" #'eshell-next-prompt)
  ; (keymap-set eshell-mode-map "C-S-<up>" #'eshell-previous-prompt)
   (keymap-global-set "C-." 'embark-act)
-  (keymap-set minibuffer-mode-map "C-," #'embark-become)
-  (keymap-set xah-fly-command-map "," #'embark-act)
+(keymap-set minibuffer-mode-map "C-," #'embark-act)
+
+(defun gh/embark-act-or-cycle ()
+  (interactive)
+  (if (eq last-command 'embark-act)
+      (embark-cycle)
+    (embark-act)))
+
+    (keymap-set xah-fly-command-map "," #'gh/embark-act-or-cycle)
+    (keymap-set xah-fly-command-map "," #'embark-act)
 
 (setq-default abbrev-mode t)
 
@@ -288,6 +308,7 @@
 
 ;; (keymap-set xah-fly-command-map "F" #'consult-locate)
   (keymap-set xah-fly-command-map "%" #'consult-buffer-other-frame)
+  (keymap-set xah-fly-command-map ";" #'consult-org-heading)
   (keymap-set xah-fly-command-map "I" #'consult-org-heading)
   ;; (keymap-set xah-fly-command-map "R" #'consult-ripgrep)
   (keymap-set xah-fly-command-map "M" #'consult-mark)
@@ -323,12 +344,20 @@
 (setq isearch-lax-whitespace nil)
 
 (define-key vertico-map (kbd "C-<up>") 'previous-history-element)
-(define-key vertico-map (kbd "C-<down>") 'next-history-element)
-(define-key vertico-map (kbd "C-v") 'xah-paste-or-paste-previous)
+		  (define-key vertico-map (kbd "C-<down>") 'next-history-element)
+		  (define-key vertico-map (kbd "C-v") 'xah-paste-or-paste-previous)
+		  (define-key vertico-map (kbd "<next>") #'vertico-scroll-up)
+		  (define-key vertico-map (kbd "<prior>") #'vertico-scroll-down)
+		  (define-key vertico-map (kbd "C-<prior>") #'vertico-first)
+		  (define-key vertico-map (kbd "C-<next>") #'vertico-last)
+		  (define-key vertico-map (kbd "C-c") #'vertico-save)
+(setq minibuffer-prompt-properties
+      '(read-only t cursor-intangible t face minibuffer-prompt))
 
-(add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy) ;clears previous file path after typing '~/'
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+		  (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy) ;clears previous file path after typing '~/'
 
-(keymap-set dired-mode-map "M-RET" 'browse-url-of-dired-file)
+		  (keymap-set dired-mode-map "M-RET" 'browse-url-of-dired-file)
 
 (defun umount-other-docs
     ()
@@ -368,7 +397,7 @@
     ;; 	  (unless (and (equal (buffer-name) "george-config.org")
     ;; 		       buffer-read-only
     ;; 		       (not (eq major-mode 'dired-mode))
-    ;; 		       (quit-window))))
+;; 		       (quit-window))))
 
     ;; (define-key xah-fly-command-map (kbd "q") #'my-q-insert-or-quit-window)
 
@@ -549,6 +578,11 @@
   (interactive)
   (start-process "my-emacs-process" nil "emacs" "-Q"))
 
+(defun emacs-TEST ()
+		    "DOCSTRING"
+		    (interactive)
+		    (start-process "my-emacs-process" nil "emacs" "-q" "-l" "~/.emacs.d-TEST/init.el"))
+
 (setq-default mode-line-format
 				  '("%e"
 				    " "
@@ -591,7 +625,7 @@
 		    (defvar-local gh-mode-line-time-and-date
 			'(:eval
 			  (when (mode-line-window-selected-p)
-			    (propertize (format-time-string " %a %e %b, %H:%M") 'face 'diff-header))))
+			    (propertize (format-time-string " %a %e %b, %H:%M ") 'face 'diff-header))))
 
 (defvar-local gh-mode-line-buffer-read-only
 		      '(:eval
@@ -636,19 +670,22 @@
 (defun gh-make-window-current (window)
   (select-window window))
 
-(setq display-buffer-alist
-      '(
-	("\\*Occur\\*"
-	 (display-buffer-reuse-window
-	  display-buffer-below-selected)
-	 (window-height . fit-window-to-buffer)
-	 (dedicated . t)
-	(body-function . gh-make-window-current))
-	("\\*helpful.*"
-	 (display-buffer-reuse-window
-	  display-buffer-below-selected)
-	 )
-	))
+		      (setq display-buffer-alist nil)
+;; (setq display-buffer-alist
+;;       '(
+;; 	("\\*Occur\\*"
+;; 	 (display-buffer-reuse-window
+;; 	  display-buffer-below-selected)
+;; 	 (window-height . fit-window-to-buffer)
+;; 	 (dedicated . t)
+;; 	(body-function . gh-make-window-current))
+;; 	("\\*helpful.*"
+;; 	 (display-buffer-reuse-window
+;; 	  display-buffer-below-selected)
+;; 	 )
+;; 	))
+
+(require 'org-tempo)
 
 (keymap-global-set "C-c c" #'org-capture)
 
@@ -665,6 +702,7 @@
     (org-table-next-row)))
 
 	  (keymap-set org-mode-map "M-n" 'org-table-check-cell)
+	  (keymap-set org-mode-map "C-c e" 'org-table-edit-field)
   (setq org-use-speed-commands t)
 	  (setq org-structure-template-alist
 		'(
@@ -700,4 +738,21 @@
 ;; 	    (lambda () (interactive)
 ;; 	      (mode-command-or-xfk-command 'magit-status-mode 'magit-refresh            'dired-revert-buffer-or-xah-delete-current-text-block)))
 
+(defun gh/minibuffer-backward-kill-when-file-completing (arg)
+(interactive "p")
+(if minibuffer-completing-file-name
+    (if (string-match-p "/." (minibuffer-contents))
+	(zap-up-to-char (- arg) ?/)
+      (delete-minibuffer-contents)
+      (backward-delete-char-untabify 1))
+  (delete-backward-char arg)))
 
+(keymap-set minibuffer-mode-map "DEL" #'gh/minibuffer-backward-kill-when-file-completing)
+
+(defun kill-cgoban-java-process (arg)
+  (interactive "P")
+  (if arg
+      (async-shell-command "pkill java" nil)
+    (async-shell-command "pkill java" nil)
+    (async-shell-command "/usr/bin/java -jar /home/george/Downloads/cgoban.jar" nil)
+  (message "Java has been killed (Cgoban)")))
