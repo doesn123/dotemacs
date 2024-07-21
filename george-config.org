@@ -631,89 +631,123 @@
 #+end_src
 * mode line
 #+begin_src emacs-lisp :tangle "init.el"
-  (setq-default mode-line-format
-		'("%e"
-		  " "
-		  gh-my-mode-line-buffer-name
-		  gh-mode-line-padding
-		  gh-mode-line-narrowing
-		  gh-mode-line-kmacro
-		  gh-mode-line-buffer-read-only
-		  gh-mode-line-major-mode
-		  gh-mode-line-padding
-		  ;; gh-mode-line-git
-		  gh-mode-line-time-and-date
-		  gh-my-mode-line-info-current-node
-		  ))
+      (setq-default mode-line-format
+		    '("%e"
+		      " "
+		      gh-my-mode-line-buffer-name
+		      gh-mode-line-padding
+		      gh-mode-line-narrowing
+		      gh-mode-line-kmacro
+		      gh-mode-line-buffer-read-only
+		      gh-mode-line-major-mode
+		      gh-mode-line-padding
+		      ;; gh-mode-line-git
+		      gh-mode-line-time-and-date
+		      gh-my-mode-line-info-current-node
+		      gh-mode-line-battery
+		      ))
 
-  (defvar-local gh-my-mode-line-buffer-name
-      '(:eval
-	(format "%s "
-		(if (mode-line-window-selected-p)
-		    (propertize (buffer-name) 'face 'italic)
-		  (propertize (buffer-name) 'face 'shadow)))))
+      (defvar-local gh-my-mode-line-buffer-name
+	  '(:eval
+	    (format "%s "
+		    (if (mode-line-window-selected-p)
+			(propertize (buffer-name) 'face 'italic)
+		      (propertize (buffer-name) 'face 'shadow)))))
 
-  (defvar-local gh-my-mode-line-info-current-node
-      '(:eval
-	(format "%s "
-		(propertize Info-current-node 'face 'italic)
-		)))
+      (defvar-local gh-my-mode-line-battery
+	  '(:eval
+	    (fancy-battery-default-mode-line)))
 
-  ;; (defvar-local gh-mode-line-git
-  ;;     '(:eval
-  ;;       (when (mode-line-window-selected-p)
-  ;; 	(format "%s"
-  ;; 		(propertize vc-mode 'face 'warning)))))
+      (defvar-local gh-my-mode-line-info-current-node
+	  '(:eval
+	    (format "%s "
+		    (propertize Info-current-node 'face 'italic)
+		    )))
 
-  (defvar-local gh-mode-line-major-mode
-      '(:eval
-	(format " %s "
-		(propertize (symbol-name major-mode) 'face 'bold))))
+      ;; (defvar-local gh-mode-line-git
+      ;;     '(:eval
+      ;;       (when (mode-line-window-selected-p)
+      ;; 	(format "%s"
+      ;; 		(propertize vc-mode 'face 'warning)))))
+
+      (defvar-local gh-mode-line-major-mode
+	  '(:eval
+	    (format " %s "
+		    (propertize (symbol-name major-mode) 'face 'bold))))
 
   (defvar-local gh-mode-line-time-and-date
-      '(:eval
-	(when (mode-line-window-selected-p)
-	  (propertize (format-time-string " %a %e %b, %H:%M ") 'face 'diff-header))))
+	'(:eval
+	  (when (mode-line-window-selected-p)
+	    (propertize (format-time-string " %a %e %b, %H:%M ") 'face 'diff-header))))
 
-  (defvar-local gh-mode-line-buffer-read-only
-      '(:eval
-	(when buffer-read-only
-	  (if (mode-line-window-selected-p)
-	      (propertize " \(ro\)" 'face 'all-the-icons-blue)
-	    (propertize " \(ro\)" 'face 'shadow)))))
-
-  (defvar-local gh-mode-line-padding
-      '(:eval
-	(when (mode-line-window-selected-p)
-	  "---")))
-
-  (defvar-local gh-mode-line-narrowing
-      '(:eval
-	;; (setq gh-mode-line-padding nil)
-	(when (buffer-narrowed-p)
-	  (if (mode-line-window-selected-p)
-	      (propertize " \(narrowed\)" 'face 'error)
-	    (propertize " \(narrowed\)" 'face 'shadow)))))
+    (defvar-local gh-mode-line-battery
+	  '(:eval
+	    (when (mode-line-window-selected-p)
+	    (fancy-battery-default-mode-line))))
 
 
-  (defvar gh-mode-line-kmacro
-    '(:eval
-      (when (and (mode-line-window-selected-p)
-		 defining-kbd-macro)
-	(propertize " KMacro " 'face 'alert-urgent-face))))
+      (defvar-local gh-my-mode-line-info-current-node
+	  '(:eval
+	    (format "%s "
+		    (propertize Info-current-node 'face 'italic)
+		    )))
 
-  (dolist (construct
-	   '(gh-mode-line-major-mode
-	     gh-mode-line-padding
-	     gh-mode-line-kmacro
-	     gh-mode-line-narrowing
-	     gh-my-mode-line-info-current-node
-	     gh-mode-line-buffer-read-only
-	     gh-mode-line-time-and-date
-	     gh-my-mode-line-buffer-name))
-    (put construct 'risky-local-variable t))
+      ;; (defvar-local gh-mode-line-git
+      ;;     '(:eval
+      ;;       (when (mode-line-window-selected-p)
+      ;; 	(format "%s"
+      ;; 		(propertize vc-mode 'face 'warning)))))
 
-					  ;to add: **-,  line nums, % through document, Git, battery, get rid of padding when narrowed    534:		    ;buffer ;management
+      (defvar-local gh-mode-line-major-mode
+	  '(:eval
+	    (format " %s "
+		    (propertize (symbol-name major-mode) 'face 'bold))))
+
+      (defvar-local gh-mode-line-time-and-date
+	  '(:eval
+	    (when (mode-line-window-selected-p)
+	      (propertize (format-time-string " %a %e %b, %H:%M ") 'face 'diff-header))))
+
+      (defvar-local gh-mode-line-buffer-read-only
+	  '(:eval
+	    (when buffer-read-only
+	      (if (mode-line-window-selected-p)
+		  (propertize " \(ro\)" 'face 'all-the-icons-blue)
+		(propertize " \(ro\)" 'face 'shadow)))))
+
+      (defvar-local gh-mode-line-padding
+	  '(:eval
+	    (when (mode-line-window-selected-p)
+	      "---")))
+
+      (defvar-local gh-mode-line-narrowing
+	  '(:eval
+	    ;; (setq gh-mode-line-padding nil)
+	    (when (buffer-narrowed-p)
+	      (if (mode-line-window-selected-p)
+		  (propertize " \(narrowed\)" 'face 'error)
+		(propertize " \(narrowed\)" 'face 'shadow)))))
+
+
+      (defvar gh-mode-line-kmacro
+	'(:eval
+	  (when (and (mode-line-window-selected-p)
+		     defining-kbd-macro)
+	    (propertize " KMacro " 'face 'alert-urgent-face))))
+
+      (dolist (construct
+	       '(gh-mode-line-major-mode
+		 gh-mode-line-padding
+		 gh-mode-line-kmacro
+		 gh-mode-line-narrowing
+		 gh-my-mode-line-info-current-node
+		 gh-mode-line-buffer-read-only
+		 gh-mode-line-battery
+		 gh-mode-line-time-and-date
+		 gh-my-mode-line-buffer-name))
+	(put construct 'risky-local-variable t))
+
+					      ;to add: **-,  line nums, % through document, Git, battery, get rid of padding when narrowed    534:		    ;buffer ;management
 #+end_src
 * buffer management
 #+begin_src emacs-lisp :tangle "init.el"
