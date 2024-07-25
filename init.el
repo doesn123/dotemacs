@@ -91,7 +91,7 @@
   (setq history-length 100)
   (setq history-delete-duplicates t)
   (setq savehist-save-minibuffer-history t)
-  (setq savehist-additional-variables '(register-alist kill-ring))
+  (setq savehist-additional-variables '(register-alist kill-ring mark-ring))
   (savehist-mode 1)
   (save-place-mode 1)
 
@@ -229,6 +229,7 @@
 (keymap-set dired-mode-map "s-d" #'dired-duplicate-this-file)
 
 (gh-package-management 'crux)
+  (gh-package-management 'corfu)
   (gh-package-management 'hydra)
   (gh-package-management 'visual-regexp)
   (gh-package-management 'denote)
@@ -262,39 +263,41 @@
     (require 'all-the-icons))
 
 (require 'substitute)
+      (setq substitute-fixed-letter-case t)
 
-  (setq substitute-fixed-letter-case t)
+      ;; If you want a message reporting the matches that changed in the
+      ;; given context.  We don't do it by default.
+      (add-hook 'substitute-post-replace-functions #'substitute-report-operation)
 
-  ;; If you want a message reporting the matches that changed in the
-  ;; given context.  We don't do it by default.
-  (add-hook 'substitute-post-replace-functions #'substitute-report-operation)
+    ;  (dolist (hook '(text-mode-hook))
+     ;   (add-hook hook #'jinx-mode))
 
-;  (dolist (hook '(text-mode-hook))
- ;   (add-hook hook #'jinx-mode))
+      ;(keymap-global-set "C-/" #'jinx-correct)
+      (vertico-mode)
+      (marginalia-mode)
+      (battery-notifier-mode)
 
-  ;(keymap-global-set "C-/" #'jinx-correct)
-  (vertico-mode)
-  (marginalia-mode)
-  (battery-notifier-mode)
+(add-hook 'after-init-hook #'fancy-battery-mode)
+(fancy-battery-mode)
+(setq fancy-battery-show-percentage t)
+(set-face-foreground 'fancy-battery-discharging "orange red")
+(set-face-foreground 'fancy-battery-critical "red")
 
-  (add-hook 'after-init-hook #'fancy-battery-mode)
+      (keymap-global-set "<f7>" 'eshell)
+      (keymap-global-set "C-." 'embark-act)
+      (keymap-global-set "M-." 'embark-dwim)
+     ; (keymap-set eshell-mode-map "C-S-<down>" #'eshell-next-prompt)
+     ; (keymap-set eshell-mode-map "C-S-<up>" #'eshell-previous-prompt)
+(setq prefix-help-command #'embark-prefix-help-command)
 
-  (setq fancy-battery-show-percentage t)
+    (defun gh/embark-act-or-cycle
+      (interactive)
+      (if (eq last-command 'embark-act)
+	  (embark-cycle)
+	(embark-act)))
 
-  (keymap-global-set "<f7>" 'eshell)
- ; (keymap-set eshell-mode-map "C-S-<down>" #'eshell-next-prompt)
- ; (keymap-set eshell-mode-map "C-S-<up>" #'eshell-previous-prompt)
-  (keymap-global-set "C-." 'embark-act)
-(keymap-set minibuffer-mode-map "C-," #'embark-act)
-
-(defun gh/embark-act-or-cycle ()
-  (interactive)
-  (if (eq last-command 'embark-act)
-      (embark-cycle)
-    (embark-act)))
-
-    (keymap-set xah-fly-command-map "," #'gh/embark-act-or-cycle)
-    (keymap-set xah-fly-command-map "," #'embark-act)
+	(keymap-set xah-fly-command-map "," #'gh/embark-act-or-cycle)
+	(keymap-set xah-fly-command-map "," #'embark-act)
 
 (setq-default abbrev-mode t)
 
@@ -308,7 +311,7 @@
 
 ;; (keymap-set xah-fly-command-map "F" #'consult-locate)
   (keymap-set xah-fly-command-map "%" #'consult-buffer-other-frame)
-  (keymap-set xah-fly-command-map ";" #'consult-org-heading)
+  (keymap-set xah-fly-command-map ";" #'consult-imenu)
   (keymap-set xah-fly-command-map "I" #'consult-org-heading)
   ;; (keymap-set xah-fly-command-map "R" #'consult-ripgrep)
   (keymap-set xah-fly-command-map "M" #'consult-mark)
@@ -724,7 +727,7 @@
 (keymap-global-set "C-c c" #'org-capture)
 
 (setq org-capture-templates
-      '(("a" "a template" item (file "scratch.org"))))
+      '(("e" "Emacs question" item (file+headline "scratch.org" "Emacs questions"))))
 
   (defun org-table-check-cell ()
   (interactive)
@@ -735,17 +738,20 @@
       (org-table-align))
     (org-table-next-row)))
 
+(setq org-confirm-babel-evaluate nil)
+
 (keymap-set org-mode-map "M-n" 'org-table-check-cell)
 (keymap-set org-mode-map "C-c e" 'org-table-edit-field)
   (setq org-use-speed-commands t)
 	  (setq org-structure-template-alist
 		'(
 		  ("a" . "export ascii")
-	   ("e" . "src emacs-lisp")
-	   ("o" . "src org-mode")
-	   ("t" . "src emacs-lisp :tangle \" \"")
-	   ("l" . "src lua")
-	   ("v" . "verse")))
+		  ("c" . "src emacs-lisp :tangle \"init.el\" :results none")
+		  ("e" . "src emacs-lisp")
+		  ("o" . "src org-mode")
+		  ("t" . "src emacs-lisp :tangle \" \"")
+		  ("l" . "src lua")
+		  ("v" . "verse")))
 
 	  (keymap-global-set "C-c C-," 'org-insert-structure-template)
 
