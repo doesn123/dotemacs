@@ -13,6 +13,5 @@ not retain the generic background set by the function
 
 	 (set-face-attribute 'default nil :background "#000000" :foreground "#ffffff")
 	 (set-face-attribute 'mode-line nil :background "#000000" :foreground "#ffffff" :box 'unspecified)
-	     (add-hook 'after-make-frame-functions #'prot-emacs-re-enable-frame-theme))
-
-    (prot-emacs-avoid-initial-flash-of-light)
+	 (add-hook 'after-make-frame-functions #'prot-emacs-re-enable-frame-theme))
+      (prot-emacs-avoid-initial-flash-of-light)

@@ -7,7 +7,6 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (blink-cursor-mode -1)
-
 (mapc
  (lambda (command)
    (put command 'disabled nil))
@@ -87,21 +86,23 @@
 (xah-fly-keys 1)
 
 (add-to-list 'load-path '"~/.emacs.d/lisp/")
-;; (setq initial-buffer-choice "~/org/scratch.org")
-  (setq history-length 100)
-  (setq history-delete-duplicates t)
-  (setq savehist-save-minibuffer-history t)
-  (setq savehist-additional-variables '(register-alist kill-ring mark-ring))
-  (savehist-mode 1)
-  (save-place-mode 1)
+  ;; (setq initial-buffer-choice "~/org/scratch.org")
+    (setq history-length 100)
+    (setq history-delete-duplicates t)
+    (setq savehist-save-minibuffer-history t)
+    (setq savehist-additional-variables '(register-alist kill-ring mark-ring))
+    (savehist-mode 1)
+    (save-place-mode 1)
 
-  (rainbow-delimiters-mode 1)
-  (find-file "~/.emacs.d/george-config.org")
-  (setq large-file-warning-threshold nil)
+;; (desktop-save-mode 1)
 
-  (put 'narrow-to-region 'disabled t)
+    (rainbow-delimiters-mode 1)
+    (find-file "~/.emacs.d/george-config.org")
+    (setq large-file-warning-threshold nil)
 
-    (setq kill-read-only-ok t)
+    (put 'narrow-to-region 'disabled t)
+
+      (setq kill-read-only-ok t)
 
 (setq display-time-world-time-format "%R // %z %Z	%A %d %B")
 (setq zoneinfo-style-world-list
@@ -229,7 +230,9 @@
 (keymap-set dired-mode-map "s-d" #'dired-duplicate-this-file)
 
 (gh-package-management 'crux)
+  ;; (gh-package-management 'pdf-tools)
   (gh-package-management 'corfu)
+  (gh-package-management 'cape)
   (gh-package-management 'hydra)
   (gh-package-management 'visual-regexp)
   (gh-package-management 'denote)
@@ -803,3 +806,8 @@
     (async-shell-command "pkill java" nil)
     (async-shell-command "/usr/bin/java -jar /home/george/Downloads/cgoban.jar" nil)
   (message "Java has been killed (Cgoban)")))
+
+(defalias 'prc 'package-refresh-contents)
+(defalias 'pi 'package-install)
+
+(keymap-global-set "C-/" #'avy-goto-char-timer)
