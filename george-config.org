@@ -87,9 +87,9 @@
   (gh-package-management 'xah-fly-keys)
   (gh-package-management 'orderless)
 					  ; keybinding - -= (and shift+keys)
-  (require 'xah-fly-keys)
-  (xah-fly-keys-set-layout "colemak-dhm")
-  (xah-fly-keys 1)
+  ;(require 'xah-fly-keys)
+  ;(xah-fly-keys-set-layout "colemak-dhm")
+  ;(xah-fly-keys 1)
 #+end_src
 * basic setup
 #+begin_src emacs-lisp :tangle "init.el" :results none
@@ -250,7 +250,7 @@
 * packages
 #+begin_src emacs-lisp :tangle "init.el" :results none
     (gh-package-management 'crux)
-    ;; (gh-package-management 'pdf-tools)
+    (gh-package-management 'pdf-tools)
     (gh-package-management 'corfu)
     (gh-package-management 'cape)
     (gh-package-management 'hydra)
@@ -895,7 +895,7 @@
 	   (set-face-attribute 'default nil :background "#000000" :foreground "#ffffff")
 	   (set-face-attribute 'mode-line nil :background "#000000" :foreground "#ffffff" :box 'unspecified)
 	   (add-hook 'after-make-frame-functions #'prot-emacs-re-enable-frame-theme))
-        (prot-emacs-avoid-initial-flash-of-light)
+	;; (prot-emacs-avoid-initial-flash-of-light)
 #+end_src
 * aliases
 #+begin_src emacs-lisp :tangle "init.el" :results none

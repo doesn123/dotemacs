@@ -81,9 +81,9 @@
 (gh-package-management 'xah-fly-keys)
 (gh-package-management 'orderless)
 					; keybinding - -= (and shift+keys)
-(require 'xah-fly-keys)
-(xah-fly-keys-set-layout "colemak-dhm")
-(xah-fly-keys 1)
+;(require 'xah-fly-keys)
+;(xah-fly-keys-set-layout "colemak-dhm")
+;(xah-fly-keys 1)
 
 (add-to-list 'load-path '"~/.emacs.d/lisp/")
   ;; (setq initial-buffer-choice "~/org/scratch.org")
@@ -230,7 +230,7 @@
 (keymap-set dired-mode-map "s-d" #'dired-duplicate-this-file)
 
 (gh-package-management 'crux)
-  ;; (gh-package-management 'pdf-tools)
+  (gh-package-management 'pdf-tools)
   (gh-package-management 'corfu)
   (gh-package-management 'cape)
   (gh-package-management 'hydra)
