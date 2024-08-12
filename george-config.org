@@ -2,66 +2,67 @@
 #+author: George
 * appearance
 #+begin_src emacs-lisp :tangle "init.el" :results none
-    (setq inhibit-startup-message t)
-    (setq inhibit-startup-echo-area-message "george")
-    (setq enable-recursive-minibuffers t)
-    (minibuffer-depth-indicate-mode 1)
-    ;; (add-hook 'Info-mode-hook #'xah-fly-insert-mode-activate)
-    (menu-bar-mode -1)
-    (tool-bar-mode -1)
-    (scroll-bar-mode -1)
-    (blink-cursor-mode -1)
-    (mapc
-     (lambda (command)
-       (put command 'disabled nil))
-     '(narrow-to-region upcase-region downcase-region))
+  (toggle-debug-on-error 1)
+  (setq inhibit-startup-message t)
+  (setq inhibit-startup-echo-area-message "george")
+  (setq enable-recursive-minibuffers t)
+  (minibuffer-depth-indicate-mode 1)
+  ;; (add-hook 'Info-mode-hook #'xah-fly-insert-mode-activate)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (blink-cursor-mode -1)
+  (mapc
+   (lambda (command)
+     (put command 'disabled nil))
+   '(narrow-to-region upcase-region downcase-region))
 
-    ;; Make native compilation silent and prune its cache.
-    (when (native-comp-available-p)
-      (setq native-compile-prune-cache t))
+  ;; Make native compilation silent and prune its cache.
+  (when (native-comp-available-p)
+    (setq native-compile-prune-cache t))
 
-    (add-hook 'after-init-hook (lambda () (set-frame-name "home")))
+  (add-hook 'after-init-hook (lambda () (set-frame-name "home")))
 
-    (set-face-attribute 'default nil :height 140)
-    (fset 'yes-or-no-p 'y-or-n-p)
-    (show-paren-mode 1)
-    (add-hook 'window-setup-hook 'toggle-frame-maximized)
+  (set-face-attribute 'default nil :height 140)
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (show-paren-mode 1)
+  (add-hook 'window-setup-hook 'toggle-frame-maximized)
 
-    (setq custom-file (make-temp-file "emacs-custom-"))
+  (setq custom-file (make-temp-file "emacs-custom-"))
 
-    (global-visual-line-mode)
+  (global-visual-line-mode)
 
-    (setq display-time-default-load-average nil)
+  (setq display-time-default-load-average nil)
 
-    (setq kill-buffer-query-functions
-	  (remq 'process-kill-buffer-query-function
-		kill-buffer-query-functions))
+  (setq kill-buffer-query-functions
+	(remq 'process-kill-buffer-query-function
+	      kill-buffer-query-functions))
 
-    (keymap-global-set "<f10>" 'menu-bar-mode)
-					    ; Themes
-    (defvar gh-modus-themes-light
-      '(modus-operandi
-	modus-operandi-tritanopia
-	modus-operandi-deuteranopia
-	modus-operandi-tinted))
+  (keymap-global-set "<f10>" 'menu-bar-mode)
+					  ; Themes
+  (defvar gh-modus-themes-light
+    '(modus-operandi
+      modus-operandi-tritanopia
+      modus-operandi-deuteranopia
+      modus-operandi-tinted))
 
-    (defvar gh-modus-themes-dark
-      '(modus-vivendi
-	modus-vivendi-tinted
-	modus-vivendi-deuteranopia
-	modus-vivendi-tritanopia))
+  (defvar gh-modus-themes-dark
+    '(modus-vivendi
+      modus-vivendi-tinted
+      modus-vivendi-deuteranopia
+      modus-vivendi-tritanopia))
 
-    (defun gh-load-random-ef-theme-variant-dep-on-time-of-day ()
-      (let ((now (string-to-number (format-time-string "%H" (current-time)))))
-	(if (and (<= now 19)
-		 (>= now 7))
-	    (ef-themes-load-random 'light)
-	  (ef-themes-load-random 'dark))))
+  (defun gh-load-random-ef-theme-variant-dep-on-time-of-day ()
+    (let ((now (string-to-number (format-time-string "%H" (current-time)))))
+      (if (and (<= now 19)
+	       (>= now 7))
+	  (ef-themes-load-random 'light)
+	(ef-themes-load-random 'dark))))
 
-    (add-hook 'after-init-hook #'gh-load-random-ef-theme-variant-dep-on-time-of-day)
+  (add-hook 'after-init-hook #'gh-load-random-ef-theme-variant-dep-on-time-of-day)
 
-    (setq consult-themes
-	  '("ef-\\|modus.*"))
+  (setq consult-themes
+	'("ef-\\|modus.*"))
 #+end_src
 * package managment
 #+begin_src emacs-lisp :tangle "init.el" :results none
@@ -126,10 +127,10 @@
     (keymap-set key-translation-map "<escape>" "C-g")
 
   (setq text-scale-mode-step 1)
-    (keymap-set xah-fly-command-map "." 'crux-other-window-or-switch-buffer)
-    (keymap-set xah-fly-command-map "," 'ignore)
+  ;  (keymap-set xah-fly-command-map "." 'crux-other-window-or-switch-buffer)
+  ;  (keymap-set xah-fly-command-map "," 'ignore)
 
-    (keymap-set xah-fly-command-map ">" #'gh/switch-to-buffer-before-previous)
+  ;  (keymap-set xah-fly-command-map ">" #'gh/switch-to-buffer-before-previous)
 
   (defun gh/switch-to-buffer-before-previous ()
     (interactive)
@@ -140,9 +141,9 @@
 
     ;; (keymap-set xah-fly-command-map ">" (lambda () (interactive) (switch-to-buffer (other-buffer (current-buffer)))))
 
-    (keymap-set xah-fly-command-map "8" 'er/expand-region)
+  ;  (keymap-set xah-fly-command-map "8" 'er/expand-region)
 
-    (keymap-set xah-fly-leader-key-map "t" 'consult-buffer)
+  ;(keymap-set xah-fly-leader-key-map "t" 'consult-buffer)
 
     ;; (keymap-global-set "C-|" (lambda () (interactive) (insert "~")))
     (keymap-global-set "<f2>" 'rename-file)
@@ -153,9 +154,9 @@
     (keymap-global-set "C-x C-x" #'eval-defun)
     (keymap-global-set "s-b" #'eval-buffer)
     (keymap-global-set "C-x C-a" #'eval-expression)
-    (keymap-global-set "C-v" #'xah-paste-or-paste-previous)
+  ;  (keymap-global-set "C-v" #'xah-paste-or-paste-previous)
     (keymap-global-set "s-d" (lambda () (interactive) (duplicate-line) (next-line)))
-    (keymap-global-set "C-n" #'xah-new-empty-buffer)
+  ;  (keymap-global-set "C-n" #'xah-new-empty-buffer)
 
     (keymap-global-set "M-<up>" (lambda () (interactive) (scroll-other-window-down 1)))
     (keymap-global-set "M-<down>" (lambda () (interactive) (scroll-other-window 1)))
@@ -169,83 +170,83 @@
 #+end_src
 * dired
 #+begin_src emacs-lisp :tangle "init.el" :results none
-  (keymap-set dired-mode-map "DEL" 'dired-up-directory)
-  (keymap-set xah-fly-leader-key-map "d" (lambda (dir) (interactive "Ddir: ") (dired dir)))
-  (define-key dired-mode-map (kbd "1") #'dired-do-shell-command)
-  (define-key dired-mode-map (kbd "R") #'ignore)
+   (keymap-set dired-mode-map "DEL" 'dired-up-directory)
+  ; (keymap-set xah-fly-leader-key-map "d" (lambda (dir) (interactive "Ddir: ") (dired dir)))
+   (define-key dired-mode-map (kbd "1") #'dired-do-shell-command)
+   (define-key dired-mode-map (kbd "R") #'ignore)
 
-  (defun gh-dired-setup ()
-    (all-the-icons-dired-mode 1))
-  (global-hl-line-mode)
-  (add-hook 'dired-mode-hook #'dired-hide-details-mode)
-  (add-hook 'dired-mode-hook #'all-the-icons-dired-mode)
-  (add-hook 'dired-mode-hook #'hl-line-mode)
-  (setq dired-dwim-target t)
-  (setq dired-kill-when-opening-new-dired-buffer t)
-  (setq delete-by-moving-to-trash t)
-  (setq dired-listing-switches "-AGgFhlv --group-directories-first --time-style=long-iso")
-  (setq dired-recursive-copies 'always)
-  (setq dired-recursive-deletes 'always)
-  (setq dired-auto-revert-buffer #'dired-directory-changed-p)
-  (setq dired-mouse-drag-files t)
+   (defun gh-dired-setup ()
+     (all-the-icons-dired-mode 1))
+   (global-hl-line-mode)
+   (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+   (add-hook 'dired-mode-hook #'all-the-icons-dired-mode)
+   (add-hook 'dired-mode-hook #'hl-line-mode)
+   (setq dired-dwim-target t)
+   (setq dired-kill-when-opening-new-dired-buffer t)
+   (setq delete-by-moving-to-trash t)
+   (setq dired-listing-switches "-AGgFhlv --group-directories-first --time-style=long-iso")
+   (setq dired-recursive-copies 'always)
+   (setq dired-recursive-deletes 'always)
+   (setq dired-auto-revert-buffer #'dired-directory-changed-p)
+   (setq dired-mouse-drag-files t)
 
-  (keymap-set dired-mode-map "<f10>" (lambda () (interactive) (dired default-directory "-lRh")))
+   (keymap-set dired-mode-map "<f10>" (lambda () (interactive) (dired default-directory "-lRh")))
 
-  (defun dired-mark-or-xah-beginning-of-line-or-block ()
-    (interactive)
-    (if (eq major-mode 'dired-mode)
-	(dired-mark 1)
-      (xah-beginning-of-line-or-block)))
+   (defun dired-mark-or-xah-beginning-of-line-or-block ()
+     (interactive)
+     (if (eq major-mode 'dired-mode)
+	 (dired-mark 1)
+       (xah-beginning-of-line-or-block)))
 
-  (defun dired-revert-buffer-or-xah-delete-current-text-block ()
-    (interactive)
-    (if (eq major-mode 'dired-mode)
-	(revert-buffer)
-      (xah-delete-current-text-block)))
+   (defun dired-revert-buffer-or-xah-delete-current-text-block ()
+     (interactive)
+     (if (eq major-mode 'dired-mode)
+	 (revert-buffer)
+       (xah-delete-current-text-block)))
 
-  (defun dired-do-rename-or-newline-without-break-of-line ()
-    (interactive)
-    (if (eq major-mode 'dired-mode)
-	(dired-do-rename)
-      (newline-without-break-of-line)))
+   (defun dired-do-rename-or-newline-without-break-of-line ()
+     (interactive)
+     (if (eq major-mode 'dired-mode)
+	 (dired-do-rename)
+       (newline-without-break-of-line)))
 
-  ;; (defun gh-dired-goto-file-or-undo (&opt file)
-  ;;   (interactive "fFile: ")
-  ;;   (if (eq major-mode 'dired-mode)
-  ;; 	  (gh-dired-goto-file (file))
-  ;; 	(undo)))
+   ;; (defun gh-dired-goto-file-or-undo (&opt file)
+   ;;   (interactive "fFile: ")
+   ;;   (if (eq major-mode 'dired-mode)
+   ;; 	  (gh-dired-goto-file (file))
+   ;; 	(undo)))
 
-  ;; (defun gh-dired-goto-file (file)
-  ;;   (interactive "f")
-  ;;   (dired-goto-file (expand-file-name file)))
+   ;; (defun gh-dired-goto-file (file)
+   ;;   (interactive "f")
+   ;;   (dired-goto-file (expand-file-name file)))
 
-  (defun gh-double-command (mode mode-command other-command)
-    (interactive)
-    (if (eq major-mode mode)
-	mode-command
-      other-command))
+   (defun gh-double-command (mode mode-command other-command)
+     (interactive)
+     (if (eq major-mode mode)
+	 mode-command
+       other-command))
 
-  (keymap-set xah-fly-command-map "r" #'dired-do-rename-or-newline-without-break-of-line)
+  ; (keymap-set xah-fly-command-map "r" #'dired-do-rename-or-newline-without-break-of-line)
 
-  (define-key dired-mode-map (kbd "r") #'dired-do-rename-or-newline-without-break-of-line)
-  (keymap-set xah-fly-command-map "m" 'dired-mark-or-xah-beginning-of-line-or-block)
-  (keymap-set xah-fly-command-map "g" 'dired-revert-buffer-or-xah-delete-current-text-block)
-  (keymap-set xah-fly-command-map "r" #'dired-do-rename-or-newline-without-break-of-line)
-  ;; (keymap-set xah-fly-command-map "j" 'gh-dired-goto-file-or-undo)
+   (define-key dired-mode-map (kbd "r") #'dired-do-rename-or-newline-without-break-of-line)
+  ; (keymap-set xah-fly-command-map "m" 'dired-mark-or-xah-beginning-of-line-or-block)
+  ; (keymap-set xah-fly-command-map "g" 'dired-revert-buffer-or-xah-delete-current-text-block)
+  ; (keymap-set xah-fly-command-map "r" #'dired-do-rename-or-newline-without-break-of-line)
+   ;; (keymap-set xah-fly-command-map "j" 'gh-dired-goto-file-or-undo)
 
-  (defun dired-duplicate-this-file ()
-    "Duplicate file on this line."
-    (interactive)
-    (let* ((this  (dired-get-filename t))
-	   (ctr   1)
-	   (new   (format "%s[%d]" this ctr)))
-      (while (file-exists-p new)
-	(setq ctr  (1+ ctr)
-	      new  (format "%s[%d]" this ctr)))
-      (dired-copy-file this new nil))
-    (revert-buffer))
+   (defun dired-duplicate-this-file ()
+     "Duplicate file on this line."
+     (interactive)
+     (let* ((this  (dired-get-filename t))
+	    (ctr   1)
+	    (new   (format "%s[%d]" this ctr)))
+       (while (file-exists-p new)
+	 (setq ctr  (1+ ctr)
+	       new  (format "%s[%d]" this ctr)))
+       (dired-copy-file this new nil))
+     (revert-buffer))
 
-  (keymap-set dired-mode-map "s-d" #'dired-duplicate-this-file)  
+   (keymap-set dired-mode-map "s-d" #'dired-duplicate-this-file)
 #+end_src
 * packages
 #+begin_src emacs-lisp :tangle "init.el" :results none
@@ -321,8 +322,8 @@
 	    (embark-cycle)
 	  (embark-act)))
 
-	  (keymap-set xah-fly-command-map "," #'gh/embark-act-or-cycle)
-	  (keymap-set xah-fly-command-map "," #'embark-act)
+;	  (keymap-set xah-fly-command-map "," #'gh/embark-act-or-cycle)
+;	  (keymap-set xah-fly-command-map "," #'embark-act)
 
 
 
@@ -343,17 +344,17 @@
 * consult
 #+begin_src emacs-lisp :tangle "init.el" :results none
     ;; (keymap-set xah-fly-command-map "F" #'consult-locate)
-    (keymap-set xah-fly-command-map "%" #'consult-buffer-other-frame)
-    (keymap-set xah-fly-command-map ";" #'consult-imenu)
-    (keymap-set xah-fly-command-map "I" #'consult-org-heading)
+ ;   (keymap-set xah-fly-command-map "%" #'consult-buffer-other-frame)
+ ;   (keymap-set xah-fly-command-map ";" #'consult-imenu)
+ ;   (keymap-set xah-fly-command-map "I" #'consult-org-heading)
     ;; (keymap-set xah-fly-command-map "R" #'consult-ripgrep)
-    (keymap-set xah-fly-command-map "M" #'consult-mark)
-    (keymap-set xah-fly-command-map "B" #'consult-bookmark)
-    (keymap-set xah-fly-command-map "G" #'consult-register-load)
-    (keymap-set xah-fly-command-map "?" #'consult-info)
-    (keymap-set xah-fly-command-map "E" #'consult-register)
-    (keymap-set xah-fly-command-map "'" #'consult-line)
-    (keymap-set xah-fly-command-map "O" #'occur)
+ ;   (keymap-set xah-fly-command-map "M" #'consult-mark)
+ ;   (keymap-set xah-fly-command-map "B" #'consult-bookmark)
+ ;   (keymap-set xah-fly-command-map "G" #'consult-register-load)
+ ;   (keymap-set xah-fly-command-map "?" #'consult-info)
+ ;   (keymap-set xah-fly-command-map "E" #'consult-register)
+ ;   (keymap-set xah-fly-command-map "'" #'consult-line)
+ ;   (keymap-set xah-fly-command-map "O" #'occur)
 
     ;;consult find commands (use hydra)
   ;fd,locate,grep
@@ -461,7 +462,7 @@
 	(end-of-line)
 	(newline-and-indent))))
 
-  (define-key xah-fly-command-map (kbd "r") #'newline-without-break-of-line)
+;(define-key xah-fly-command-map (kbd "r") #'newline-without-break-of-line)
 
 
   (defun narrow-or-widen-dwim (p)
@@ -569,7 +570,7 @@
     ("c" (lambda () (interactive) (find-file "~/.emacs.d/george-config.org") (consult-line)) "config")
     ("F" consult-focus-lines "focus-lines"))
 
-  (keymap-set xah-fly-command-map "F" #'hydra-consult-find/body)
+ ; (keymap-set xah-fly-command-map "F" #'hydra-consult-find/body)
 
   (defhydra hydra-register (:color blue)
     ("i" insert-register "insert")
@@ -614,9 +615,9 @@
     ("C-r" apply-macro-to-region-lines "region")
     ("C-n" kmacro-name-last-macro "name last"))
 
-  (keymap-set xah-fly-command-map "K" 'hydra-kmacro/body)
-  (keymap-set xah-fly-command-map "R" 'hydra-register/body)
-  (keymap-set xah-fly-command-map "S" 'hydra-substitute/body)
+ ; (keymap-set xah-fly-command-map "K" 'hydra-kmacro/body)
+ ; (keymap-set xah-fly-command-map "R" 'hydra-register/body)
+ ; (keymap-set xah-fly-command-map "S" 'hydra-substitute/body)
 
   (keymap-global-set "M-w" #'hydra-window/body)
 
@@ -826,8 +827,8 @@
 * regex
 #+begin_src emacs-lisp :tangle "init.el" :results none
   (setq reb-re-syntax 'string)
-  (keymap-set xah-fly-leader-key-map "p" #'vr/query-replace)
-  (keymap-set xah-fly-leader-key-map "p" #'vr/replace)
+;(keymap-set xah-fly-leader-key-map "p" #'vr/query-replace)
+;(keymap-set xah-fly-leader-key-map "p" #'vr/replace)
 #+end_src
 * magit
 #+begin_src emacs-lisp :tangle "init.el" :results none
